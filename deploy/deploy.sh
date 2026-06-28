@@ -15,7 +15,8 @@ cd "$REPO_DIR"
 
 git pull origin main >> "$LOG_FILE" 2>&1
 
-docker compose down >> "$LOG_FILE" 2>&1
-docker compose up -d --build >> "$LOG_FILE" 2>&1
+# Only rebuild the docs service. The webhook service keeps running so it can
+# respond to GitHub; rebuild it manually when you update the webhook code.
+docker compose -f docker-compose.yml up -d --build docs >> "$LOG_FILE" 2>&1
 
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] Deploy finished" >> "$LOG_FILE"

@@ -1,0 +1,30 @@
+services:
+  docs:
+    build: .
+    container_name: truckline-docs
+    restart: unless-stopped
+    ports:
+      - "3995:80"
+    networks:
+      - truckline-network
+
+  webhook:
+    build:
+      context: ./deploy
+      dockerfile: webhook.Dockerfile
+    container_name: truckline-docs-webhook
+    restart: unless-stopped
+    environment:
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET:?WEBHOOK_SECRET is required}
+      - DEPLOY_SCRIPT=/app/deploy.sh
+      - PORT=9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/truckline/web_servers/docs:/home/truckline/web_servers/docs
+      - /var/log/truckline-docs-deploy.log:/var/log/truckline-docs-deploy.log
+    networks:
+      - truckline-network
+
+networks:
+  truckline-network:
+    external: true
