@@ -1,0 +1,22 @@
+---
+import logo from '../assets/truckline_large_no_shadow.svg';
+---
+
+<a href="https://trucklinemp.com/" class="site-title sl-flex">
+	<img src={logo.src} alt="TrucklineMP" width="120" />
+</a>
+
+<style>
+	.site-title {
+		align-items: center;
+		gap: var(--sl-nav-gap);
+		font-size: var(--sl-text-h4);
+		font-weight: 600;
+		color: var(--sl-color-text);
+		text-decoration: none;
+	}
+
+	.site-title:hover {
+		color: var(--sl-color-text-accent);
+	}
+</style>

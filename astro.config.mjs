@@ -36,10 +36,15 @@ export default defineConfig({
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/TrucklineMP/docs' },
 				{ icon: 'discord', label: 'Discord', href: 'https://discord.gg/trucklinemp' },
 				{ icon: 'external', label: 'Website', href: 'https://trucklinemp.com' },
+				{ icon: 'external', label: 'Made with Starlight', href: 'https://starlight.astro.build/' },
 			],
+			components: {
+				SiteTitle: './src/components/SiteTitle.astro',
+			},
 			sidebar: [
 				{
 					label: 'VTC Programs',
+					collapsed: false,
 					items: [
 						{
 							slug: 'guides/verified-vtc-program',
@@ -59,6 +64,7 @@ export default defineConfig({
 				},
 				{
 					label: 'VTC Guides',
+					collapsed: false,
 					items: [
 						{
 							slug: 'guides/vtc-general-settings',
@@ -99,6 +105,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Account Guides',
+					collapsed: false,
 					items: [
 						{
 							slug: 'guides/profile-settings',
@@ -133,6 +140,19 @@ export default defineConfig({
 							label: 'Account Deletion',
 							translations: {
 								pl: 'Usunięcie Konta',
+							},
+						},
+					],
+				},
+				{
+					label: 'Contribute',
+					collapsed: false,
+					items: [
+						{
+							slug: 'guides/contributing',
+							label: 'Translate Documentation',
+							translations: {
+								pl: 'Tłumacz Dokumentację',
 							},
 						},
 					],
