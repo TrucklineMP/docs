@@ -13,6 +13,7 @@ fi
 
 cd "$REPO_DIR"
 
+git config --global --add safe.directory "$REPO_DIR"
 git pull origin main >> "$LOG_FILE" 2>&1
 
 # Only rebuild the docs service. The webhook service keeps running so it can
