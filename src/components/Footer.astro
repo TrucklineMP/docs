@@ -1,0 +1,68 @@
+---
+import logo from '../assets/truckline_large_no_shadow.svg';
+---
+
+<footer class="docs-footer">
+	<div class="footer-content">
+		<a href="/" class="footer-logo">
+			<img src={logo.src} alt="TrucklineMP" width="100" />
+		</a>
+
+		<div class="footer-links">
+			<a href="https://trucklinemp.com/" target="_blank" rel="noopener noreferrer" class="footer-link">
+				trucklinemp.com
+			</a>
+			<span class="footer-separator">·</span>
+			<a href="https://starlight.astro.build/" target="_blank" rel="noopener noreferrer" class="footer-link">
+				Built with Starlight
+			</a>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.docs-footer {
+		margin-top: 4rem;
+		padding: 2rem 0;
+		border-top: 1px solid var(--sl-color-hairline);
+	}
+
+	.footer-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		text-align: center;
+	}
+
+	.footer-logo {
+		opacity: 0.8;
+		transition: opacity 0.2s ease;
+	}
+
+	.footer-logo:hover {
+		opacity: 1;
+	}
+
+	.footer-links {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+	}
+
+	.footer-link {
+		color: var(--sl-color-gray-3);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.footer-link:hover {
+		color: var(--sl-color-text-accent);
+	}
+
+	.footer-separator {
+		color: var(--sl-color-gray-5);
+	}
+</style>

@@ -36,10 +36,10 @@ export default defineConfig({
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/TrucklineMP/docs' },
 				{ icon: 'discord', label: 'Discord', href: 'https://discord.gg/trucklinemp' },
 				{ icon: 'external', label: 'Website', href: 'https://trucklinemp.com' },
-				{ icon: 'external', label: 'Made with Starlight', href: 'https://starlight.astro.build/' },
 			],
 			components: {
 				SiteTitle: './src/components/SiteTitle.astro',
+				Footer: './src/components/Footer.astro',
 			},
 			sidebar: [
 				{
