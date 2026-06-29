@@ -9,6 +9,8 @@ export default defineConfig({
 			title: {
 				en: 'TrucklineMP',
 				pl: 'TrucklineMP',
+				de: 'TrucklineMP',
+				fr: 'TrucklineMP',
 			},
 			defaultLocale: 'root',
 			locales: {
@@ -19,6 +21,14 @@ export default defineConfig({
 				pl: {
 					label: 'Polski',
 					lang: 'pl',
+				},
+				de: {
+					label: 'Deutsch',
+					lang: 'de',
+				},
+				fr: {
+					label: 'Français',
+					lang: 'fr',
 				},
 			},
 			logo: {
