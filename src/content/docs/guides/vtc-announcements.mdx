@@ -1,0 +1,282 @@
+---
+title: VTC Announcements
+description: Send configurable Discord webhook notifications when important VTC actions happen on TrucklineMP.
+---
+
+# VTC Announcements
+
+VTC Announcements lets your staff post automatic updates to Discord when something important happens in your VTC. Examples include a member joining, an application being submitted, or an event being cancelled.
+
+Messages are sent through **Discord webhooks** that you create in your own server. You choose which events to announce and how each message should look.
+
+## Requirements
+
+- The **VTC Announcements** module must be enabled for your VTC on TrucklineMP.
+- You need a Discord server where you can create webhooks (Server Settings → Integrations → Webhooks).
+- Staff who configure announcements need the right VTC permissions (see [Permissions](#permissions) below).
+
+## Accessing Announcements
+
+1. Open your VTC profile and go to **Manage**.
+2. Select **Announcements** in the management sidebar (under Members).
+3. Add a webhook, then enable the events you care about.
+
+You can add up to **10 webhooks** per VTC. Use multiple webhooks when you want different channels for different topics (for example, one for recruitment and one for events).
+
+---
+
+## Setting Up a Webhook
+
+### Create a Discord webhook
+
+1. In Discord, open the target channel.
+2. Go to **Edit Channel → Integrations → Webhooks → New Webhook**.
+3. Copy the webhook URL. It looks like `https://discord.com/api/webhooks/...`.
+
+### Add it on TrucklineMP
+
+1. On the Announcements page, click **Add webhook**.
+2. Give it a clear name (for example, `Staff log` or `Recruitment alerts`).
+3. Paste the Discord webhook URL and save.
+
+Webhook URLs are stored securely. After creation, only a masked version of the URL is shown in the list.
+
+---
+
+## Permissions
+
+Assign these through [VTC Roles & Permissions](/guides/vtc-roles-permissions/):
+
+| Permission | Purpose |
+| --- | --- |
+| `announcements.manage` | Create, edit, and delete webhooks; change event templates; export config |
+| `announcements.view` | View webhooks and the delivery log |
+| `announcements.test` | Send test messages without full manage access |
+
+Give **manage** to leadership or HR roles. Give **view** to staff who only need to confirm that messages are delivering. **Test** is useful for trial staff who should verify setup without changing production config.
+
+---
+
+## Configuring Events
+
+Each webhook has its own event list. Expand a group (Members, Recruitment, Events, and so on), then toggle individual events on or off.
+
+### Default templates
+
+Most events ship with a sensible default Discord embed. Leave **Use default message template** enabled unless you want full control.
+
+### Custom templates
+
+Turn off the default template to edit:
+
+- **Message content** (optional plain text above the embed)
+- **Embed title, description, URL, color, footer**
+- **Webhook username and avatar** overrides for that event only
+
+Use **variables** (listed in the sidebar on the config tab) to insert live data. Example: `**{member.name}** joined {vtc.name}`.
+
+### Bulk actions
+
+- **All on / All off** on each group header toggles every event in that group.
+- **Minimal**, **Detailed staff log**, and **Public-friendly** presets apply a starting configuration. Detailed enables all events; Public-friendly enables a smaller member-facing set.
+
+### Role ping (optional)
+
+Per event, you can set a **ping role ID** (Discord role snowflake). When the event fires, the message will include `<@&roleId>` so that role gets notified.
+
+### Conditional delivery (optional)
+
+Per event, you can add conditions:
+
+- **Quiet hours** with a timezone, start time, and end time (announcements are skipped during that window).
+- **Recruitment open only** (fires only when recruitment is open on your VTC).
+- **Require role** (fires only when the affected member has a specific VTC role).
+
+---
+
+## Template Variables
+
+Variables are replaced when the message is sent. Common ones:
+
+| Variable | Meaning |
+| --- | --- |
+| `{vtc.name}` | VTC display name |
+| `{vtc.handle}` | VTC handle (with @) |
+| `{vtc.url}` | Public VTC profile URL |
+| `{member.name}` | Affected member name |
+| `{actor.name}` | Staff member who performed the action |
+| `{role.name}` | Role name |
+| `{application.id}` | Recruitment application ID |
+| `{news.title}` | News post title |
+| `{event.name}` | Event name |
+| `{event.url}` | Event page URL |
+| `{reason}` | Reason or note text |
+| `{timestamp}` | UTC time of the event |
+
+The UI lists every supported variable. Click one to copy it into your template.
+
+---
+
+## Supported Events
+
+Events are grouped in the management UI. All are **off by default** except member joined, member left, and member kicked on new webhooks.
+
+### Members
+
+- Member joined
+- Member left
+- Member kicked
+- Role assigned to member
+- Role removed from member
+
+### Recruitment
+
+- Application submitted
+- Application accepted
+- Application rejected
+- Application withdrawn
+
+### Invitations
+
+- Invite created
+- Invite redeemed
+- Invite revoked
+
+### News
+
+- News published
+- News updated
+- News deleted
+
+### Events
+
+- Event created
+- Event updated
+- Event cancelled
+- Event broadcast (staff message to attendees)
+- RSVP changed
+- Event check-in
+- Attendee approved (when approval is required)
+- Event auto-cancelled (no registrations before start)
+
+### Roles
+
+- Role created
+- Role updated
+- Role deleted
+
+### Management
+
+- Ownership transferred
+- Blacklist entry added
+- Blacklist entry removed
+- Settings updated
+- Recruitment toggled open or closed
+- VTC disbanded
+- Discord server unlinked from VTC
+
+### Verification
+
+- Verification application submitted
+- Verification approved
+- Verification rejected
+
+---
+
+## Delivery Modes
+
+### Instant (default)
+
+Each enabled event sends to Discord as soon as it happens. Failed deliveries are retried automatically (up to three attempts with backoff).
+
+### Daily digest
+
+When **daily digest** is enabled on a webhook, events are queued and combined into a single daily summary post instead of sending immediately. Useful for high-activity VTCs that still want a staff channel without constant pings.
+
+---
+
+## In-App Mirror (optional)
+
+You can enable **mirror in app** on a webhook. When an announcement would fire, staff with `announcements.view` also receive an in-app notification on TrucklineMP. This does not replace Discord; it gives staff a backup feed inside the site.
+
+---
+
+## Testing, Export, and Duplicate
+
+- **Send test** picks a sample event and posts a preview message to Discord. There is a short cooldown between tests.
+- **Duplicate** copies a webhook’s event configuration to a new webhook (disabled by default until you enable it).
+- **Export** downloads your template config as JSON for backup or copying to another VTC.
+
+Always run a test after changing templates or webhook URLs.
+
+---
+
+## Delivery Log
+
+Open the **Delivery log** tab to see recent sends for the selected webhook.
+
+- Filter by success or failure, or by event slug.
+- Failed rows show HTTP status and error text from Discord.
+- Use **Resend** on a failed row to queue another delivery attempt.
+
+If a webhook fails repeatedly, it may be **auto-disabled** to protect your channel from broken URLs. Re-enable it from the webhook settings after fixing the Discord URL. A warning banner appears when this happens.
+
+---
+
+## Webhook-Level Options
+
+Beyond per-event settings, each webhook supports:
+
+- **Default username** and **default avatar** (used when an event template does not override them)
+- **Enabled / disabled** toggle for the whole webhook
+- **Delivery mode** (instant or daily digest)
+
+---
+
+## Tips and Best Practices
+
+**Use separate channels for separate audiences.** A public `#announcements` channel might only need member joined and news published. A private `#staff-log` channel can use the Detailed preset.
+
+**Start small.** Enable a few events, test them, then expand. Turning on everything at once makes it hard to spot misconfigured templates.
+
+**Keep webhook URLs secret.** Anyone with the URL can post to your channel. If a URL leaks, delete the webhook in Discord, create a new one, and update TrucklineMP.
+
+**Match permissions to responsibility.** Not every officer needs `announcements.manage`. View and test permissions are enough for many roles.
+
+**Check the delivery log after deploys.** If Discord returns 404, the webhook was deleted on Discord’s side. Create a new webhook and paste the new URL.
+
+---
+
+## Troubleshooting
+
+### No messages appear in Discord
+
+- Confirm the webhook is **enabled** and the specific **event is enabled**.
+- Check **Delivery log** for failures.
+- Verify the Discord webhook still exists in Server Settings.
+- Confirm the VTC Announcements module is enabled for your VTC.
+
+### Messages stopped after working before
+
+- The webhook may have been **auto-disabled** after repeated failures. Fix the URL and re-enable.
+- Discord may have removed the webhook. Create a new one.
+
+### Test works but real events do not
+
+- The event may be disabled, or a **condition** (quiet hours, recruitment open, required role) may be blocking it.
+- Daily digest mode queues messages until the digest runs.
+
+### Wrong names or missing details in the message
+
+- Check your template variables. A typo like `{member.name}` vs `{target.name}` changes who is shown.
+- Custom templates that omit variables still work, but static text will not include dynamic data.
+
+---
+
+## Related Guides
+
+- [VTC Roles & Permissions](/guides/vtc-roles-permissions/): assign announcement permissions to roles
+- [VTC Member Management](/guides/vtc-member-management/): actions that trigger member events
+- [VTC Recruitment](/guides/vtc-recruitment/): application events and recruitment toggles
+- [VTC Discord Verification](/guides/vtc-discord-verification/): separate from announcements; links your server for profile display
+- [General Settings](/guides/vtc-general-settings/): VTC identity and recruitment settings

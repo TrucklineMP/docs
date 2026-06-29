@@ -112,6 +112,13 @@ export default defineConfig({
 							},
 						},
 						{
+							slug: 'guides/vtc-announcements',
+							label: 'Announcements',
+							translations: {
+								pl: 'Ogłoszenia',
+							},
+						},
+						{
 							slug: 'guides/vtc-discord-verification',
 							label: 'Discord Verification',
 							translations: {
