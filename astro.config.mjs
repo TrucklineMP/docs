@@ -124,6 +124,13 @@ export default defineConfig({
 							},
 						},
 						{
+							slug: 'guides/vtc-announcements',
+							label: 'Announcements',
+							translations: {
+								pl: 'Ogłoszenia',
+							},
+						},
+						{
 							slug: 'guides/vtc-discord-verification',
 							label: 'Discord Verification',
 							translations: {
@@ -137,6 +144,22 @@ export default defineConfig({
 							translations: {
 								pl: 'Widoczność',
 								ru: 'Видимость',
+							},
+						},
+					],
+				},
+				{
+					label: 'Discord Bot',
+					translations: {
+						pl: 'Bot Discord',
+					},
+					collapsed: false,
+					items: [
+						{
+							slug: 'guides/discord-linked-roles',
+							label: 'Linked Roles',
+							translations: {
+								pl: 'Połączone Role',
 							},
 						},
 					],

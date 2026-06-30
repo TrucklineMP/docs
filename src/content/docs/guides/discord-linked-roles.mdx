@@ -1,0 +1,192 @@
+---
+title: Discord Linked Roles
+description: Add the TrucklineMP bot and configure Linked Roles so members can verify their TrucklineMP account and opt in to server roles.
+---
+
+# Discord Linked Roles
+
+Linked Roles are a Discord feature. Server admins attach verification rules to a role. Members **opt in** to that role by connecting their TrucklineMP account. Discord checks the rules and grants the role if they qualify.
+
+This works on any Discord server. It is not limited to VTCs.
+
+TrucklineMP provides two checks admins can require:
+
+| Check | Meaning |
+|-------|---------|
+| **Account linked** | The member has a TrucklineMP account connected through the Linked Role flow |
+| **TrucklineMP staff** | The member is TrucklineMP platform staff |
+
+---
+
+## Before you start
+
+### Server admins
+
+- **Manage Roles** (or Administrator) in the server
+- The [TrucklineMP bot](https://discord.com/discovery/applications/1467506804727746854) installed in your server. TrucklineMP Linked Roles use the bot as an app connection. The bot must be present before **TrucklineMP** appears when you add a requirement.
+
+### Members
+
+- A TrucklineMP account at [trucklinemp.com](https://trucklinemp.com)
+- Access to the server menu on desktop to complete the first connection (see [Claiming a role](#claiming-a-role-members))
+
+---
+
+## Step 1: Add the TrucklineMP bot
+
+1. Open [TrucklineMP on Discord](https://discord.com/discovery/applications/1467506804727746854).
+2. Click **Add to Server**.
+3. Choose your server and approve the permissions.
+4. Finish the install.
+
+The bot enables Linked Role requirements and slash commands such as `/profile`. Adding the bot does not create any roles by itself.
+
+---
+
+## Step 2: Create a Linked Role (admins)
+
+Linked Roles are configured on a **role**, not from a separate Linked Roles wizard.
+
+1. Open **Server Settings**.
+2. Go to **Roles**.
+3. Click **Create Role**, or select an existing role you want to gate.
+4. Name the role and set a color if you like. Click **Save Changes**.
+5. Open the **Links** tab at the top of the role editor.
+6. Click **Add requirement**.
+7. Under **Apps**, select **TrucklineMP**.
+8. Add the checks you want (for example **Account linked** equals **Yes**).
+9. Click **Save Changes**.
+
+To add more than one check on the same role, add another requirement. Discord requires the member to pass **all** requirements on that role.
+
+### Example roles
+
+**Verified member**
+
+- Role name: `Verified` (or your choice)
+- Links requirement: **Account linked** = **Yes**
+
+**Platform staff only**
+
+- Role name: `TrucklineMP Staff`
+- Links requirement: **TrucklineMP staff** = **Yes**
+
+You can add requirements to an existing role instead of creating a new one. Open the role, go to **Links**, and add a TrucklineMP requirement there.
+
+---
+
+## Step 3: Gate channels (optional)
+
+To require a Linked Role before members can view or send messages in a channel:
+
+1. Open **Channel Settings** for the channel.
+2. Go to **Permissions**.
+3. Under **Add members or roles**, add the Linked Role you created.
+4. Save.
+
+Members who try to enter that channel will be prompted to connect TrucklineMP and opt in to the role if they have not already.
+
+---
+
+## Claiming a role (members)
+
+Linked Roles are **not** assigned automatically. Even if a member already has a TrucklineMP account, they must opt in inside the server.
+
+### Option A: Server menu
+
+1. Click your **server name** at the top left of the client.
+2. Select **Linked Roles**.
+3. Click the role you want.
+4. Review the requirements shown.
+5. Click to connect **TrucklineMP**.
+6. Sign in to TrucklineMP if asked, then approve the connection on Discord's authorization screen.
+7. Return to Discord. If you meet the requirements, the role is granted.
+
+### Option B: Gated channel
+
+1. Open a channel that requires a Linked Role.
+2. Follow the on-screen prompt to verify and claim the role.
+3. Complete the TrucklineMP connection flow when prompted.
+
+After you have the role once, you keep access to gated channels on that server unless an admin changes the requirements or you remove the connection.
+
+---
+
+## How the TrucklineMP connection works
+
+When a member connects through a Linked Role:
+
+1. Discord opens TrucklineMP's authorization page.
+2. The member signs in to TrucklineMP (if not already signed in).
+3. TrucklineMP sends connection metadata to Discord (account linked, staff status, and display name).
+4. Discord evaluates that data against the role's **Links** requirements.
+
+This is separate from **Settings → Connections** on trucklinemp.com. That page is for account recovery and profile linking. Linked Roles always use the in-server connection flow started from **Linked Roles** in the server menu or from a gated channel.
+
+If TrucklineMP reports that the Discord account does not match an existing link on the website, the member must use the same Discord account everywhere or update their TrucklineMP connections first.
+
+Staff status is read from TrucklineMP. When it changes on the website, Discord can refresh the connection metadata for members who have already connected.
+
+---
+
+## Bot commands
+
+With the bot installed, these slash commands are available:
+
+| Command | Description |
+|---------|-------------|
+| `/profile [user]` | View a member's TrucklineMP profile if they have completed the Linked Role connection |
+| `/about` | Information about TrucklineMP |
+
+If `/profile` says a user has not linked their account, they have not finished the Linked Role opt-in flow for that server.
+
+VTC owners can also use `/verify-server` and `/vtc` after [verifying the server on TrucklineMP](/guides/vtc-discord-verification/). Those commands are unrelated to Linked Roles setup.
+
+---
+
+## Important details
+
+- **Opt-in only.** Qualifying members do not receive the role until they claim it through **Linked Roles** or a gated channel.
+- **Per server.** Connecting in one server does not grant Linked Roles in another. Each server has its own roles and requirements.
+- **Admin visibility.** Members who qualify but have not opted in may not appear in the role's member list until they claim the role.
+- **Requirement changes.** If you edit a role's **Links** requirements, access to gated channels updates immediately for members who no longer pass the checks.
+- **Desktop for first claim.** Discord's member help notes that opting in through a gated channel may require the desktop app the first time. After that, mobile usually works for channels you already have access to.
+
+---
+
+## Troubleshooting
+
+### TrucklineMP does not appear when adding a requirement
+
+- Confirm the TrucklineMP bot is installed in the server.
+- Refresh **Server Settings → Roles → Links** after installing the bot.
+- Make sure you have **Manage Roles** or Administrator.
+
+### A member meets the requirements but has no role
+
+- They must opt in via **server name → Linked Roles** or through a gated channel.
+- Connecting Discord under trucklinemp.com **Settings → Connections** does not grant Linked Roles.
+
+### A member lost access after disconnecting
+
+- Removing the TrucklineMP connection revokes Linked Role eligibility. They need to connect again through **Linked Roles**.
+
+### Staff role did not update
+
+- Ask the member to open **Linked Roles** in the server and reconnect TrucklineMP, or wait for Discord to refresh connection metadata.
+
+---
+
+## Best practices
+
+- Create a simple **Verified** role with **Account linked** before opening member-only channels.
+- Gate sensitive channels with that Linked Role instead of handing out the role manually.
+- Pin a short note in `#rules` or `#welcome` telling members to use **server name → Linked Roles**.
+- Keep the TrucklineMP bot in the server so requirements and `/profile` keep working.
+
+---
+
+## Related Guides
+
+- [Connections](/guides/connections/) - Link Discord and other accounts on TrucklineMP
+- [VTC Discord Verification](/guides/vtc-discord-verification/) - Optional: show your VTC's Discord server on your TrucklineMP profile
