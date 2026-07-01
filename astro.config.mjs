@@ -60,6 +60,9 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: 'VTC Programs',
+					translations: {
+						ru: 'Программы VTC',
+					},
 					collapsed: false,
 					items: [
 						{
@@ -90,6 +93,9 @@ export default defineConfig({
 				},
 				{
 					label: 'VTC Guides',
+					translations: {
+						ru: 'Руководства по VTC',
+					},
 					collapsed: false,
 					items: [
 						{
@@ -170,6 +176,9 @@ export default defineConfig({
 				},
 				{
 					label: 'Account Guides',
+					translations: {
+						ru: 'Руководства по учетным записям',
+					},
 					collapsed: false,
 					items: [
 						{
@@ -216,28 +225,46 @@ export default defineConfig({
 				},
 				{
 					label: 'Developers',
+					translations: {
+						ru: 'Разработчикам',
+					},
 					collapsed: false,
 					items: [
 						{
 							slug: 'guides/developers/overview',
 							label: 'Platform Overview',
+							translations: {
+								ru: 'Обзор платформы',
+							},
 						},
 						{
 							slug: 'guides/developers/public-api',
 							label: 'Public API',
+							translations: {
+								ru: 'Публичный API',
+							},
 						},
 						{
 							slug: 'guides/developers/oauth-apps',
 							label: 'OAuth Apps',
+							translations: {
+								ru: 'Приложения OAuth',
+							},
 						},
 						{
 							slug: 'guides/developers/webhooks',
 							label: 'Webhooks',
+							translations: {
+								ru: 'Вебхуки',
+							},
 						},
 					],
 				},
 				{
 					label: 'Contribute',
+					translations: {
+						ru: 'Внесите вклад',
+					},
 					collapsed: false,
 					items: [
 						{
