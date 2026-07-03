@@ -1,0 +1,68 @@
+---
+title: Regional and Timezone
+description: Set your timezone so dates and times display correctly across TrucklineMP.
+---
+
+# Regional and Timezone
+
+TrucklineMP uses your timezone preference to show local dates and times on events, notifications, and other time-sensitive content.
+
+## Accessing regional settings
+
+1. Click your avatar in the top-right corner
+2. Select **Settings**
+3. Open the **Regional** tab
+4. Or go to `trucklinemp.com/user/me/settings?tab=regional`
+
+---
+
+## Choosing a timezone
+
+Select the IANA timezone that matches where you live or where you plan convoys. Examples:
+
+- `Europe/London`
+- `America/New_York`
+- `Europe/Berlin`
+
+Changes save when you confirm. Relative times (for example "2 hours ago") update on the next page load.
+
+---
+
+## What uses your timezone
+
+| Feature | Effect |
+|---------|--------|
+| **Events** | Start and end times shown in your local offset |
+| **Notifications** | Timestamps in the bell popover |
+| **Profile activity** | Localized display where supported |
+| **Forum** | Datetime rendering when forum uses your account preference |
+
+Some VTC tools (such as announcement **quiet hours**) use a timezone configured on the webhook, not your personal setting. See [VTC Announcements](/guides/vtc-announcements/).
+
+---
+
+## Best practices
+
+- Pick the timezone where you actually schedule events, not necessarily your physical location if you lead convoys in another region
+- Update your timezone when you move or change your primary play schedule
+- Event creators should still enter accurate UTC-backed times in the event editor; viewers see converted local times
+
+---
+
+## Troubleshooting
+
+### Times look wrong by one hour
+
+Daylight saving changes are handled by IANA zones. Re-select your timezone if you recently traveled.
+
+### Event still shows a different time than Discord
+
+Discord messages and TrucklineMP event pages may use different display rules. Trust the event page on trucklinemp.com for official RSVP times.
+
+---
+
+## Related guides
+
+- [VTC Events](/guides/vtc-events/)
+- [Notifications](/guides/notifications/)
+- [Profile Settings](/guides/profile-settings/)

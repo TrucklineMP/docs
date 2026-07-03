@@ -1,0 +1,70 @@
+---
+title: User Directory
+description: Search and browse TrucklineMP user profiles from the public directory.
+---
+
+# User Directory
+
+The user directory helps you find drivers by name, handle, or VTC affiliation.
+
+## Accessing the directory
+
+Open [trucklinemp.com/users](https://trucklinemp.com/users).
+
+You can browse without signing in. Some profile details require authentication or friendship context.
+
+---
+
+## Search and filters
+
+Use the search bar and filters to narrow results:
+
+- **Name or handle** partial match
+- **VTC affiliation** when available
+- Pagination for large result sets
+
+Click a user to open their [public profile](/guides/public-profile/).
+
+---
+
+## Profile URLs
+
+Users are reachable at:
+
+- `trucklinemp.com/@handle` (preferred when a handle is set)
+- `trucklinemp.com/user/{webId}` (numeric WebID fallback)
+
+Handles are unique and chosen in [Profile Settings](/guides/profile-settings/).
+
+---
+
+## Privacy
+
+Users control what appears on their profile (avatar, social links, connected streaming accounts). Banned users may show a status banner. Staff-only notes are never public.
+
+---
+
+## Reporting users
+
+If you find policy violations, open their profile and use **Report user** to file a [support ticket](/guides/support-tickets/). Do not harass users in DMs or on Discord.
+
+---
+
+## API access
+
+Integrators can search users via the Public API:
+
+```
+GET https://api.trucklinemp.com/users/search
+GET https://api.trucklinemp.com/users/{handleOrId}
+```
+
+See [Public API](/guides/developers/public-api/).
+
+---
+
+## Related guides
+
+- [Public Profile](/guides/public-profile/)
+- [Profile Settings](/guides/profile-settings/)
+- [Bans & Appeals](/guides/bans-appeals/)

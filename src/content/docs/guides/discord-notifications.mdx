@@ -1,0 +1,68 @@
+---
+title: Discord Notifications
+description: Receive TrucklineMP site notifications as Discord direct messages when your account is linked.
+---
+
+# Discord Notifications
+
+When your Discord account is linked to TrucklineMP, the **TrucklineMP Discord bot** can forward certain site notifications to you as **Discord DMs**.
+
+This is separate from [VTC Announcements](/guides/vtc-announcements/) webhooks (those post to channels in **your** VTC server). Discord notifications are personal DMs from the platform bot.
+
+---
+
+## Requirements
+
+1. **Discord linked** under [Connections](/guides/connections/) on trucklinemp.com
+2. **DMs allowed** from TrucklineMP / server members in your Discord privacy settings
+3. **Notification type** must be eligible for Discord relay (not every bell item is mirrored)
+
+---
+
+## How it works
+
+1. Something happens on TrucklineMP (application update, event notice, etc.)
+2. A row is created in your notification list (website bell)
+3. The bot picks up the notification and sends a DM embed with a link back to the site
+4. The notification is marked as sent to Discord to avoid duplicates
+
+If you are offline, the bot backfills recent unsent notifications when it catches up.
+
+---
+
+## What DMs look like
+
+DMs use embeds with:
+
+- Short title and description
+- Link to the relevant trucklinemp.com page
+- TrucklineMP branding
+
+They are informational. Reply to DMs is not a support channel. Use [Support Tickets](/guides/support-tickets/) for staff help.
+
+---
+
+## Troubleshooting
+
+### No DMs but bell notifications work
+
+- Confirm Discord is still connected in Settings
+- Open Discord **User Settings > Privacy & Safety** and allow DMs
+- Unblock the TrucklineMP bot if you blocked it earlier
+- Re-link Discord under Connections
+
+### DMs stopped after leaving a server
+
+Personal notification DMs do not require you to stay in any particular server. If DMs still fail, re-authorize the connection.
+
+### Duplicate or missing messages
+
+The bot sends each notification once. Refresh the website bell if counts disagree. Missing DMs may arrive after a short delay during high load.
+
+---
+
+## Related guides
+
+- [Notifications](/guides/notifications/) - website bell
+- [Discord Connection Flows](/guides/discord-connection-flows/) - how linking differs from Linked Roles
+- [Connections](/guides/connections/)

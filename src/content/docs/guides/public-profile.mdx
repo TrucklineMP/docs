@@ -1,0 +1,105 @@
+---
+title: Public Profile
+description: Understand your TrucklineMP public profile tabs, badges, activity, and what others can see.
+---
+
+# Public Profile
+
+Your public profile is how other drivers see you on TrucklineMP. It combines identity, VTC membership, community activity, and standing information.
+
+## Opening a profile
+
+- Your profile: click your avatar, or go to `trucklinemp.com/user/me` (redirects to your handle or WebID URL)
+- Another user: `trucklinemp.com/@handle` or `/user/{webId}`
+- From the [user directory](/guides/user-directory/)
+
+---
+
+## Profile header
+
+The header shows:
+
+- Avatar and display name
+- Handle (`@username`)
+- WebID
+- Staff or program badges
+- Active ban or suspension banner (when applicable)
+- Live **Twitch** or **YouTube** status when connected and visible
+- Quick actions (report user, for signed-in viewers)
+
+---
+
+## Profile tabs
+
+Tabs vary by account. Common sections:
+
+### Overview
+
+Summary stats, roles, badges, and highlights.
+
+### VTC
+
+Current VTC membership, role, and link to the company profile. Users in no VTC show an empty state.
+
+### Activity
+
+Recent platform activity feed (posts, participation, and similar signals when available).
+
+### Forum
+
+Forum participation summary with links to [forum.trucklinemp.com](https://forum.trucklinemp.com) content when the forum module is enabled.
+
+### Configs
+
+External truck configs you chose to share (hidden when you enable **hide external configs** in settings).
+
+### Record
+
+Ban and moderation history visible under standing rules. You may see more on your own profile than strangers do. See [Bans & Appeals](/guides/bans-appeals/).
+
+---
+
+## What you control
+
+Edit in [Profile Settings](/guides/profile-settings/):
+
+- Display name and handle
+- Avatar (upload or URL)
+- Social links (TikTok, X, etc.)
+- YouTube and Twitch visibility toggles
+
+Edit in [Connections](/guides/connections/):
+
+- Linked OAuth providers (Steam, Discord, Google, etc.)
+
+---
+
+## Badges and programs
+
+Recognition badges (for example contributor or program awards) appear when staff or automated programs assign them. You cannot self-assign official badges.
+
+---
+
+## Reporting
+
+Signed-in users can report a profile for moderation review. Reports create a [support ticket](/guides/support-tickets/). Provide factual details.
+
+---
+
+## API
+
+Public profile data is available to integrations:
+
+```
+GET https://api.trucklinemp.com/users/{handleOrId}
+```
+
+OAuth `profile` scope returns a subset for authorized apps. See [OAuth Apps](/guides/developers/oauth-apps/).
+
+---
+
+## Related guides
+
+- [Profile Settings](/guides/profile-settings/)
+- [User Directory](/guides/user-directory/)
+- [Forum](/guides/forum/)

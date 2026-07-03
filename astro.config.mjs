@@ -74,6 +74,14 @@ export default defineConfig({
 							},
 						},
 						{
+							slug: 'guides/verified-vtc-discord-role',
+							label: 'Verified VTC Discord Role',
+							translations: {
+								pl: 'Rola Discord Zweryfikowanego VTC',
+								ru: 'Роль Discord верифицированного VTC',
+							},
+						},
+						{
 							slug: 'guides/partnered-vtc-program',
 							label: 'Partnered VTC Program',
 							translations: {
@@ -98,6 +106,14 @@ export default defineConfig({
 					},
 					collapsed: false,
 					items: [
+						{
+							slug: 'guides/vtc-creating',
+							label: 'Creating a VTC',
+						},
+						{
+							slug: 'guides/vtc-directory',
+							label: 'VTC Directory',
+						},
 						{
 							slug: 'guides/vtc-general-settings',
 							label: 'General Settings',
@@ -131,6 +147,14 @@ export default defineConfig({
 							},
 						},
 						{
+							slug: 'guides/vtc-events',
+							label: 'Events',
+						},
+						{
+							slug: 'guides/vtc-news',
+							label: 'News',
+						},
+						{
 							slug: 'guides/vtc-announcements',
 							label: 'Announcements',
 							translations: {
@@ -154,6 +178,14 @@ export default defineConfig({
 								ru: 'Видимость',
 							},
 						},
+						{
+							slug: 'guides/vtc-activity-log',
+							label: 'Activity Log',
+						},
+						{
+							slug: 'guides/vtc-disbanding',
+							label: 'Disbanding a VTC',
+						},
 					],
 				},
 				{
@@ -165,12 +197,24 @@ export default defineConfig({
 					collapsed: false,
 					items: [
 						{
+							slug: 'guides/discord-connection-flows',
+							label: 'Connection Flows',
+						},
+						{
 							slug: 'guides/discord-linked-roles',
 							label: 'Linked Roles',
 							translations: {
 								pl: 'Połączone Role',
 								ru: 'Привязанные Роли',
 							},
+						},
+						{
+							slug: 'guides/discord-notifications',
+							label: 'Discord Notifications',
+						},
+						{
+							slug: 'guides/official-discord-server',
+							label: 'Official Discord Server',
 						},
 					],
 				},
@@ -190,6 +234,14 @@ export default defineConfig({
 							},
 						},
 						{
+							slug: 'guides/public-profile',
+							label: 'Public Profile',
+						},
+						{
+							slug: 'guides/user-directory',
+							label: 'User Directory',
+						},
+						{
 							slug: 'guides/account-security',
 							label: 'Account Security',
 							translations: {
@@ -206,12 +258,32 @@ export default defineConfig({
 							},
 						},
 						{
+							slug: 'guides/regional-timezone',
+							label: 'Regional & Timezone',
+						},
+						{
+							slug: 'guides/notifications',
+							label: 'Notifications',
+						},
+						{
 							slug: 'guides/appearance-preferences',
 							label: 'Appearance & Preferences',
 							translations: {
 								pl: 'Wygląd i Preferencje',
 								ru: 'Внешний вид и предпочтения',
 							},
+						},
+						{
+							slug: 'guides/forum',
+							label: 'Forum',
+						},
+						{
+							slug: 'guides/support-tickets',
+							label: 'Support Tickets',
+						},
+						{
+							slug: 'guides/bans-appeals',
+							label: 'Bans & Appeals',
 						},
 						{
 							slug: 'guides/account-deletion',
@@ -257,6 +329,10 @@ export default defineConfig({
 							translations: {
 								ru: 'Вебхуки',
 							},
+						},
+						{
+							slug: 'guides/developers/console',
+							label: 'Developer Console',
 						},
 					],
 				},

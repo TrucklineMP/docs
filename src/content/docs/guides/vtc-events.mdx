@@ -1,0 +1,143 @@
+---
+title: VTC Events
+description: Create convoys and events, manage RSVPs, slots, attendance, and the global events calendar on TrucklineMP.
+---
+
+# VTC Events
+
+TrucklineMP events let VTCs schedule convoys, manage RSVPs, assign slots, and track attendance. Members and the public can discover events on the global calendar or on each VTC profile.
+
+## Where events live
+
+| Location | URL | Who sees it |
+|----------|-----|-------------|
+| **Global calendar** | [trucklinemp.com/events](https://trucklinemp.com/events) | Everyone (public events) |
+| **VTC profile** | `/vtc/@handle` events section | Visitors on your profile |
+| **VTC manage** | `/vtc/@handle/manage/events` | Staff with event permissions |
+
+---
+
+## Creating an event (VTC staff)
+
+1. Open your VTC **Manage** panel
+2. Go to **Events**
+3. Click **Create Event** (or use `/vtc/@handle/manage/events/create`)
+4. Fill in event details and publish
+
+Typical fields include:
+
+- **Title and description**
+- **Start and end time**
+- **Server** (game server or realm)
+- **Departure and arrival** locations
+- **Category** (for example convoy, race, meetup)
+- **Banner image** (HTTPS URL)
+- **Max attendees** (optional capacity limit)
+- **Visibility** (who can see and RSVP)
+
+Staff need the appropriate **events** permissions in your VTC role. See [Roles & Permissions](/guides/vtc-roles-permissions/).
+
+---
+
+## RSVPs and attendance
+
+Members and eligible users can RSVP from the event page.
+
+### RSVP statuses
+
+| Status | Meaning |
+|--------|---------|
+| **Going** | Confirmed attendance |
+| **Maybe** | Interested but not committed |
+| **Not going** | Declined |
+| **Waitlist** | Capacity full; queued for a spot |
+
+When **max attendees** is set and the going list is full, new going RSVPs move to the waitlist automatically.
+
+### Check-in
+
+Event managers can check in attendees at event time. Self check-in may be available depending on event settings.
+
+### Approval flow
+
+Some events require staff to approve RSVPs before a user is marked as going.
+
+---
+
+## Event slots
+
+Slots let you assign roles or positions within an event (for example lead truck, tail, photographer).
+
+Managers with slot permissions can:
+
+- Create slots with labels and roles
+- Set max occupants per slot
+- Assign attending members to slots
+- Reorder slots
+
+Only users who are attending the event can be assigned to slots.
+
+---
+
+## Co-hosts and multi-VTC events
+
+Events can involve multiple VTCs. Co-host VTCs appear on the event page. VTC-level attendance tracking records which companies are participating.
+
+---
+
+## Managing an active event
+
+Staff with **events.manage** (or equivalent) permissions can:
+
+- Edit event details before start
+- Cancel the event (notifies attendees)
+- Broadcast a message to RSVPs
+- View and export the attendee list
+- Manage event bans (block specific users from this event)
+- Add internal member notes for event staff
+
+Cancelled events remain visible with a cancelled status where configured.
+
+---
+
+## Global events page
+
+[trucklinemp.com/events](https://trucklinemp.com/events) lists upcoming public events across the platform. Users can filter and open any event they have access to.
+
+Authenticated users can also create events from the global flow when permitted.
+
+---
+
+## Announcements integration
+
+When [VTC Announcements](/guides/vtc-announcements/) webhooks are configured, event lifecycle changes (created, updated, cancelled, RSVP) can post to your Discord server automatically.
+
+---
+
+## Permissions reference
+
+Event-related VTC permissions are grouped under **events** in the role editor. Common slugs include creating events, managing attendance, managing slots, and viewing staff-only event data. Owners always have full access.
+
+---
+
+## Troubleshooting
+
+### "I cannot create an event"
+
+Confirm your role includes event creation permission and that the **VTC Events** platform module is enabled.
+
+### RSVP stuck on waitlist
+
+The event may be at capacity. A manager can free a going spot or raise max attendees.
+
+### Event not on the global calendar
+
+Check event visibility settings. Private or VTC-only events may not appear publicly.
+
+---
+
+## Related guides
+
+- [VTC Announcements](/guides/vtc-announcements/) - Discord webhook alerts for event changes
+- [Roles & Permissions](/guides/vtc-roles-permissions/)
+- [Public API](/guides/developers/public-api/) - `GET /events` for integrations

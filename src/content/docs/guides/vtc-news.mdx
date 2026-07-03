@@ -1,0 +1,84 @@
+---
+title: VTC News
+description: Publish news posts on your VTC profile, pin announcements, and manage your VTC news feed.
+---
+
+# VTC News
+
+VTC News lets your company publish updates on your TrucklineMP profile. Posts appear in your VTC news feed and can surface on the global news API for public readers.
+
+## Accessing news management
+
+1. Open your VTC **Manage** panel
+2. Select **News** from the sidebar (`/vtc/@handle/manage/news`)
+3. Create, edit, or delete posts from the news dashboard
+
+You need **news** permissions on your VTC role (for example `news.create`, `news.edit`, `news.delete`). Owners have full access.
+
+---
+
+## Creating a post
+
+Click **New Post** and provide:
+
+| Field | Notes |
+|-------|-------|
+| **Title** | Headline shown in feeds and on the post page |
+| **Content** | Markdown body |
+| **Cover image** | Optional HTTPS banner for the post |
+| **Pinned** | Keep this post at the top of your feed |
+
+Save to publish immediately. Edits update the live post.
+
+---
+
+## Public visibility
+
+Published posts appear on:
+
+- Your VTC profile news tab
+- Individual post pages at `/vtc/@handle/post/{postId}`
+- The Public API at `GET /vtcs/{id}/news` and `GET /news/{newsId}`
+
+Unlisted or private VTC visibility rules still apply to who can reach your profile.
+
+---
+
+## Pinning posts
+
+Pin important announcements (recruitment drives, policy changes, event reminders) so they stay above older posts. Only one or a few pins are recommended so the feed stays readable.
+
+---
+
+## Deleting posts
+
+Deletion is permanent. Staff with delete permission can remove posts from the manage panel. Consider editing instead of deleting when correcting minor mistakes.
+
+---
+
+## Announcements integration
+
+If you use [VTC Announcements](/guides/vtc-announcements/) Discord webhooks, news events (published, updated) can trigger automatic Discord messages using templates with placeholders like `{news.title}`.
+
+---
+
+## Staff moderation
+
+Platform staff may moderate VTC news that violates rules. VTC owners see moderation status in the manage panel when applicable.
+
+---
+
+## Best practices
+
+- Use clear titles so members can scan the feed quickly
+- Pin only what is currently important
+- Link to [events](/guides/vtc-events/) or recruitment pages when relevant
+- Keep images on HTTPS URLs you control
+
+---
+
+## Related guides
+
+- [VTC Announcements](/guides/vtc-announcements/)
+- [General Settings](/guides/vtc-general-settings/)
+- [Public API](/guides/developers/public-api/) - news endpoints

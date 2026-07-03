@@ -1,0 +1,155 @@
+---
+title: Developer Console
+description: "Tour the TrucklineMP Developer Console: projects, keys, analytics, audit logs, quotas, and resources."
+---
+
+# Developer Console
+
+The Developer Console at [trucklinemp.com/developer](https://trucklinemp.com/developer) is where you manage API keys, OAuth apps, webhooks, and integration telemetry.
+
+Enable access first: [Developer Platform Overview](/guides/developers/overview/#before-you-start). Developer Mode is permanent once activated.
+
+---
+
+## Console layout
+
+The sidebar is grouped into four areas:
+
+### General
+
+| Page | Purpose |
+|------|---------|
+| **Dashboard** | Project overview cards, quick links |
+| **All Projects** | List, search, and create projects |
+
+### APIs & Services
+
+| Page | Purpose |
+|------|---------|
+| **API Keys** | Create and revoke `tl_` keys per project |
+| **OAuth Apps** | Register and configure OAuth applications |
+| **Webhooks** | Subscribe to platform event pushes |
+| **API Library** | Embedded ReDoc for `/api/v1/openapi.json` |
+| **Playground** | Send test requests from the browser |
+
+### Governance
+
+| Page | Purpose |
+|------|---------|
+| **Analytics** | Request volume, errors, latency, top endpoints |
+| **Usage Quotas** | Rate tier display, burst usage, suspicious flags |
+| **Audit Logs** | Per-request log with IP, status, rate-limit hits |
+
+### Resources
+
+| Page | Purpose |
+|------|---------|
+| **API Changelog** | Published API change history |
+| **App Directory** | Browse public OAuth apps, report abuse |
+
+---
+
+## Projects
+
+- Maximum **5 projects** per developer account
+- Each project owns its API keys and OAuth apps
+- Select the active project from the header; selection persists in browser storage
+- Many pages accept `?project={id}` in the URL
+
+Create a project before generating keys or OAuth credentials.
+
+---
+
+## API keys
+
+- Prefix: `tl_`
+- Maximum **10 active keys** per project
+- Secret shown **once** at creation
+- Read-only access to public REST data plus higher rate limits
+- Revoke compromised keys immediately from the console
+
+See [Public API](/guides/developers/public-api/).
+
+---
+
+## OAuth apps
+
+- Maximum **5 OAuth apps** per project
+- Client ID prefix: `tlmp_client_`
+- Unpublished apps require **test users** for authorization
+- Publishing may require staff review
+
+See [OAuth Apps](/guides/developers/oauth-apps/).
+
+---
+
+## Webhooks
+
+- Maximum **10 webhooks** per developer account (user-scoped, not per project)
+- HTTPS endpoints only
+- Rotate signing secrets from the console after compromise
+
+See [Webhooks](/guides/developers/webhooks/).
+
+---
+
+## Analytics and audit
+
+**Analytics** summarizes traffic for the selected project: timeline charts, error rate, latency percentiles, and top endpoints or keys.
+
+**Audit logs** list individual requests with method, path, status code, user agent, and whether rate limiting fired. Filter by time range and status. Use this to debug integrations and abuse false positives.
+
+**Quotas** shows your current API tier (`free`, `basic`, `premium`, `unlimited`), effective limits, and any anti-abuse state. Tier upgrades are assigned by staff; contact [support](/guides/support-tickets/) for commercial needs.
+
+---
+
+## Playground
+
+The playground loads the live OpenAPI spec and lets you attach a session-stored API key to try endpoints against same-origin `/api/v1`. Useful before writing client code.
+
+---
+
+## App directory
+
+Published OAuth apps appear in the directory for discovery. Users can search apps and report suspicious listings. Keep your privacy policy and website URLs accurate on the OAuth app **General** page.
+
+---
+
+## API changelog
+
+Staff publish changelog entries (features, deprecations, breaking changes). Developers read them in the console. There is no self-service publish for third parties.
+
+---
+
+## What is not in the console
+
+These are **not** third-party integration surfaces:
+
+| Surface | Notes |
+|---------|-------|
+| `/api/rpc` | Internal oRPC for the website UI only |
+| `/api/v1/mobile/*` | First-party mobile app |
+| `/api/v1/launcher/*` | Game launcher |
+| Admin procedures | Staff-only review and tier changes |
+
+Use the Public API and OAuth documented in this docs section.
+
+---
+
+## Limits summary
+
+| Resource | Limit |
+|----------|-------|
+| Projects per account | 5 |
+| API keys per project | 10 |
+| OAuth apps per project | 5 |
+| Webhooks per account | 10 |
+
+---
+
+## Related guides
+
+- [Developer Platform Overview](/guides/developers/overview/)
+- [Public API](/guides/developers/public-api/)
+- [OAuth Apps](/guides/developers/oauth-apps/)
+- [Webhooks](/guides/developers/webhooks/)

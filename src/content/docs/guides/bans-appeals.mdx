@@ -1,0 +1,112 @@
+---
+title: Bans and Appeals
+description: Understand public ban records, check your standing, and submit ban appeals on TrucklineMP.
+---
+
+# Bans and Appeals
+
+TrucklineMP publishes certain moderation records and provides an appeals path when you disagree with a ban or suspension.
+
+## Public ban list
+
+Visit [trucklinemp.com/bans](https://trucklinemp.com/bans) to browse public ban entries.
+
+Each record may show:
+
+- Offense category (sanitized for privacy)
+- Scope (platform, game, communication)
+- Start and end dates for temporary actions
+- Whether the ban is active or expired
+
+Individual ban pages live at `/bans/{id}`.
+
+Not every internal moderation note appears publicly. Sensitive details stay in staff tools.
+
+---
+
+## Your profile and standing
+
+On your [public profile](/guides/public-profile/):
+
+- An active ban banner appears when you are currently banned or suspended
+- The **Record** tab may list your ban history when visibility rules allow
+
+Other users see only what policy permits.
+
+---
+
+## Appeal eligibility
+
+Not every ban can be appealed immediately. Factors include:
+
+- Ban type and severity
+- Cooldown since last appeal
+- Whether the ban is permanent by policy
+
+The support system checks eligibility when you start an appeal. If you are not eligible, the form explains why and when you can try again.
+
+---
+
+## Submitting an appeal
+
+1. Sign in to the account that received the ban
+2. Open [trucklinemp.com/support?lane=appeal](https://trucklinemp.com/support?lane=appeal)
+3. Complete the appeal form with your honest explanation
+4. Wait for staff review on the ticket thread
+
+Appeals are **not** instant chat with moderators. Staff read your ticket and respond when review is complete.
+
+### The form is not a courtroom
+
+We do not care about fake professionalism. You will not lose points for informal writing. You will lose points for lying.
+
+The form asks two things directly:
+
+- **Was that kinda on you?** Pick Yes, No, or Depends. Answer honestly, not the answer you think staff wants to hear.
+- **Why that happened.** Explain it in your own words. No need for a formal essay, just tell us straight what happened.
+
+Do not fake being sorry. If you genuinely believe it was not you, say that. If you know it was you, own it. Staff can tell the difference between a real explanation and a scripted apology, and honesty gets reviewed faster either way.
+
+### What to include
+
+- What you believe was incorrect about the decision, if anything
+- Any context staff may have missed
+- Evidence links (screenshots, timestamps) when relevant
+- A straight, honest tone. Hostility and obvious lies lengthen review time, politeness is not required
+
+---
+
+## After a decision
+
+- **Approved**: Restrictions lift per staff instructions. You may need to sign out and back in.
+- **Denied**: The ticket shows the outcome. A cooldown may apply before another appeal.
+- **Partial**: Some restrictions removed, others remain. Read the reply carefully.
+
+---
+
+## Discord bans
+
+Discord moderation on the **official TrucklineMP server** is linked to platform standing in many cases. Discord-only issues on **VTC servers** are handled by that VTC's admins, not TrucklineMP staff.
+
+Appeal platform bans through the website support system, not by DMing moderators on Discord.
+
+---
+
+## API visibility
+
+Third-party tools can read public ban data via:
+
+```
+GET https://api.trucklinemp.com/bans
+GET https://api.trucklinemp.com/bans/{id}
+```
+
+OAuth scope `bans:read` is defined for future userinfo use but is **not** returned in userinfo today. See [OAuth Apps](/guides/developers/oauth-apps/#userinfo-response).
+
+---
+
+## Related guides
+
+- [Support Tickets](/guides/support-tickets/)
+- [Public Profile](/guides/public-profile/)
+- [Official Discord Server](/guides/official-discord-server/)

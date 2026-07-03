@@ -44,9 +44,15 @@ function resolveApiUrl(path: string): string {
 	return `${base}${normalizedPath}`;
 }
 
+const CONTRIBUTOR_BADGE_PATH = '/programs/badges/contributor';
+
+export function getContributorBadgeProgramUrl(): string {
+	return resolveApiUrl(CONTRIBUTOR_BADGE_PATH);
+}
+
 export async function fetchContributorBadgeProgram(): Promise<BadgeProgram | null> {
 	try {
-		const res = await fetch(resolveApiUrl('/programs/badges/contributor'), {
+		const res = await fetch(getContributorBadgeProgramUrl(), {
 			headers: { Accept: 'application/json' },
 		});
 		if (!res.ok) return null;

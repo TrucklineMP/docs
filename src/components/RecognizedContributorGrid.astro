@@ -1,37 +1,173 @@
 ---
-import { fetchContributorBadgeProgram } from '../lib/truckline-api';
-import RecognizedContributorCard from './RecognizedContributorCard.astro';
+import { getContributorBadgeProgramUrl } from '../lib/truckline-api';
 
-const program = await fetchContributorBadgeProgram();
-const recipients = program?.recipients ?? [];
+const apiUrl = getContributorBadgeProgramUrl();
 ---
 
-{recipients.length === 0 ? (
-	<p class="recognized-empty">
-		No recognized documentation contributors yet. The list syncs automatically from TrucklineMP when badges are
-		awarded.
-	</p>
-) : (
-	<div class="recognized-grid">
-		{recipients.map((member) => (
-			<RecognizedContributorCard member={member} />
-		))}
-	</div>
-)}
+<div id="recognized-contributors" class="recognized-root" data-api-url={apiUrl}>
+	<p class="recognized-loading">Loading recognized contributors…</p>
+</div>
 
-<style>
+<script define:vars={{ apiUrl }}>
+	const root = document.getElementById('recognized-contributors');
+	if (!root) throw new Error('recognized-contributors root missing');
+
+	const emptyHtml = `<p class="recognized-empty">No recognized documentation contributors yet. Badge holders are listed here when awarded on <a href="https://trucklinemp.com/programs/recognition#contributors">TrucklineMP</a>.</p>`;
+
+	function escapeHtml(value) {
+		return String(value)
+			.replaceAll('&', '&amp;')
+			.replaceAll('<', '&lt;')
+			.replaceAll('>', '&gt;')
+			.replaceAll('"', '&quot;');
+	}
+
+	function renderCard(member) {
+		const avatar =
+			member.image ||
+			`https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=1a1a1a&color=c8ff00`;
+		const handle = member.handle
+			? `<p class="recognized-handle">@${escapeHtml(member.handle)}</p>`
+			: '';
+
+		return `<article class="recognized-card">
+	<a href="${escapeHtml(member.profileUrl)}" target="_blank" rel="noopener noreferrer" class="recognized-avatar-link">
+		<img src="${escapeHtml(avatar)}" alt="${escapeHtml(member.name)}" width="72" height="72" class="recognized-avatar" loading="lazy" />
+	</a>
+	<div class="recognized-body">
+		<h3 class="recognized-name">
+			<a href="${escapeHtml(member.profileUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(member.name)}</a>
+		</h3>
+		${handle}
+		<p class="recognized-reason">${escapeHtml(member.reason)}</p>
+		<a href="${escapeHtml(member.profileUrl)}" target="_blank" rel="noopener noreferrer" class="recognized-profile">View TrucklineMP profile</a>
+	</div>
+</article>`;
+	}
+
+	async function loadRecognizedContributors() {
+		try {
+			const response = await fetch(apiUrl, { headers: { Accept: 'application/json' } });
+			if (!response.ok) throw new Error(`HTTP ${response.status}`);
+			const program = await response.json();
+			const recipients = Array.isArray(program?.recipients) ? program.recipients : [];
+
+			if (recipients.length === 0) {
+				root.innerHTML = emptyHtml;
+				return;
+			}
+
+			root.innerHTML = `<div class="recognized-grid">${recipients.map(renderCard).join('')}</div>`;
+		} catch {
+			root.innerHTML = `<p class="recognized-empty">Could not load recognized contributors right now. View the current list on <a href="https://trucklinemp.com/programs/recognition#contributors">TrucklineMP</a>.</p>`;
+		}
+	}
+
+	loadRecognizedContributors();
+</script>
+
+<style is:global>
+	.recognized-root {
+		margin-block: 1.5rem;
+	}
+
+	.recognized-loading {
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+	}
+
 	.recognized-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
 		gap: 1rem;
-		margin-block: 1.5rem;
 	}
 
 	.recognized-empty {
-		margin-block: 1.5rem;
 		padding: 1rem 1.25rem;
 		border: 1px dashed var(--sl-color-hairline);
 		font-size: var(--sl-text-sm);
 		color: var(--sl-color-gray-3);
+	}
+
+	.recognized-empty a {
+		color: #84cc16;
+	}
+
+	.recognized-card {
+		display: flex;
+		gap: 1.25rem;
+		padding: 1.25rem;
+		border: 1px solid var(--sl-color-hairline);
+		background: var(--sl-color-gray-6);
+		transition:
+			border-color 0.2s ease,
+			transform 0.2s ease;
+	}
+
+	.recognized-card:hover {
+		border-color: rgba(132, 204, 22, 0.35);
+		transform: translateY(-2px);
+	}
+
+	.recognized-avatar-link {
+		flex-shrink: 0;
+		line-height: 0;
+	}
+
+	.recognized-avatar {
+		display: block;
+		border: 2px solid var(--sl-color-hairline);
+		border-radius: 999px;
+		object-fit: cover;
+		transition: border-color 0.2s ease;
+	}
+
+	.recognized-card:hover .recognized-avatar {
+		border-color: #84cc16;
+	}
+
+	.recognized-body {
+		min-width: 0;
+	}
+
+	.recognized-name {
+		margin: 0 0 0.25rem;
+		font-size: var(--sl-text-lg);
+		font-weight: 800;
+		letter-spacing: -0.01em;
+	}
+
+	.recognized-name a {
+		color: var(--sl-color-white);
+		text-decoration: none;
+	}
+
+	.recognized-name a:hover {
+		color: #84cc16;
+	}
+
+	.recognized-handle {
+		margin: 0 0 0.75rem;
+		font-family: var(--sl-font-mono);
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-3);
+	}
+
+	.recognized-reason {
+		margin: 0 0 0.75rem;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-2);
+		line-height: 1.5;
+	}
+
+	.recognized-profile {
+		font-family: var(--sl-font-mono);
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-3);
+		text-decoration: none;
+	}
+
+	.recognized-profile:hover {
+		color: #84cc16;
 	}
 </style>

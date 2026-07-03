@@ -53,10 +53,12 @@ Supported PKCE method: `S256`.
 |-------|--------|
 | `profile` | Username, avatar, and public profile (required) |
 | `vtc:read` | VTC membership, roles, and VTC details |
-| `events:read` | Events the user attends or created |
-| `bans:read` | Ban or suspension status for the user |
+| `events:read` | Reserved for future userinfo fields (not returned yet) |
+| `bans:read` | Reserved for future userinfo fields (not returned yet) |
 
 Request only the scopes your app needs. Users see the full list on the consent screen.
+
+`events:read` and `bans:read` can be requested today but do not add fields to userinfo yet. Use the Public API ban endpoints for public ban data instead.
 
 ## Authorization flow
 
@@ -109,6 +111,54 @@ Response includes `access_token` (`tlmp_...`) and optionally `refresh_token` (`t
 curl -H "Authorization: Bearer tlmp_ACCESS_TOKEN" \
   "https://trucklinemp.com/api/oauth/userinfo"
 ```
+
+## Userinfo response
+
+Fields depend on the scopes granted to the access token. The subject is always included.
+
+### Always returned
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `sub` | string | TrucklineMP user ID |
+| `web_id` | string | Public WebID |
+
+### With `profile` scope
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | string | Display name |
+| `picture` | string | Avatar URL |
+| `handle` | string | Public `@handle` (may be null) |
+
+### With `vtc:read` scope
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `vtc_memberships` | array | Objects with `vtcId`, `vtcName`, `role`, `isOwner`, `joinedAt` |
+
+### Example
+
+```json
+{
+  "sub": "user_abc123",
+  "web_id": "10042",
+  "name": "Driver Name",
+  "picture": "https://cdn.example/avatar.webp",
+  "handle": "drivername",
+  "vtc_memberships": [
+    {
+      "vtcId": 7,
+      "vtcName": "Example Logistics",
+      "role": "Driver",
+      "isOwner": false,
+      "joinedAt": "2026-01-15T10:00:00.000Z"
+    }
+  ]
+}
+```
+
+Invalid or expired tokens return HTTP `401` with `{ "error": "invalid_token" }`.
 
 ## PKCE
 
@@ -167,5 +217,6 @@ Rotate the client secret from the security page if it is compromised. Existing t
 ## Related guides
 
 - [Developer Platform Overview](/guides/developers/overview/)
+- [Developer Console](/guides/developers/console/)
 - [Public API](/guides/developers/public-api/)
 - [Webhooks](/guides/developers/webhooks/)

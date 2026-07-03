@@ -1,0 +1,134 @@
+---
+title: Discord Connection Flows
+description: "Understand how TrucklineMP connects to Discord: account linking, Linked Roles, VTC server verification, and the main-server Verified VTC role."
+---
+
+# Discord Connection Flows
+
+TrucklineMP uses Discord in several ways. They solve different problems and **do not** replace each other.
+
+| Flow | Where | Purpose |
+|------|-------|---------|
+| **Account connection** | Website Settings | Identity, recovery, notification DMs |
+| **Linked Roles** | Discord server | Opt-in roles gated by TrucklineMP rules |
+| **VTC server verification** | Discord `/verify-server` | Prove a server belongs to your VTC on the website |
+| **Verified VTC role** | Main TrucklineMP Discord | Leadership role for verified VTC owners |
+
+---
+
+## 1. Account connection (Settings)
+
+**Path:** trucklinemp.com → Settings → **Connections** → Connect Discord
+
+**Use for:**
+
+- Linking Discord to your TrucklineMP identity
+- Account recovery options
+- [Discord notification DMs](/guides/discord-notifications/)
+
+**Does not:**
+
+- Grant Linked Roles on a Discord server
+- Verify a VTC server on your profile
+- Automatically add roles anywhere
+
+You can disconnect and reconnect from Connections unless staff restrictions apply.
+
+---
+
+## 2. Linked Roles (Discord server)
+
+**Path:** Discord → Server menu → **Linked Roles** → connect TrucklineMP
+
+**Use for:**
+
+- Server admins requiring members to prove they have a TrucklineMP account
+- Optional **TrucklineMP staff** check for staff-only channels
+- Gating channels behind a verified role
+
+**Does not:**
+
+- Replace website Connections linking for DMs (though the same Discord account should be used)
+- Show a VTC badge on trucklinemp.com
+- Run `/verify-server` for VTC ownership
+
+Members must **opt in** per server. Roles are not assigned silently.
+
+Full setup: [Linked Roles](/guides/discord-linked-roles/)
+
+---
+
+## 3. VTC server verification
+
+**Path:** VTC Manage → General Settings → generate token → Discord `/verify-server`
+
+**Use for:**
+
+- Displaying your VTC's official Discord on your TrucklineMP profile
+- Running `/vtc` in that server to show company info
+- Proving server ownership to visitors on the website
+
+**Requires:**
+
+- VTC owner or staff with Discord settings permission
+- TrucklineMP bot installed in the server
+- Administrator permission in Discord to run `/verify-server`
+
+**Does not:**
+
+- Configure Linked Roles (do that separately in Discord role settings)
+- Link members' personal accounts unless they also use Linked Roles or Connections
+
+Full setup: [VTC Discord Verification](/guides/vtc-discord-verification/)
+
+---
+
+## 4. Verified VTC role (main server)
+
+**Path:** Main TrucklineMP Discord → Verified VTC role channel → **Request Role**
+
+**Use for:**
+
+- Verified VTC owners (and one optional manager) who want a leadership role on the **official** TrucklineMP Discord
+- Recognition separate from your own VTC's Discord server
+
+**Requires:**
+
+- [Verified VTC Program](/guides/verified-vtc-program/) status
+- The **Verified** [Linked Role](/guides/discord-linked-roles/) on the main server
+- VTC owner submits the request via Modbot (optional manager Discord user ID)
+
+**Does not:**
+
+- Verify your VTC's Discord server on your profile (use flow 3)
+- Replace Linked Roles on community servers
+
+Full setup: [Verified VTC Discord Role](/guides/verified-vtc-discord-role/)
+
+---
+
+## Quick decision guide
+
+| I want to... | Use |
+|--------------|-----|
+| Get site alerts in Discord DMs | [Connections](/guides/connections/) |
+| Require members to verify before #members chat | [Linked Roles](/guides/discord-linked-roles/) |
+| Show our VTC Discord on our profile | [VTC Discord Verification](/guides/vtc-discord-verification/) |
+| Get the leadership role on the main TrucklineMP Discord | [Verified VTC Discord Role](/guides/verified-vtc-discord-role/) |
+| Post recruitment alerts to a channel | [VTC Announcements](/guides/vtc-announcements/) webhooks |
+
+---
+
+## Same Discord account everywhere
+
+Use one Discord account for Connections, Linked Roles, and verification. Mismatched accounts cause "not linked" errors in `/profile` and failed role checks.
+
+---
+
+## Related guides
+
+- [Linked Roles](/guides/discord-linked-roles/)
+- [VTC Discord Verification](/guides/vtc-discord-verification/)
+- [Discord Notifications](/guides/discord-notifications/)
+- [Verified VTC Discord Role](/guides/verified-vtc-discord-role/)
+- [Official Discord Server](/guides/official-discord-server/)
