@@ -23,13 +23,14 @@ hero:
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
-import HomeSection from '../../../components/HomeSection.astro';
-import QuickLinks from '../../../components/QuickLinks.astro';
+import HomeSection from '../../components/HomeSection.astro';
+import QuickLinks from '../../components/QuickLinks.astro';
 
 <QuickLinks links={[
   { label: 'Программы VTC', href: '#vtc-programs' },
   { label: 'Руководства VTC', href: '#vtc-guides' },
   { label: 'Discord Бот', href: '#discord-bot' },
+  { label: 'Разработчикам', href: '#developers' },
   { label: 'Аккаунт', href: '#account-guides' },
   { label: 'Участие', href: '#contribute' },
 ]} />
@@ -84,11 +85,11 @@ import QuickLinks from '../../../components/QuickLinks.astro';
       [Читать руководство →](/ru/guides/vtc-announcements/)
     </Card>
     <Card title="Верификация Discord" icon="external">
-      Привязка и подтверждение Discord-сервера вашей VTC для его отображения в публичном профиле.
+      Свяжите и верифицируйте Discord-сервер вашей VTC, чтобы он отображался в вашем публичном профиле.
       [Читать руководство →](/ru/guides/vtc-discord-verification/)
     </Card>
     <Card title="Видимость" icon="eye">
-      Управление поиском и просмотром компании — публичного, доступного по ссылке и приватного режимов доступа.
+      Управляйте тем, кто может найти и просмотреть вашу VTC — объяснение публичной, скрытой и приватной видимости.
       [Читать руководство →](/ru/guides/vtc-visibility/)
     </Card>
   </CardGrid>
@@ -97,42 +98,68 @@ import QuickLinks from '../../../components/QuickLinks.astro';
 <HomeSection
   id="discord-bot"
   title="Discord Бот"
-  description="Подключите Discord-бота TrucklineMP к своему серверу и автоматизируйте верификацию участников."
+  description="Подключите Discord-бота TrucklineMP к вашему серверу и автоматизируйте верификацию участников."
   icon="external"
 >
   <CardGrid stagger>
-    <Card title="Привязанные Роли" icon="external">
-      Установите бота TrucklineMP и настройте требования к ролям, чтобы участники могли проверять и принимать участие в ролях на вашем сервере.
+    <Card title="Связанные роли" icon="external">
+      Установите бота TrucklineMP и настройте требования для ролей, чтобы участники могли проходить верификацию и получать роли на вашем сервере.
       [Читать руководство →](/ru/guides/discord-linked-roles/)
     </Card>
   </CardGrid>
 </HomeSection>
 
 <HomeSection
+  id="developers"
+  title="Разработчикам"
+  description="Создавайте интеграции с использованием публичного API TrucklineMP, OAuth и вебхуков."
+  icon="document"
+>
+  <CardGrid stagger>
+    <Card title="Обзор платформы" icon="rocket">
+      Включите Режим разработчика, создавайте проекты и выбирайте между ключами API, OAuth или вебхуками.
+      [Начать работу →](/ru/guides/developers/overview/)
+    </Card>
+    <Card title="Публичный API" icon="document">
+      Аутентификация, базовые URL-адреса, лимиты запросов и обзор эндпоинтов для REST-доступа только для чтения.
+      [Читать руководство →](/ru/guides/developers/public-api/)
+    </Card>
+    <Card title="Приложения OAuth" icon="external">
+      Авторизация пользователей через TrucklineMP, настройка PKCE, тестовые пользователи и публикация вашего приложения.
+      [Читать руководство →](/ru/guides/developers/oauth-apps/)
+    </Card>
+    <Card title="Вебхуки" icon="external">
+      Подписывайтесь на события платформы, проверяйте подписи HMAC и управляйте автоматическими повторными попытками.
+      [Читать руководство →](/ru/guides/developers/webhooks/)
+    </Card>
+  </CardGrid>
+</HomeSection>
+
+<HomeSection
   id="account-guides"
-  title="Руководства по аккаунту"
-  description="Управление профилем TrucklineMP, безопасностью, подключёнными сервисами и личными настройками."
+  title="Настройки аккаунта"
+  description="Управляйте своим профилем TrucklineMP, безопасностью, подключениями и личными предпочтениями."
   icon="user"
 >
   <CardGrid stagger>
     <Card title="Настройки профиля" icon="user">
-      Настройка отображаемого имени, никнейма, аватарки и ссылок на социальные сети.
+      Настройте отображаемое имя, никнейм, аватар и ссылки на социальные сети.
       [Читать руководство →](/ru/guides/profile-settings/)
     </Card>
     <Card title="Безопасность аккаунта" icon="lock">
-      Защита учётной записи с помощью двухфакторной аутентификации, управление сессиями и настройки приватности.
+      Защитите свой аккаунт с помощью двухфакторной аутентификации, управления сессиями и настроек конфиденциальности.
       [Читать руководство →](/ru/guides/account-security/)
     </Card>
-    <Card title="Подключённые аккаунты" icon="external">
-      Привязка и управление внешними сервисами — Discord, Google, YouTube и Twitch.
+    <Card title="Подключения" icon="external">
+      Связывайте и управляйте внешними аккаунтами — Discord, Google, YouTube и Twitch.
       [Читать руководство →](/ru/guides/connections/)
     </Card>
     <Card title="Внешний вид и предпочтения" icon="setting">
-      Выбор тем оформления, управление авторизованными приложениями, экспорт данных и настройки форума.
+      Настраивайте темы оформления, управляйте авторизованными приложениями, экспортируйте данные и настраивайте параметры форума.
       [Читать руководство →](/ru/guides/appearance-preferences/)
     </Card>
     <Card title="Удаление аккаунта" icon="trash">
-      Пошаговый процесс безвозвратного удаления учётной записи и описание последствий этого действия.
+      Узнайте, как навсегда удалить свой аккаунт, и поймите, что произойдет после этого.
       [Читать руководство →](/ru/guides/account-deletion/)
     </Card>
   </CardGrid>
@@ -140,18 +167,18 @@ import QuickLinks from '../../../components/QuickLinks.astro';
 
 <HomeSection
   id="contribute"
-  title="Участие в проекте"
-  description="Помогите улучшить документацию TrucklineMP — переводите материалы и вносите свой вклад в сообщество."
+  title="Участие"
+  description="Помогите улучшить документацию TrucklineMP с помощью переводов и вклада сообщества."
   icon="open-book"
 >
   <CardGrid stagger>
     <Card title="Перевод документации" icon="open-book">
-      Помогите сделать TrucklineMP доступнее для каждого, переведя документацию на свой родной язык.
+      Помогите сделать TrucklineMP доступным для всех, переводя документацию на свой язык.
       [Читать руководство →](/ru/guides/contributing/)
     </Card>
     <Card title="Участники" icon="star">
-      Познакомьтесь с участниками сообщества и командой Truckline, стоящей за документацией.
-      [Смотреть участников →](/ru/guides/contributors/)
+      Познакомьтесь с участниками сообщества и командой Truckline, стоящими за созданием документации.
+      [Посмотреть участников →](/ru/guides/contributors/)
     </Card>
   </CardGrid>
 </HomeSection>
