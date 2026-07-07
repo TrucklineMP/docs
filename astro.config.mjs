@@ -12,6 +12,7 @@ export default defineConfig({
 				de: 'TrucklineMP',
 				fr: 'TrucklineMP',
 				ru: 'TrucklineMP',
+				ta: 'TrucklineMP',
 			},
 			defaultLocale: 'root',
 			locales: {
@@ -35,6 +36,10 @@ export default defineConfig({
 					label: 'Русский',
 					lang: 'ru',
 				},
+				ta: {
+					label: 'தமிழ்',
+					lang: 'ta',
+				  },
 			},
 			logo: {
 				src: './src/assets/truckline_large_no_shadow.svg',
