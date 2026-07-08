@@ -102,6 +102,7 @@ export default defineConfig({
               translations: {
                 pl: "Partnerski Program VTC",
                 ru: "Партнёрская программа VTC",
+                de: "Partner-VTC-Programm",
               },
             },
             {
