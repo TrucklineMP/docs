@@ -274,6 +274,7 @@ export default defineConfig({
               translations: {
                 pl: "Ustawienia Profilu",
                 ru: "Настройки профиля",
+                de: "Profileinstellungen",
               },
             },
             {
