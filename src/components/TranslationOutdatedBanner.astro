@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+	slug: string;
+	locale: string;
+}
+
+const { slug, locale } = Astro.props;
+
+// Only show banner if not on English (root) locale
+if (locale === 'root' || !locale) {
+	return null;
+}
+
+const allDocs = await getCollection('docs');
+
+// Find English and translated versions
+const englishDoc = allDocs.find(doc => doc.slug === slug && doc.id.startsWith('docs/'));
+const translatedDoc = allDocs.find(doc => doc.slug === slug && doc.id.startsWith(`docs/${locale}/`));
+
+if (!englishDoc || !translatedDoc) {
+	return null;
+}
+
+const englishDate = new Date(englishDoc.data.lastUpdated || '2026-01-01');
+const translatedDate = new Date(translatedDoc.data.lastUpdated || '2026-01-01');
+
+// Show banner if translation is older (more than 1 day difference to avoid noise)
+const isOutdated = englishDate.getTime() - translatedDate.getTime() > 86400000;
+
+if (!isOutdated) {
+	return null;
+}
+---
+
+{isOutdated && (
+	<div class="translation-banner">
+		<p>
+			This translation may be outdated. Latest English version updated
+			<strong>{englishDate.toLocaleDateString()}</strong>.
+			<a href={`/${slug}`}>View the English version</a>
+		</p>
+	</div>
+)}
+
+<style>
+	.translation-banner {
+		background-color: var(--sl-color-yellow-low);
+		border: 1px solid var(--sl-color-yellow);
+		border-radius: 0.5rem;
+		padding: 1rem;
+		margin-bottom: 1.5rem;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-text-accent);
+	}
+
+	.translation-banner p {
+		margin: 0;
+	}
+
+	.translation-banner a {
+		color: var(--sl-color-text-accent);
+		text-decoration: underline;
+	}
+
+	.translation-banner a:hover {
+		opacity: 0.8;
+	}
+
+	.translation-banner strong {
+		font-weight: 600;
+	}
+</style>

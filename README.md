@@ -10,6 +10,8 @@ To contribute translations or improve the documentation, see the [Contributing g
 
 Community contributors are credited on the [Contributors page](https://docs.trucklinemp.com/guides/contributors/).
 
+Join the contributors Discord server: [https://discord.gg/jsuGrx4Rbv](https://discord.gg/jsuGrx4Rbv)
+
 ## Languages
 
 - [English](https://docs.trucklinemp.com)

@@ -1,0 +1,30 @@
+---
+title: Translation Status
+description: Current status of documentation translations across all languages.
+version: 1.2.0
+lastUpdated: 2026-07-09
+---
+
+import TranslationStatusTable from '../../../components/TranslationStatusTable.astro';
+
+# Translation Status
+
+This page shows which documentation pages are translated and how current each translation is. A green status means the translation is up-to-date with the English version. Orange means it may be outdated. Red means it hasn't been translated yet.
+
+<TranslationStatusTable />
+
+## Legend
+
+- **Current** - Translation is within 1 day of the English version
+- **Outdated** - Translation is more than 1 day behind the English version
+- **Missing** - No translation exists for this language yet
+
+## How to Help
+
+If you notice an outdated translation or want to contribute a new translation, please:
+
+1. Check the [Contributing Translations](/guides/contributing/) guide
+2. Create a pull request on GitHub with your translation
+3. Follow the file structure and quality standards outlined in the guide
+
+Thank you for helping keep our documentation accessible across languages!

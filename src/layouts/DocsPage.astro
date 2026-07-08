@@ -1,0 +1,16 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import Default from '@astrojs/starlight/layouts/DocsPage.astro';
+import TranslationOutdatedBanner from '../components/TranslationOutdatedBanner.astro';
+
+const props = Astro.props as Props;
+const lastUpdated = (props.entry.data as any).lastUpdated || null;
+---
+
+<Default {...props}>
+	<TranslationOutdatedBanner slot="before-content" slug={props.entry.slug} locale={props.entry.collection} />
+	<slot />
+	<div slot="after-content" style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--sl-color-hairline); font-size: var(--sl-text-xs); color: var(--sl-color-gray-3);">
+		{lastUpdated && `Last updated: ${new Date(lastUpdated).toLocaleDateString()}`}
+	</div>
+</Default>

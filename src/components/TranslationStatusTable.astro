@@ -1,0 +1,193 @@
+---
+import { getCollection } from 'astro:content';
+
+const allDocs = await getCollection('docs');
+
+interface DocStatus {
+	title: string;
+	slug: string;
+	root: { lastUpdated: string; version: string } | null;
+	ru: { lastUpdated: string; version: string } | null;
+	pl: { lastUpdated: string; version: string } | null;
+	de: { lastUpdated: string; version: string } | null;
+	fr: { lastUpdated: string; version: string } | null;
+}
+
+const docMap = new Map<string, DocStatus>();
+
+// Group docs by slug
+allDocs.forEach(doc => {
+	const baseSlug = doc.slug.replace(/^(ru|pl|de|fr)\//, '');
+	const locale = doc.slug.startsWith('ru/') ? 'ru' :
+	               doc.slug.startsWith('pl/') ? 'pl' :
+	               doc.slug.startsWith('de/') ? 'de' :
+	               doc.slug.startsWith('fr/') ? 'fr' : 'root';
+
+	if (!docMap.has(baseSlug)) {
+		docMap.set(baseSlug, {
+			title: doc.data.title,
+			slug: baseSlug,
+			root: null,
+			ru: null,
+			pl: null,
+			de: null,
+			fr: null,
+		});
+	}
+
+	const entry = docMap.get(baseSlug)!;
+	if (locale === 'root' && doc.id.startsWith('docs/') && !doc.id.includes('/')) {
+		entry.root = {
+			lastUpdated: doc.data.lastUpdated,
+			version: doc.data.version,
+		};
+	} else if (locale !== 'root') {
+		entry[locale as keyof Omit<DocStatus, 'title' | 'slug' | 'root'>] = {
+			lastUpdated: doc.data.lastUpdated,
+			version: doc.data.version,
+		};
+	}
+});
+
+// Sort by title
+const sortedDocs = Array.from(docMap.values()).sort((a, b) => a.title.localeCompare(b.title));
+
+interface LanguageStatus {
+	status: 'current' | 'outdated' | 'missing';
+	date: string;
+	version: string;
+}
+
+function getStatus(englishDate: string, translationDate: string | null): LanguageStatus {
+	if (!translationDate) {
+		return { status: 'missing', date: '-', version: '-' };
+	}
+
+	const engDate = new Date(englishDate).getTime();
+	const transDate = new Date(translationDate).getTime();
+	const dayInMs = 86400000;
+
+	if (engDate - transDate > dayInMs) {
+		return {
+			status: 'outdated',
+			date: new Date(translationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+			version: translationDate.split('T')[0],
+		};
+	}
+
+	return {
+		status: 'current',
+		date: new Date(translationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+		version: translationDate.split('T')[0],
+	};
+}
+---
+
+<div class="translation-table-container">
+	<table class="translation-table">
+		<thead>
+			<tr>
+				<th>Page</th>
+				<th title="English">EN</th>
+				<th title="Russian">RU</th>
+				<th title="Polish">PL</th>
+				<th title="German">DE</th>
+				<th title="French">FR</th>
+			</tr>
+		</thead>
+		<tbody>
+			{sortedDocs.map(doc => {
+				const enStatus = doc.root ? { status: 'current' as const, date: new Date(doc.root.lastUpdated).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) } : null;
+				const ruStatus = doc.root ? getStatus(doc.root.lastUpdated, doc.ru?.lastUpdated || null) : null;
+				const plStatus = doc.root ? getStatus(doc.root.lastUpdated, doc.pl?.lastUpdated || null) : null;
+				const deStatus = doc.root ? getStatus(doc.root.lastUpdated, doc.de?.lastUpdated || null) : null;
+				const frStatus = doc.root ? getStatus(doc.root.lastUpdated, doc.fr?.lastUpdated || null) : null;
+
+				return (
+					<tr>
+						<td class="title-cell">{doc.title}</td>
+						<td class="status-cell current">
+							{enStatus && <span class="status-badge">{enStatus.date}</span>}
+						</td>
+						<td class={`status-cell ${ruStatus?.status}`}>
+							<span class="status-badge" title={ruStatus?.version}>{ruStatus?.date}</span>
+						</td>
+						<td class={`status-cell ${plStatus?.status}`}>
+							<span class="status-badge" title={plStatus?.version}>{plStatus?.date}</span>
+						</td>
+						<td class={`status-cell ${deStatus?.status}`}>
+							<span class="status-badge" title={deStatus?.version}>{deStatus?.date}</span>
+						</td>
+						<td class={`status-cell ${frStatus?.status}`}>
+							<span class="status-badge" title={frStatus?.version}>{frStatus?.date}</span>
+						</td>
+					</tr>
+				);
+			})}
+		</tbody>
+	</table>
+</div>
+
+<style>
+	.translation-table-container {
+		overflow-x: auto;
+		margin: 2rem 0;
+	}
+
+	.translation-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: var(--sl-text-sm);
+	}
+
+	.translation-table th {
+		background-color: var(--sl-color-gray-6);
+		padding: 0.75rem;
+		text-align: left;
+		font-weight: 600;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+
+	.translation-table td {
+		padding: 0.75rem;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+
+	.title-cell {
+		font-weight: 500;
+		max-width: 250px;
+	}
+
+	.status-cell {
+		text-align: center;
+	}
+
+	.status-badge {
+		display: inline-block;
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.25rem;
+		font-size: var(--sl-text-xs);
+		font-weight: 500;
+	}
+
+	.status-cell.current .status-badge {
+		background-color: var(--sl-color-green-low);
+		color: var(--sl-color-green);
+	}
+
+	.status-cell.outdated .status-badge {
+		background-color: var(--sl-color-orange-low);
+		color: var(--sl-color-orange);
+	}
+
+	.status-cell.missing .status-badge {
+		background-color: var(--sl-color-red-low);
+		color: var(--sl-color-red);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.translation-table th {
+			background-color: var(--sl-color-gray-5);
+		}
+	}
+</style>

@@ -65,6 +65,9 @@ export default defineConfig({
         Footer: "./src/components/Footer.astro",
         SidebarSublist: "./src/components/SidebarSublist.astro",
       },
+      overrides: {
+        docLayout: "./src/layouts/DocsPage.astro",
+      },
       sidebar: [
         {
           label: "VTC Programs",
@@ -345,6 +348,10 @@ export default defineConfig({
               slug: "guides/developers/console",
               label: "Developer Console",
             },
+            {
+              slug: "guides/developers/leaked-secrets",
+              label: "Leaked API Keys & Secrets",
+            },
           ],
         },
         {
@@ -367,8 +374,12 @@ export default defineConfig({
               label: "Translate Documentation",
               translations: {
                 pl: "Tłumacz Dokumentację",
-                ru: "Перевод документации",
+                ru: "Перевод dokumentacji",
               },
+            },
+            {
+              slug: "guides/translation-status",
+              label: "Translation Status",
             },
           ],
         },

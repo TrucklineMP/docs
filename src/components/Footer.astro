@@ -1,5 +1,15 @@
 ---
 import logo from '../assets/truckline_large_no_shadow.svg';
+
+interface Props {
+	lastUpdated?: string;
+}
+
+const { lastUpdated } = Astro.props;
+
+const lastUpdatedDate = lastUpdated
+	? new Date(lastUpdated).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+	: null;
 ---
 
 <footer class="docs-footer">
@@ -21,6 +31,12 @@ import logo from '../assets/truckline_large_no_shadow.svg';
 				Built with Starlight
 			</a>
 		</div>
+
+		{lastUpdatedDate && (
+			<div class="footer-updated">
+				Updated {lastUpdatedDate}
+			</div>
+		)}
 	</div>
 </footer>
 
@@ -68,5 +84,11 @@ import logo from '../assets/truckline_large_no_shadow.svg';
 
 	.footer-separator {
 		color: var(--sl-color-gray-5);
+	}
+
+	.footer-updated {
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-3);
+		margin-top: 0.5rem;
 	}
 </style>
