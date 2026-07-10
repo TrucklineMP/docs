@@ -1,0 +1,119 @@
+---
+Başlık: Bir VTC oluşturmak
+Açıklama: Uygunluk koşullarını ve TrucklineMP'de nasıl sanal bir kamyon taşımacığılı şirketi kuracağını, uygunluğunu ve gereksinimlerini öğren.
+versiyon: 1.2.0
+Son güncelleme tarihi: 2026-07-08
+---
+
+# Bir VTC oluşturma
+TrucklineMP üzerinde sanal bir kamyon taşımacılığı şirketi (VTC) . Bu rehber uygunluk koşullarını, oluşturma sihirbazını ve VTC'in hayata geçtikten sonra ne olacağını konu almaktadır.
+
+## Başlamadan önce
+
+sana gerekenler:
+
+- Oturum açılmış bir TrucklineMP hesabı
+- Bir VTC oluşturmak için izin (platform eligibility rules apply)
+- Sahibi olduğunuz bir başka VTC olamaz (Her hesap tek bir VTC sahibi olabilir)
+
+Oluşturma akışını buradan açın [trucklinemp.com/vtc/create](https://trucklinemp.com/vtc/create).
+
+---
+
+## Uygunluk kontrolü
+
+Oluşturma sayfasını açtığında TrucklineMP otomatik olarak bir uygunluk kontrolü yapar. Eğer uygun değisen sayfa neden olduğunu açıklar. Sık görülen sebepler şunlardır:
+
+- Halihazırda bir VTC sahibi olmak.
+- Hesxap durumu veya platform kısıtlamaları.
+- Özellik platform kofigürasyonu tarafından devre dışı.
+
+Uygunluk kontrolden geçene kadar devam edemezsin.
+
+---
+
+## Oluşturma sihirbaz
+
+Sihirbazın 5 adımı vardır: **Kimlik**, **Açıklama**, **Kurallar**, **Detaylar**, ve **Gözden geçirme**.
+
+### Adım 1: Kimlik
+
+| Alan | Notlar |
+|-------|-------|
+| **VTC Adı** | platform üzerinde görünecek isim. Gerekli. |
+| **Yer tutucu** | Benzersiz URL başlığın: `trucklinemp.com/vtc/@yourhandle`. sadece 2-15 karakter, küçük harfler, sayılar ve alt tire (_). Gerekli. |
+| **Tagline** | Kısa bir Tagline (opsiyonel). |
+| **Ana dil** | VTC'in için varsayılan dil. |
+| **Logo** | Kare bir profil görseline giden HTTPS URL'si (opsiyonel). |
+| **Kapak görseli** | Geniş bir kapak görseline giden HTTPS URL'si  (opsiyonel). |
+| **Görünürlük** | Genel, liste dışı veya özel. [Görünürlük](/guides/vtc-visibility/) sayfasına bak. |
+
+### Adım 2: Açıklmama
+
+Aşağıya VTC hikayenizi yazın. 5,000 karaktere kadar, gerekli. Bu genel profilinizde görünür.
+
+### Adım 3: Kurallar
+
+Aşağıya üye kurallarınızı yazın. 5,000 karektere kadar, gerekli. Başvurucak kişiler ve üyeler bunları profilinnzden okuyabilirler.
+
+### Adım 4: Detaylar
+
+| Alan | Notlar |
+|-------|-------|
+| **Minimum Hesap Yaşı** | Katılmak için gereken TrucklineMP hesap günü. Limit olmaması için `0` girin. |
+| **Minimum Oynama Süresi** | Katılmak için gerekli olan oynama süresi. Limit olmaması için`0` girin. |
+| **Başvuru durumu** | Başvuru sahiplerinin başvuru oluşturma işleminden hemen sonra başvurup başvuramayacakları. |
+| **İlitişim E-posta adresi** | Opsiyonel, genel iletişim adresi. |
+| **Bağlantılar** | Website, Discord daveti, Instagram, Facebook, X/Twitter. Belirtilmişse tam `https://` URL formatında olmalı. |
+
+### Adım 5: Gözden geçirme
+
+Her alanı onayla ardınan gönder. İşlem başarılıyla sonuçlandığında yeni VTC profilinize yönlendirilirsiniz.
+
+---
+
+## Varsayılan kurulum
+
+When your VTC is created, TrucklineMP seeds default roles:
+
+- **Yönetim**
+- **Görevli**
+- **Sürücü**
+- **Acemi**
+
+Tüm yetkilerle VTC sahibi olursun. **Yönet** sayfasını VTC profilinden işe alım sürecini yönetmek için aç, üyeler ve Discord bağlantısı.
+
+---
+
+## Oluşturmadan sonra
+
+Önerilen sonraki adım:
+
+1. [Genel Ayarlar](/guides/vtc-general-settings/) - Marka kimliğini ve bağlantıları iyileştirin
+2. [Roller & Yetkiler](/guides/vtc-roles-permissions/) - Hiyerarşini ayarla
+3. [Başvurular](/guides/vtc-recruitment/) - başvuruları açın veya harici bir form ayarlayın
+4. [Discord Doğrulaması](/guides/vtc-discord-verification/) - discord sunucunuzu bağlayın (opsiyonel)
+
+---
+
+## Sorun giderme
+
+### "VTC oluşturmaya uygun değilsin"
+
+Oluştur sayasındaki sepebleri oku. Halihazırda zaten bir VTC sahibi olabilirsin veya durum problemini çözmen gerek.
+
+### Yer tutucu kaydedilmeyecek
+
+Yer tutucu 2-15 kakrakter arasında, ve sadece küçk harf, harfler, sayılar ve  alt tire(_) içermelidir. Yer tutucu benzersiz olmalıdır.
+
+### Oluşturma bağlantılarda başarısız oldu
+
+Bütün opsiyonel URL'ler `https://` ile başlamalıdır. Discord davet bağlantıları tam URL'ler olmalıdır, sadece kod olmamalıdır.
+
+---
+
+## İlgili öğreticiler
+
+- [VTC Dizini](/guides/vtc-directory/) - diğreleri VTC'ni nasıl bulacak
+- [Görünürlük](/guides/vtc-visibility/) - genel, liste dışı ve özel modlar
+- [Doğrulanmış VTC Programı](/guides/verified-vtc-program/) - daha sonra doğrluanmış durum başvurusunda bulun
