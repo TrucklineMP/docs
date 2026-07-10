@@ -133,7 +133,7 @@ Prefer a named method once the route is stable and commonly used.
 ## Local smoke test against the API
 
 ```ts
-import { Truckline } from "./src/index.ts"; // or build and import from dist
+import { Truckline } from "trucklinemp-sdk"; // or import from your local checkout's src/index.ts
 
 const tl = new Truckline({
   apiKey: process.env.TRUCKLINE_API_KEY,
