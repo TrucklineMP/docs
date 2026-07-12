@@ -94,6 +94,7 @@ export default defineConfig({
               translations: {
                 pl: "Rola Discord Zweryfikowanego VTC",
                 ru: "Роль Discord верифицированного VTC",
+                de: "Verifizierte VTC-Discord-Rolle",
               },
             },
             {
