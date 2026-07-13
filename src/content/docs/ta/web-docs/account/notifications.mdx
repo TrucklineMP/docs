@@ -1,0 +1,87 @@
+---
+title: Notifications
+description: Platform அறிவிப்புகளை Notification Bell மூலம் பார்வையிடுவது, படித்ததாகக் குறியிடுவது மற்றும் Discord DM அறிவிப்புகள் எவ்வாறு செயல்படுகின்றன என்பதை அறியவும்.
+version: 1.2.0
+lastUpdated: 2026-07-08
+---
+
+# அறிவிப்புகள்
+
+TrucklineMP உங்கள் செயல்பாடுகளுடன் தொடர்புடைய பல்வேறு நிகழ்வுகளுக்காக In-App அறிவிப்புகள்-ஐ அனுப்புகிறது. இதில் VTC புதுப்பிப்புகள், Recruitment, Events, Moderation அறிவிப்புகள் மற்றும் பிற முக்கிய தகவல்கள் அடங்கும்.
+
+## அறிவிப்பு மணி
+
+உள்நுழைந்துள்ள (Signed-in) பயனர்கள் Site Header-இல் **Bell Icon**-ஐ காண்பார்கள்.
+
+- படிக்கப்படாத (Unread) Notifications எண்ணிக்கையை Badge மூலம் காணலாம்.
+- Notification பட்டியலைத் திறக்க **Bell Icon**-ஐ கிளிக் செய்யவும்.
+- ஒரு Notification-ஐ கிளிக் செய்தால், அதனுடன் தொடர்புடைய பக்கம் (Link இருந்தால்) திறக்கும்.
+- தனிப்பட்ட Notification-ஐ **Read** எனக் குறிக்கலாம் அல்லது Popover-இலிருந்து முழுப் பட்டியலையும் Clear செய்யலாம்.
+
+தற்போது தனியாக முழுப் பக்க Notification Center இல்லை. **Bell Icon**-தான் முக்கிய Notification Interface ஆகும்.
+
+---
+
+## நீங்கள் பெறக்கூடிய அறிவிப்புகள்
+
+உதாரணமாக:
+
+- VTC Application ஏற்கப்பட்டது அல்லது நிராகரிக்கப்பட்டது.
+- புதிய Recruitment Application (VTC Staff-க்காக).
+- Event Reminder-கள் அல்லது RSVP மாற்றங்கள்.
+- Platform Announcements.
+- Moderation அல்லது Account தொடர்பான அறிவிப்புகள் (தேவையானபோது).
+
+நீங்கள் பெறும் அறிவிப்பு வகைகள், உங்கள் Roles மற்றும் செயல்பாடுகளைப் பொறுத்து மாறுபடும்.
+
+---
+
+## Discord DM delivery
+
+உங்கள் **Discord Account**, [Connections](/guides/connections/) பகுதியில் இணைக்கப்பட்டிருந்தால், TrucklineMP Discord Bot அதே Notification-ஐ Discord-இல் **Direct Message (DM)** ஆகவும் அனுப்பக்கூடும்.
+
+தேவையானவை:
+
+- `trucklinemp.com/user/me/settings?tab=connections` பகுதியில் Discord இணைக்கப்பட்டிருக்க வேண்டும்.
+- உங்கள் Discord Account-இல் Server Members அல்லது TrucklineMP Bot-இலிருந்து Direct Messages பெற அனுமதி வழங்கப்பட்டிருக்க வேண்டும்.
+- அந்த Notification வகை Discord Relay-ஐ ஆதரிக்க வேண்டும்.
+
+Discord DM என்பது வசதிக்காக அனுப்பப்படும் கூடுதல் நகல் மட்டுமே. அதிகாரப்பூர்வ அறிவிப்பு பட்டியலைப் பார்க்க எப்போதும் Website-இல் உள்ள **Notification Bell**-ஐ பயன்படுத்தவும்.
+
+DM தொடர்பான சிக்கல்களுக்கு [Discord Notifications](/guides/discord-notifications/) வழிகாட்டியைப் பார்க்கவும்.
+
+---
+
+## Mobile app
+
+TrucklineMP Mobile App தனித்த அறிவிப்பு API-களைப் பயன்படுத்துகிறது. Mobile Push அறிவிப்புகள், இணையதள அறிவிப்பு மணி-இலிருந்து தனித்துவமாக செயல்பட்டாலும், அதே போன்ற அறிவிப்புகளை காண்பிக்கக்கூடும்.
+
+---
+
+## தனியுரிமை
+
+உங்கள் அறிவிப்புகள் உங்கள் கணக்கிற்கு மட்டுமே தனிப்பட்டவை. பிற பயனர்கள் உங்கள் அறிவிப்பு பட்டியலைப் பார்க்க முடியாது.
+
+---
+
+## சிக்கல் தீர்வு
+
+### Bell-இல் எண்ணிக்கை காட்டப்படுகிறது, ஆனால் அறிவிப்பு பட்டியல் காலியாக உள்ளது
+
+பக்கத்தை **Refresh** செய்யவும். சிக்கல் தொடர்ந்தால், Sign Out செய்து மீண்டும் Sign In செய்யவும்.
+
+### Discord DM Notifications வரவில்லை
+
+Discord இணைக்கப்பட்டுள்ளதா, Direct Messages அனுமதிக்கப்பட்டுள்ளதா, மேலும் TrucklineMP Bot உங்களை Block செய்யவில்லையா என்பதை உறுதிசெய்யவும்.மேலும் தகவலுக்கு [Discord Notifications](/guides/discord-notifications/) வழிகாட்டியைப் பார்க்கவும்.
+
+### Recruitment Notifications வரவில்லை
+
+உங்கள் VTC-இல் தேவையான Staff Permissions வழங்கப்பட்டிருக்க வேண்டும். மேலும், உங்கள் VTC-க்கு Recruitment அம்சம் செயல்படுத்தப்பட்டிருக்க வேண்டும்.
+
+---
+
+## தொடர்புடைய வழிகாட்டிகள்
+
+- [Discord Notifications](/guides/discord-notifications/)
+- [Connections](/guides/connections/)
+- [VTC Recruitment](/guides/vtc-recruitment/)
