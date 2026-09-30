@@ -2,7 +2,7 @@
 title: Documentation TrucklineMP
 description: Documentation officielle de TrucklineMP - documentation web, SDK web, et (bientôt) documentation et SDK du jeu.
 version: 1.3.0
-lastUpdated: 2026-09-17
+lastUpdated: 2026-09-30
 template: splash
 hero:
   tagline: La plateforme multijoueur conçue pour la communauté du transport routier et des autocars virtuels.
@@ -28,6 +28,8 @@ import ContributorAvatars from '../../../components/ContributorAvatars.astro';
 		tag="Plateforme"
 		icon="open-book"
 		status="available"
+		statusLabels={{ available: 'Disponible', soon: 'Bientôt' }}
+		ctaLabel="Explorer"
 		href="/fr/web-docs/vtc/creating/"
 		description="Guides pour gérer votre VTC ou VBC - recrutement, événements, intégration Discord, et gestion de compte."
 	/>
@@ -36,6 +38,8 @@ import ContributorAvatars from '../../../components/ContributorAvatars.astro';
 		tag="Développeurs"
 		icon="setting"
 		status="available"
+		statusLabels={{ available: 'Disponible', soon: 'Bientôt' }}
+		ctaLabel="Explorer"
 		href="/fr/web-api/overview/"
 		description="Intégrez-vous avec TrucklineMP - l'API publique, le SDK TypeScript, les applications OAuth, et les webhooks."
 	/>
@@ -44,7 +48,9 @@ import ContributorAvatars from '../../../components/ContributorAvatars.astro';
 		tag="En jeu"
 		icon="rocket"
 		status="soon"
-		href="/game-docs/"
+		statusLabels={{ available: 'Disponible', soon: 'Bientôt' }}
+		ctaLabel="Explorer"
+		href="/fr/game-docs/"
 		description="Documentation pour le mod compagnon en jeu de TrucklineMP."
 	/>
 	<ModuleCard
@@ -52,9 +58,16 @@ import ContributorAvatars from '../../../components/ContributorAvatars.astro';
 		tag="Développeurs"
 		icon="puzzle"
 		status="soon"
-		href="/game-sdk/"
+		statusLabels={{ available: 'Disponible', soon: 'Bientôt' }}
+		ctaLabel="Explorer"
+		href="/fr/game-sdk/"
 		description="Développez des outils et des mods au-dessus de l'intégration en jeu de TrucklineMP."
 	/>
 </ModuleGrid>
 
-<ContributorAvatars />
+<ContributorAvatars
+	heading="Rendu possible grâce à vous"
+	subheading="TrucklineMP est porté par la passion et notre communauté active."
+	caption="Quelques-uns des contributeurs de notre documentation open source."
+	emptyState="Aucun contributeur GitHub trouvé."
+/>
