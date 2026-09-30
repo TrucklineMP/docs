@@ -6,7 +6,7 @@ This site contains guides, rules, features overview, and FAQs for players. Docum
 
 ## Contributing
 
-To contribute translations or improve the documentation, see the [Contributing guide](https://docs.trucklinemp.com/web-docs/contribute/contributing/).
+To contribute translations or improve the documentation, see the [Contributing guide](https://docs.trucklinemp.com/web-docs/contribute/contributing/). Before opening a pull request, check [CONTRIBUTING.md](CONTRIBUTING.md) for the repository conventions (frontmatter, links, sidebar labels, checks).
 
 Community contributors are credited on the [Contributors page](https://docs.trucklinemp.com/web-docs/contribute/contributors/).
 
