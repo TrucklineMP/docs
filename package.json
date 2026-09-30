@@ -16,17 +16,17 @@
     "check": "astro check"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.39.2",
+    "@astrojs/starlight": "^0.42.4",
     "@fontsource-variable/geist": "^5.2.9",
     "@fontsource-variable/geist-mono": "^5.2.8",
-    "astro": "^6.3.1",
+    "astro": "^7.2.10",
     "sharp": "^0.35.5",
-    "starlight-sidebar-topics": "^0.8.0",
+    "starlight-sidebar-topics": "^0.9.0",
     "swagger-ui-dist": "^5.32.14"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "starlight-links-validator": "^0.24.1",
+    "starlight-links-validator": "^0.26.0",
     "typescript": "^6.0.3"
   }
 }
