@@ -1,18 +1,7 @@
 ---
-let githubContributors = [];
-try {
-	const response = await fetch('https://api.github.com/repos/TrucklineMP/docs/contributors?per_page=100', {
-		headers: {
-			'User-Agent': 'TrucklineMP-Docs-Builder',
-		},
-	});
-	if (response.ok) {
-		const data = await response.json();
-		githubContributors = data.filter((item: any) => item.type === 'User' && !item.login.endsWith('[bot]'));
-	}
-} catch (e) {
-	console.error('Failed to fetch GitHub contributors:', e);
-}
+import { getGitHubContributors } from '../lib/github-contributors';
+
+const githubContributors = await getGitHubContributors();
 
 interface Props {
 	heading?: string;
@@ -47,7 +36,7 @@ const githubOverflow = githubContributors.length > MAX_DISPLAY ? githubContribut
 	{githubContributors.length > 0 ? (
 		<div class="avatar-strip-wrapper">
 			<div class="avatar-strip">
-				{githubDisplay.map((user: any) => (
+				{githubDisplay.map((user) => (
 					<a href={user.html_url} target="_blank" rel="noopener noreferrer" class="avatar-link" title={user.login}>
 						<img src={user.avatar_url} alt={user.login} width="64" height="64" class="avatar-img" loading="lazy" />
 					</a>

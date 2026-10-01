@@ -1,11 +1,12 @@
 ---
 title: Участники
 description: Сообщество и команда TrucklineMP, работающие над документацией.
-version: 1.2.0
-lastUpdated: 2026-07-08
+version: 1.3.0
+lastUpdated: 2026-09-30
 ---
 
 import ContributorGrid from '../../../../../components/ContributorGrid.astro';
+import GitHubContributorGrid from '../../../../../components/GitHubContributorGrid.astro';
 import { teamContributors } from '../../../../../data/contributors';
 
 Документация — это совместная работа. Эти люди помогают сделать руководства TrucklineMP доступными, точными и переведёнными на разные языки.
@@ -13,6 +14,12 @@ import { teamContributors } from '../../../../../data/contributors';
 ## Команда Truckline
 
 <ContributorGrid contributors={teamContributors} />
+
+## Участники сообщества
+
+Все, кто внёс вклад в [репозиторий документации](https://github.com/TrucklineMP/docs) на GitHub.
+
+<GitHubContributorGrid emptyState="Участники на GitHub не найдены." />
 
 ---
 

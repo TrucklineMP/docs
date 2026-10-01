@@ -1,11 +1,12 @@
 ---
 title: Contributeurs
 description: Les contributeurs de la communauté et l'équipe TrucklineMP à l'origine de la documentation.
-version: 1.2.0
-lastUpdated: 2026-09-17
+version: 1.3.0
+lastUpdated: 2026-09-30
 ---
 
 import ContributorGrid from '../../../../../components/ContributorGrid.astro';
+import GitHubContributorGrid from '../../../../../components/GitHubContributorGrid.astro';
 import { teamContributors } from '../../../../../data/contributors';
 
 La documentation est un effort communautaire. Ces personnes aident à rendre les guides TrucklineMP accessibles, précis et disponibles dans davantage de langues.
@@ -13,6 +14,12 @@ La documentation est un effort communautaire. Ces personnes aident à rendre les
 ## Équipe Truckline
 
 <ContributorGrid contributors={teamContributors} />
+
+## Contributeurs de la communauté
+
+Toutes les personnes ayant contribué au [dépôt de la documentation](https://github.com/TrucklineMP/docs) sur GitHub.
+
+<GitHubContributorGrid emptyState="Aucun contributeur GitHub trouvé." />
 
 ---
 
