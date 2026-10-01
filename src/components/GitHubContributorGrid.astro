@@ -1,0 +1,109 @@
+---
+import { teamContributors } from '../data/contributors';
+import { getGitHubContributors } from '../lib/github-contributors';
+
+interface Props {
+	emptyState?: string;
+}
+
+const { emptyState = 'No GitHub contributors found.' } = Astro.props;
+
+// Team members are already listed under "Truckline Team"; GitHub logins are case-insensitive.
+const teamLogins = new Set(teamContributors.map((member) => member.github.toLowerCase()));
+const { lang } = Astro.locals.starlightRoute;
+
+// Contribution count label per language (base subtag), keyed by plural category.
+const contributionLabels: Record<string, Partial<Record<Intl.LDMLPluralRule, string>>> = {
+	en: { one: 'contribution', other: 'contributions' },
+	fr: { one: 'contribution', other: 'contributions' },
+	pt: { one: 'contribuição', other: 'contribuições' },
+	ru: { one: 'вклад', few: 'вклада', many: 'вкладов', other: 'вклада' },
+};
+const labels = contributionLabels[lang.split('-')[0]] ?? contributionLabels.en;
+const pluralRules = new Intl.PluralRules(lang);
+const numberFormat = new Intl.NumberFormat(lang);
+const formatContributions = (count: number) =>
+	`${numberFormat.format(count)} ${labels[pluralRules.select(count)] ?? labels.other}`;
+
+const contributors = (await getGitHubContributors()).filter((user) => !teamLogins.has(user.login.toLowerCase()));
+---
+
+{contributors.length > 0 ? (
+	<ul class="github-contributor-grid">
+		{contributors.map((user) => (
+			<li>
+				<a href={user.html_url} target="_blank" rel="noopener noreferrer" class="github-contributor">
+					<img src={user.avatar_url} alt="" width="48" height="48" class="github-contributor-avatar" loading="lazy" />
+					<span class="github-contributor-info">
+						<span class="github-contributor-login">@{user.login}</span>
+						<span class="github-contributor-count">{formatContributions(user.contributions)}</span>
+					</span>
+				</a>
+			</li>
+		))}
+	</ul>
+) : (
+	<p class="github-contributor-empty">{emptyState}</p>
+)}
+
+<style>
+	.github-contributor-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+		gap: 0.75rem;
+		margin-block: 1.5rem;
+		padding: 0;
+		list-style: none;
+	}
+
+	.github-contributor-grid li {
+		margin: 0;
+	}
+
+	.github-contributor {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.75rem;
+		border: 1px solid var(--sl-color-hairline);
+		background: var(--sl-color-gray-6);
+		color: var(--sl-color-white);
+		text-decoration: none;
+		transition: border-color 0.2s ease;
+	}
+
+	.github-contributor:hover {
+		border-color: var(--sl-color-accent);
+	}
+
+	.github-contributor-avatar {
+		flex-shrink: 0;
+		border-radius: 9999px !important;
+		object-fit: cover;
+		background: #1a1a1a;
+	}
+
+	.github-contributor-info {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.github-contributor-count {
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-3);
+	}
+
+	.github-contributor-login {
+		font-family: var(--sl-font-mono);
+		font-size: var(--sl-text-sm);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.github-contributor-empty {
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+	}
+</style>
