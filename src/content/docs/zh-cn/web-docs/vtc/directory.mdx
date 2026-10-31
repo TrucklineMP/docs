@@ -1,0 +1,102 @@
+---
+title: VTC 与 VBC 目录
+description: 在 TrucklineMP 上浏览、搜索和筛选虚拟运输公司 (VTC) 与虚拟巴士公司 (VBC)。
+version: 1.4.0
+lastUpdated: 2026-10-30
+---
+TrucklineMP 为虚拟运输公司 (VTC) 和虚拟巴士公司 (VBC) 分别提供了独立目录，帮助卡车司机和巴士运营商发现相关组织。您可以浏览所有公开信息，根据您的需求进行筛选，并打开公司资料以申请加入或了解更多信息。
+
+## 访问目录
+
+- **VTC 目录**：打开 [trucklinemp.com/vtc](https://trucklinemp.com/vtc)。
+- **VBC 目录**：打开 [trucklinemp.com/vbc](https://trucklinemp.com/vbc)。
+
+只有**公开**公司会显示在这些目录中。未列出和私密公司不会出现在浏览结果中，除非您拥有直接链接或邀请。
+
+---
+
+## 搜索与筛选
+
+使用工具栏缩小结果范围：
+
+| 筛选条件 | 用途 |
+|--------|---------|
+| **搜索** | 匹配公司名称、描述或游戏内标签 |
+| **状态** | 仅显示已验证、经认证、官方、合作或正在招募的公司 |
+| **语言** | 主要语言筛选 |
+| **游戏** | 显示适用于 ETS2 或 ATS 的公司 |
+| **标签** | 匹配公司的游戏内标签 |
+| **成员数量** | 成员数量的最小值或最大值 |
+
+### 排序选项
+
+- 最新优先
+- 成员最多
+- 最活跃
+- 名称 (A-Z)
+
+更改筛选条件后，结果会实时更新。在还有更多结果时，可通过分页加载更多公司。
+
+---
+
+## 公司卡片
+
+每张卡片显示：
+
+- 徽标和横幅预览
+- 公司名称和账号 (`@handle`)
+- 口号或描述摘要
+- 徽章（已验证、官方、合作、开放招募）
+- 成员数量
+- 主要语言
+
+点击卡片可打开完整的公司资料。
+
+---
+
+## 公司资料概览
+
+在公司资料中，您可以：
+
+- 阅读完整描述和规则
+- 查看即将举行的活动和新闻
+- 预览成员并打开完整成员名单
+- 若开放招募，则提交申请
+- 若拥有邀请码，则通过邀请加入
+- 在已配置的情况下，查看经过验证的 Discord 服务器链接
+
+资料页面的 URL 使用账号格式：`trucklinemp.com/vtc/@handle` (VTC) 或 `trucklinemp.com/vbc/@handle` (VBC)。
+
+---
+
+## 致公司所有者
+
+为提高可发现性，建议：
+
+1. 在[常规设置](/zh-cn/web-docs/vtc/general-settings/)中将可见性设为**公开**
+2. 若正在招聘，请保持招募状态为开放
+3. 在符合资格时，申请[已验证](/zh-cn/web-docs/vtc-programs/verified/)或[合作](/zh-cn/web-docs/vtc-programs/partnered/)状态
+4. 发布[新闻](/zh-cn/web-docs/vtc/news/)和[活动](/zh-cn/web-docs/vtc/events/)，以保持资料活跃
+
+未列出公司可通过直接链接访问，但不会出现在目录浏览结果中。
+
+---
+
+## API 访问
+
+第三方工具可通过公共 API 列出公司：
+
+```
+GET https://api.trucklinemp.com/vtcs
+```
+
+有关身份验证和分页的详细信息，请参阅[公共 API](/zh-cn/web-api/public-api/)。
+
+---
+
+## 相关指南
+
+- [创建 VTC 或 VBC](/zh-cn/web-docs/vtc/creating/)
+- [可见性](/zh-cn/web-docs/vtc/visibility/)
+- [公司招募](/zh-cn/web-docs/vtc/recruitment/)
+- [姊妹公司](/zh-cn/web-docs/vtc/sister-companies/)

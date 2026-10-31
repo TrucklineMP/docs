@@ -57,6 +57,7 @@ Modules: `web-docs/`, `web-api/`, `game-docs/`, `game-sdk/`, plus the homepage `
 | `pl` | `pl` | Polski |
 | `de` | `de` | Deutsch |
 | `fr` | `fr` | Français |
+| `zh-cn` | `zh-CN` | 简体中文 |
 | `ta` | `ta` | தமிழ் |
 | `tr` | `tr` | Türkçe |
 | `pt` | `pt-PT` | Português (Portugal) |

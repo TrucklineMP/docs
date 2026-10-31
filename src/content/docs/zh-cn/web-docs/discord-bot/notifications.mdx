@@ -1,0 +1,67 @@
+---
+title: Discord 通知
+description: 当您的账户已关联时，您将通过 Discord 私信接收 TrucklineMP 网站通知。
+version: 1.2.0
+lastUpdated: 2026-10-30
+---
+当您的 Discord 账户与 TrucklineMP 关联后，**TrucklineMP Discord 机器人**可将某些网站通知以 **Discord 私信** 的形式转发给您。
+
+此功能与 [VTC 公告](/zh-cn/web-docs/vtc/announcements/) 网络钩子（会发布到**您**的 VTC 服务器的频道）是相互独立的。Discord 通知是平台机器人发送的个人私信。
+
+---
+
+## 要求
+
+1. 在 trucklinemp.com 的[连接设置](/zh-cn/web-docs/account/connections/) 中已关联 Discord
+2. 在您的 Discord 隐私设置中，允许 TrucklineMP / 服务器成员发送私信
+3. 通知类型必须支持通过 Discord 转发（并非所有通知都会同步）
+
+---
+
+## 工作原理
+
+1. TrucklineMP 上发生某项操作（例如应用更新、活动通知等）
+2. 您的通知列表（网站铃铛图标）中新增一条记录
+3. 机器人获取该通知，并发送一条包含网站链接的私信嵌入消息
+4. 该通知被标记为“已通过 Discord 发送”，以避免重复
+
+如果您离线，机器人会在恢复后补发近期未发送的通知。
+
+---
+
+## 私信样式
+
+私信采用嵌入消息形式，包含：
+
+- 简短的标题和描述
+- 指向 trucklinemp.com 相关页面的链接
+- TrucklineMP 品牌标识
+
+此类消息仅供参考。回复私信并非支持渠道。如需工作人员帮助，请使用[支持工单](/zh-cn/web-docs/account/support-tickets/)。
+
+---
+
+## 故障排查
+
+### 未收到私信，但网站铃铛通知正常
+
+- 确认您在设置中仍已关联 Discord
+- 打开 Discord 的**用户设置 > 隐私与安全**，并允许接收私信
+- 如果您之前屏蔽过 TrucklineMP 机器人，请取消屏蔽
+- 在“连接设置”中重新关联 Discord
+
+### 离开某个服务器后不再收到私信
+
+个人通知私信并不要求您必须留在特定服务器中。如果问题仍然存在，请重新授权连接。
+
+### 消息重复或丢失
+
+机器人每条通知只会发送一次。如果通知数量不一致，请刷新网站铃铛。高负载期间，缺失的私信可能会稍晚送达。
+
+---
+
+## 相关指南
+
+- [通知](/zh-cn/web-docs/account/notifications/) - 网站铃铛
+- [Discord 连接流程](/zh-cn/web-docs/discord-bot/connection-flows/) - 关联操作与“已关联角色”的区别
+- [连接设置](/zh-cn/web-docs/account/connections/)

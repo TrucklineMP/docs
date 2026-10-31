@@ -1,0 +1,339 @@
+---
+title: TypeScript SDK
+description: 官方 @trucklinemp/sdk 指南 - 公共 API 客户端、类型化模型、分页、OAuth、网络钩子、错误和配置。
+version: 2.0.0
+lastUpdated: 2026-10-30
+---
+`@trucklinemp/sdk` 是用于 TrucklineMP 集成的官方 TypeScript 和 JavaScript 工具包。它涵盖：
+
+- **公共 API** 客户端（`Truckline`），包含类型化模型、重试和分页辅助功能
+- **OAuth** 辅助功能（`TrucklineOAuth`、PKCE），用于用户登录
+- **网络钩子** 签名验证和交付处理程序（Node.js）
+
+[OpenAPI 规范](https://trucklinemp.com/api/v1/openapi) 仍然是所有字段的权威来源。SDK 会跟踪常见资源，并有意保持精简。
+
+| | |
+|---|---|
+| 包 | `@trucklinemp/sdk` |
+| 版本 | 0.2.x |
+| 注册表 | [npmjs.com](https://www.npmjs.com/package/@trucklinemp/sdk) |
+| 仓库 | [github.com/trucklinemp/sdk](https://github.com/trucklinemp/sdk) |
+| 许可证 | MIT |
+| 运行环境 | Node.js 18+（全局 `fetch`）；HTTP 客户端支持浏览器环境 |
+
+## 安装
+
+```bash
+npm install @trucklinemp/sdk
+```
+
+### 入口点
+
+| 导入 | 内容 |
+|--------|----------|
+| `@trucklinemp/sdk` | 完整客户端、模型、错误；OAuth 和网络钩子已重新导出 |
+| `@trucklinemp/sdk/oauth` | 仅 OAuth / PKCE |
+| `@trucklinemp/sdk/webhooks` | 仅网络钩子验证 / 处理程序（使用 Node `crypto`） |
+
+当您希望减少依赖范围时（例如在独立服务中使用 OAuth），建议使用子路径导入。
+
+## 快速开始（公共 API）
+
+1. 在 [开发者控制台](https://trucklinemp.com/developer) 中启用开发者模式并创建项目。
+2. 创建 API 密钥（`tlmp_api_...`）并安全存储。
+3. 调用 API：
+
+```ts
+import { Truckline, TrucklineError } from "@trucklinemp/sdk";
+
+const tl = new Truckline({
+  apiKey: process.env.TRUCKLINE_API_KEY,
+});
+
+console.log(tl.version); // SDK 版本字符串
+
+const { user } = await tl.users.get("some-handle");
+console.log(user.webId, user.steamId, user.name);
+
+const bySteam = await tl.users.getBySteam("76561198000000000");
+
+try {
+  await tl.vtcs.get("missing-vtc");
+} catch (err) {
+  if (err instanceof TrucklineError) {
+    console.error(err.status, err.code, err.requestId, err.message);
+    if (err.isRateLimited) console.error("retry after", err.retryAfter);
+  }
+}
+```
+
+匿名调用适用于许多公共路由，但速率限制较低。生产环境中请务必发送密钥。
+
+## 配置
+
+```ts
+new Truckline({
+  apiKey: "tlmp_api_...",
+  baseUrl: undefined,              // 默认 https://api.trucklinemp.com
+  timeoutMs: 30_000,
+  maxRetries: 1,                   // 在 429 和 5xx 时重试
+  retryOnServerError: true,
+  headers: { "X-App": "my-bot" },
+  userAgent: "my-bot/1.0",         // 仅 Node.js；默认包含 SDK 版本
+  debug: false,
+  onRequest: ({ method, url, attempt }) => {},
+  onResponse: ({ status, requestId, durationMs }) => {},
+  fetch: customFetch,              // 可选
+});
+```
+
+### 基础 URL
+
+| 选项 | 基础 URL |
+|--------|----------|
+| 默认 | `https://api.trucklinemp.com` |
+
+**不要** 在 `api.trucklinemp.com` 后额外添加 `/v1`。请参阅 [公共 API 基础 URL](/zh-cn/web-api/public-api/#基础-url)。
+
+### 速率限制信息
+
+请求后，检查最后解析的速率限制标头：
+
+```ts
+await tl.meta.version();
+console.log(tl.lastRateLimit);
+// { retryAfter, limit, remaining, reset }
+```
+
+## 类型化模型
+
+该包导出了公共负载的 TypeScript 类型（随着 API 扩展，结构可能会增加；可选字段仍为可选）：
+
+- 用户：`PublicUser`、`PublicUserSearchResult`、`PublicUserBans` 等
+- VTC / 成员：`VtcListItem`、`VtcMember`、`VtcNewsItem`、`VtcRole`
+- 事件：`PublicEvent`、`PublicEventAttendee`、`PublicEventSlot`
+- 新闻、封禁、合作伙伴、徽章、游戏服务器、OAuth 用户信息、网络钩子交付
+
+来自 API 的日期被类型化为 ISO 字符串（`IsoDateString`）。
+
+示例：
+
+```ts
+import type { PublicUser } from "@trucklinemp/sdk";
+
+const { user } = await tl.users.get("driver");
+const profile: PublicUser = user;
+```
+
+## 资源
+
+### 元数据 / 平台
+
+```ts
+await tl.meta.version();
+await tl.meta.status();
+await tl.meta.stats();
+await tl.meta.partners();
+await tl.meta.rules();
+await tl.meta.session();
+await tl.meta.recruitmentOpen();
+```
+
+### 用户
+
+```ts
+await tl.users.search({ q: "alex", page: 1, limit: 20 });
+await tl.users.get("handle-or-id-or-steamId64");
+await tl.users.getBySteam("7656119…");
+await tl.users.resolve("handle");          // 返回 PublicUser
+await tl.users.batch(["id1", "id2"]);      // 自动以 50 为分块大小
+await tl.users.bans(userId);
+await tl.users.events(userId, { tab: "upcoming" });
+
+for await (const page of tl.users.iterateSearch({ q: "a", limit: 20 })) {
+  console.log(page.length);
+}
+
+const allMatches = await tl.users.searchAll({ q: "a", maxItems: 100 });
+```
+
+公共用户对象在账户已关联时会包含 **`steamId`**。
+
+### VTC
+
+```ts
+await tl.vtcs.list({ limit: 20, q: "logistics" });
+await tl.vtcs.get("handle-or-id");
+await tl.vtcs.batch([1, 2, 3]);
+await tl.vtcs.members("handle");
+await tl.vtcs.news(vtcId);
+await tl.vtcs.events(vtcId);
+await tl.vtcs.roles(vtcId);
+await tl.vtcs.gallery(vtcId);
+await tl.vtcs.tier(vtcId);
+await tl.vtcs.liveEvents(vtcId);
+await tl.vtcs.upcomingEvents(vtcId);
+
+for await (const members of tl.vtcs.iterateMembers("my-vtc", { limit: 50 })) {
+  for (const m of members) console.log(m.name, m.steamId);
+}
+
+const everyVtc = await tl.vtcs.listAll({ maxPages: 10 });
+```
+
+### 事件、新闻、封禁、项目、游戏
+
+```ts
+await tl.events.list();
+await tl.events.get(eventId);
+await tl.events.attendees(eventId);
+await tl.events.slots(eventId);
+
+await tl.news.list();
+await tl.news.get(newsId);
+
+await tl.bans.list({ page: 1, pageSize: 25, q: "cheat" });
+await tl.bans.get(banId);
+for await (const page of tl.bans.iterate({ pageSize: 50 })) { /* … */ }
+
+await tl.programs.badge("bug-hunter");
+await tl.programs.recognition();
+await tl.game.servers();
+```
+
+### 自由调用
+
+```ts
+await tl.get("/version");
+await tl.request("GET", "/vtcs", { query: { limit: 5 } });
+await tl.post("/path", { body: { … } }); // 如果未来有已记录的写入路由
+```
+
+## 错误和重试
+
+失败的 HTTP 响应会抛出 `TrucklineError`：
+
+| 字段 / 标志 | 含义 |
+|--------------|---------|
+| `status` | HTTP 状态码（`0` 表示网络 / 超时 / 中止） |
+| `code` | API 或客户端代码（`NOT_FOUND`、`TIMEOUT`、`ABORTED` 等） |
+| `requestId` | 用于支持的关联 ID |
+| `retryAfter` | 存在时从 `Retry-After` 获取的秒数 |
+| `details` | 额外的 API 负载 |
+| `isRateLimited` / `isNotFound` / `isUnauthorized` / `isForbidden` | 辅助判断 |
+| `isTimeout` / `isNetworkError` / `isServerError` / `isValidationError` | 辅助判断 |
+
+默认重试：在 **429** 和 **5xx** 时最多重试 `maxRetries` 次（默认 `1`），并采用随机退避。设置 `maxRetries: 0` 可禁用重试。当 `maxRetries > 0` 时，网络故障也会重试。
+
+平台限制表：[速率限制](/zh-cn/web-api/public-api/#速率限制)。
+
+## OAuth
+
+当您需要**以登录用户身份**获取数据时（仅使用 API 密钥无法实现），请使用 OAuth。完整产品流程请参阅：[OAuth 应用](/zh-cn/web-api/oauth-apps/)。
+
+```ts
+import { TrucklineOAuth, generatePkce } from "@trucklinemp/sdk/oauth";
+
+const oauth = new TrucklineOAuth({
+  clientId: process.env.CLIENT_ID!,
+  clientSecret: process.env.CLIENT_SECRET, // 对于公开 + PKCE 客户端可省略
+  redirectUri: "https://myapp.com/callback",
+  // siteUrl: "https://trucklinemp.com",
+});
+
+const pkce = generatePkce();
+const url = oauth.getAuthorizeUrl({
+  scope: ["profile", "vtc:read", "presence:read"],
+  state: "csrf-token",
+  codeChallenge: pkce.codeChallenge,
+});
+
+// 重定向后：
+const tokens = await oauth.exchangeCode(code, {
+  codeVerifier: pkce.codeVerifier,
+});
+const me = await oauth.userinfo(tokens.access_token);
+console.log(me.sub, me.steam_id, me.handle);
+
+const refreshed = await oauth.refresh(tokens.refresh_token!);
+await oauth.revoke(tokens.access_token, "access_token");
+```
+
+重定向 URI 规则（本地主机 / 私有局域网 / https）：[OAuth 应用 - 重定向 URI](/zh-cn/web-api/oauth-apps/#重定向-uri-规则)。
+
+使用 `profile` 范围的 `userinfo` 在账户已关联时会包含 `steam_id`。
+
+## 网络钩子（Node.js）
+
+交付内容使用 HMAC-SHA256 对**原始负载**进行签名：
+
+```
+X-TrucklineMP-Signature: sha256=<hex>
+X-TrucklineMP-Event: user.banned
+X-TrucklineMP-Delivery: <id>
+```
+
+```ts
+import {
+  createWebhookHandler,
+  verifyWebhookSignature,
+  WEBHOOK_SIGNATURE_HEADER,
+} from "@trucklinemp/sdk/webhooks";
+
+const handle = createWebhookHandler({
+  secret: process.env.WEBHOOK_SECRET!,
+  onEvent: async (event, meta) => {
+    console.log(meta.type, meta.deliveryId, event);
+  },
+});
+
+// Express：使用 express.raw() 以避免提前解析主体
+app.post("/hooks/truckline", express.raw({ type: "*/*" }), async (req, res) => {
+  const result = await handle({ rawBody: req.body, headers: req.headers });
+  res.status(result.ok ? 200 : 401).json(result);
+});
+```
+
+低级调用：
+
+```ts
+verifyWebhookSignature(rawBody, req.headers[WEBHOOK_SIGNATURE_HEADER], secret);
+```
+
+事件目录和重试：[网络钩子](/zh-cn/web-api/webhooks/)。
+
+## 示例
+
+在 SDK 仓库中（执行 `npm run build` 后）：
+
+| 文件 | 用途 |
+|------|---------|
+| `examples/basic.mjs` | 版本 + 用户搜索 |
+| `examples/oauth-pkce.mjs` | 打印授权 URL + 验证器 |
+| `examples/webhook-express.mjs` | 最小化 Express 接收器 |
+
+## 版本控制
+
+- **SDK** 的方法、选项和错误类遵循语义化版本控制（`Truckline.VERSION` / 包版本）。
+- **服务器** JSON 字段可能会演进；新出现的可选字段应视为可选。
+- 客户端的破坏性变更将通过主版本发布。请参阅包的 [变更日志](https://github.com/trucklinemp/sdk/blob/main/CHANGELOG.md)。
+
+## 隐私
+
+使用您密钥的 API 流量会受到与原始 HTTP 相同的日志记录和速率限制。请参阅[隐私政策](https://id.trucklinemp.com/legal/privacy)和[公共 API](/zh-cn/web-api/public-api/) 的遥测说明。
+
+## 贡献
+
+包结构、PR 和添加方法：[为 TypeScript SDK 做出贡献](/zh-cn/web-api/sdk-contributing/)。
+
+## 相关指南
+
+| 指南 | 主题 |
+|-------|--------|
+| [平台概览](/zh-cn/web-api/overview/) | 开发者模式、集成类型 |
+| [公共 API](/zh-cn/web-api/public-api/) | 身份验证、基础 URL、速率限制、端点映射 |
+| [OAuth 应用](/zh-cn/web-api/oauth-apps/) | 授权、令牌、作用域、重定向 URI |
+| [网络钩子](/zh-cn/web-api/webhooks/) | 事件、签名、重试 |
+| [开发者控制台](/zh-cn/web-api/console/) | 项目、密钥、游乐场 |
+| [为 SDK 做出贡献](/zh-cn/web-api/sdk-contributing/) | 本地设置和 PR |
+| [泄露的 API 密钥和秘密](/zh-cn/web-api/leaked-secrets/) | 泄露后的轮换 |

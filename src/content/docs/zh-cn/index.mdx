@@ -1,0 +1,73 @@
+---
+title: TrucklineMP 文档
+description: TrucklineMP 官方文档，包括 Web 文档、Web SDK，以及即将推出的游戏文档和 SDK。
+version: 1.3.0
+lastUpdated: 2026-10-31
+template: splash
+hero:
+  tagline: 专为虚拟卡车与客车社区打造的多人游戏平台。
+  image:
+    file: ../../../assets/truckline_large_no_shadow.svg
+    alt: TrucklineMP
+---
+
+import ModuleGrid from '../../../components/ModuleGrid.astro';
+import ModuleCard from '../../../components/ModuleCard.astro';
+import ContributorAvatars from '../../../components/ContributorAvatars.astro';
+
+<div class="home-statement-section">
+	<p class="home-eyebrow">文档中心</p>
+	<p class="home-statement-text">
+		从下方选择一个模块开始使用。每个模块都有独立的文档，让你专注于所需内容。
+	</p>
+</div>
+
+<ModuleGrid>
+	<ModuleCard
+		title="Web 文档"
+		tag="平台"
+		icon="open-book"
+		status="available"
+		statusLabels={{ available: '可用', soon: '即将推出' }}
+		ctaLabel="查看"
+		href="/zh-cn/web-docs/vtc/creating/"
+		description="VTC 或 VBC 管理指南，包括招募、活动、Discord 集成和账户管理。"
+	/>
+	<ModuleCard
+		title="Web API"
+		tag="开发者"
+		icon="setting"
+		status="available"
+		statusLabels={{ available: '可用', soon: '即将推出' }}
+		ctaLabel="查看"
+		href="/zh-cn/web-api/overview/"
+		description="接入 TrucklineMP，涵盖公共 API、TypeScript SDK、OAuth 应用和 Webhook。"
+	/>
+	<ModuleCard
+		title="游戏文档"
+		tag="游戏内"
+		icon="rocket"
+		status="soon"
+		statusLabels={{ available: '可用', soon: '即将推出' }}
+		ctaLabel="查看"
+		href="/zh-cn/game-docs/"
+		description="TrucklineMP 游戏内配套模组文档。"
+	/>
+	<ModuleCard
+		title="游戏 SDK"
+		tag="开发者"
+		icon="puzzle"
+		status="soon"
+		statusLabels={{ available: '可用', soon: '即将推出' }}
+		ctaLabel="查看"
+		href="/zh-cn/game-sdk/"
+		description="基于 TrucklineMP 游戏集成开发工具和模组。"
+	/>
+</ModuleGrid>
+
+<ContributorAvatars
+	heading="由你共同成就"
+	subheading="TrucklineMP 源于热爱，由活跃的社区共同驱动。"
+	caption="部分开源文档贡献者。"
+	emptyState="未找到 GitHub 贡献者。"
+/>

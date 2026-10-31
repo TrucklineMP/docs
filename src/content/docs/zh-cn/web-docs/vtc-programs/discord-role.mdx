@@ -1,0 +1,166 @@
+---
+title: 已验证 VTC Discord 角色
+description: 已验证 VTC 所有者如何申请 TrucklineMP 主 Discord 服务器上的“已验证 VTC 管理者/所有者”角色、提名一名管理者，以及保持该角色有效状态的方法。
+version: 1.2.0
+lastUpdated: 2026-10-30
+---
+已验证 VTC 所有者可以申请 **TrucklineMP 主 Discord 服务器**上的一个特殊角色：**已验证 VTC 管理者/所有者**。此角色用于在官方社区服务器中担任 VTC 领导职务。该角色独立于您 VTC 自己的 Discord 服务器，也独立于您个人资料中的 [VTC Discord 验证](/zh-cn/web-docs/vtc/discord-verification/)。
+
+该系统完全自动化。申请将根据您的 TrucklineMP 账户和 VTC 权限进行检查。对于有效的申请，无需人工审核。
+
+---
+
+## 您将获得
+
+- **已验证 VTC 管理者/所有者**角色（位于 TrucklineMP 主 Discord 服务器）
+- 作为 [已验证 VTC](/zh-cn/web-docs/vtc-programs/verified/) 领导者的身份认可
+- 每个 VTC 最多可拥有 **两名** 角色持有者：
+  - **VTC 所有者**（必填名额）
+  - **一名可选管理者**（来自您的 VTC）
+
+---
+
+## 要求
+
+在申请角色前，请确保满足以下所有条件。
+
+### 对于 VTC 所有者（您本人）
+
+| 要求 | 详情 |
+|-------------|---------|
+| **已验证 VTC** | 您的 VTC 必须在 TrucklineMP 上获得 [已验证 VTC 计划](/zh-cn/web-docs/vtc-programs/verified/) 的批准状态 |
+| **所有权** | 您必须是 VTC 所有者。只有所有者才能提交申请 |
+| **已关联 Discord** | 您的 TrucklineMP 账户必须与您用于主服务器的 Discord 账户相关联 |
+| **已验证的关联角色** | 您必须在主 Discord 服务器上拥有 **已验证** 的 [关联角色](/zh-cn/web-docs/discord-bot/linked-roles/) |
+| **主服务器成员** | 您必须是官方 TrucklineMP Discord 的成员 |
+
+### 对于可选管理者
+
+如果您提名第二人，该人员还必须：
+
+- 是您在 TrucklineMP 上 VTC 的 **成员**
+- 在该 VTC 中担任 **管理** 职位（即拥有 VTC 管理权限的角色）
+- 其 TrucklineMP 账户必须 **已关联 Discord**
+- 在主 Discord 服务器上拥有 **已验证** 的关联角色
+- 不得已在其他 VTC 中担任此角色
+
+您不能两次提名自己。所有者名额和管理者名额是独立的。
+
+---
+
+## 如何申请角色
+
+申请需在主 TrucklineMP Discord 的专用 **已验证 VTC 角色** 频道中通过 Modbot 发布。
+
+1. 加入 [官方 TrucklineMP Discord 服务器](/zh-cn/web-docs/discord-bot/official-server/)。
+2. 完成 [Discord 关联角色](/zh-cn/web-docs/discord-bot/linked-roles/) 流程并领取 **已验证** 角色（服务器名称 → 关联角色）。
+3. 打开“已验证 VTC 角色申请”频道。
+4. 点击面板消息上的“申请角色”。
+5. 在表单中：
+   - 若仅授予您本人角色，请将管理者字段留空；或
+   - 输入您想提名的 VTC 管理者的 **Discord 用户 ID**（数字 ID，非显示名称）。
+6. 提交表单。您将收到一条包含结果的临时回复。
+
+若两个名额均获批，您和提名的管理者将在数秒内获得该角色。
+
+### 稍后提名管理者或更换管理者
+
+提交新申请，并输入不同的管理者 Discord 用户 ID。系统会替换当前已占用的管理者名额。您的所有者名额将在每次申请时更新。
+
+### 速率限制
+
+每个 Discord 账户每分钟只能提交一次申请。
+
+---
+
+## 在 TrucklineMP 上查看状态
+
+VTC 所有者可通过网站查看角色持有者信息：
+
+1. 打开您的 VTC **管理控制台**。
+2. 前往 **设置**。
+3. 滚动到 **主 Discord 角色** 部分。
+
+此部分将显示：
+
+- 您的 VTC 是否已验证
+- 谁持有 **所有者** 和 **管理者** 名额（若已分配）
+- 指向 Discord 申请频道的链接（若已配置）
+
+只有 VTC 所有者才能查看此部分。
+
+---
+
+## 角色被自动移除的情况
+
+该角色会持续被监控。一旦失去资格，角色将被立即移除。您的 VTC 或职位不再符合条件后，您将无法保留该 Discord 角色。
+
+常见移除原因：
+
+| 事件 | 结果 |
+|-------|----------------|
+| VTC 失去 **已验证** 状态 | 该 VTC 的所有角色授予均被撤销 |
+| VTC 被 **解散** | 该 VTC 的所有角色授予均被撤销 |
+| **所有权转移** | 原所有者的角色授予被撤销。新所有者需重新申请 |
+| 成员被 **移除** 出 VTC | 该成员的角色授予被撤销 |
+| 管理者 **失去管理权限** | 该管理者的角色授予被撤销 |
+| TrucklineMP 账户与 **Discord 解除关联** | 该用户的所有角色授予均被撤销 |
+| Discord 上的 **已验证** 关联角色被移除 | 在下次资格检查时，角色授予将被撤销 |
+
+验证状态被撤销后没有宽限期。请在您的 VTC 重新获得验证且仍满足所有要求后，再重新申请。
+
+---
+
+## 问题排查
+
+### “您必须拥有一个已验证的 VTC”
+
+您的 VTC 没有有效的已验证计划状态，或者您不是所有者。请在您的管理面板中检查 **验证状态**。
+
+### “您需要已验证的关联角色”
+
+通过主 Discord 上的 **服务器名称 → 关联角色** 领取 **已验证** 角色。仅在 trucklinemp.com 的 **设置 → 连接** 中关联 Discord 并不满足此要求。
+
+### “提名的用户必须拥有 VTC 管理职位”
+
+您输入的人员不是具有管理权限的 VTC 成员。请先在您的 VTC 中为其分配 **管理** 角色（或等效权限）。
+
+### “提名的管理者必须拥有已验证的关联角色”
+
+在提名前，您的管理者必须已在主服务器上完成关联角色选择流程。
+
+### “该用户已在另一个 VTC 中担任此角色”
+
+每人同一时间只能为一个 VTC 担任此角色。
+
+### “您拥有多个已验证的 VTC”
+
+自动化流程仅支持每位所有者拥有一个已验证 VTC。如遇特殊情况，请联系 Truckline 工作人员寻求帮助。
+
+### 申请成功后角色仍未出现
+
+- 请确认您所在的服务器是 **主** TrucklineMP Discord 服务器，而非员工或测试服务器。
+- 等待数秒后再次检查您的角色。
+- 若问题仍然存在，请提交 [支持工单](/zh-cn/web-docs/account/support-tickets/)，并附上您的 VTC 名称和 Discord 用户名。
+
+---
+
+## 与其他 Discord 功能的区别
+
+| 功能 | 用途 |
+|---------|---------|
+| [Discord 关联角色](/zh-cn/web-docs/discord-bot/linked-roles/) | 任何关联了 TrucklineMP 账户的成员均可选择的 **已验证** 角色 |
+| [VTC Discord 验证](/zh-cn/web-docs/vtc/discord-verification/) | 将 **您 VTC 的 Discord 服务器** 与您的 TrucklineMP VTC 个人资料相关联 |
+| **已验证 VTC 管理者/所有者**（本指南） | 为已验证 VTC 所有者及其一名管理者提供的主 TrucklineMP Discord 服务器上的领导角色 |
+
+您必须先拥有 **已验证** 的关联角色，才能申请“已验证 VTC 管理者/所有者”角色。
+
+---
+
+## 相关指南
+
+- [已验证 VTC 计划](/zh-cn/web-docs/vtc-programs/verified/)
+- [Discord 关联角色](/zh-cn/web-docs/discord-bot/linked-roles/)
+- [官方 Discord 服务器](/zh-cn/web-docs/discord-bot/official-server/)
+- [VTC 常规设置](/zh-cn/web-docs/vtc/general-settings/)
+- [VTC 角色与权限](/zh-cn/web-docs/vtc/roles-permissions/)

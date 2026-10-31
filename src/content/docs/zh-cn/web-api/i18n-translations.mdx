@@ -1,0 +1,93 @@
+---
+title: 国际化与翻译
+description: 开发者指南，介绍 Next-Intl 运行时、目录结构、翻译工作区和验证工具。
+version: 1.0.0
+lastUpdated: 2026-10-30
+---
+TrucklineMP 使用基于 [Next-Intl](https://next-intl-docs.vercel.app/) 构建的统一国际化 (i18n) 系统，用于处理多语言路由、翻译目录和翻译贡献。
+
+---
+
+## 翻译目录
+
+Web 应用中所有可翻译字符串均在 `messages/` 目录下按语言区域组织的 JSON 消息文件中定义：
+
+```
+messages/
+├── en/                   # 英语（源目录）
+│   ├── common.json
+│   ├── account.json
+│   └── ...
+├── pl/                   # 波兰语
+│   ├── common.json
+│   └── ...
+└── de/                   # 德语
+    ├── common.json
+    └── ...
+```
+
+### 格式化消息
+消息键支持标准的 ICU 翻译功能，例如插值和复数形式：
+```json
+{
+  "welcome": "欢迎回来，{username}！",
+  "memberCount": "{count, plural, =0 {无成员} =1 {1 名成员} other {# 名成员}}"
+}
+```
+
+---
+
+## 翻译工作区
+
+TrucklineMP 提供内置的工作区，用于管理和审核翻译：
+
+1. **用户工作区 (`/translations`)**：允许社区成员为其所选语言中不完整的键提交翻译贡献。
+2. **审核工作区 (`/translations/[locale]/review`)**：为翻译审核人员提供的工作流程界面，用于检查、批准或拒绝翻译提交。
+
+平台工作人员通过仅限内部使用的工具管理语言区域配置和翻译部署。
+
+---
+
+## 官方内容
+
+系统级内容（例如徽章定义、动态下拉菜单选项或平台官方规则）注册在以下位置：
+
+[official-content.ts](file:///c:/Users/olus/Desktop/truckline/Web/src/i18n/official-content.ts)
+
+开发者必须使用该模块中的辅助函数来注册系统字符串，以确保它们能被翻译运行时解析并收录到目录中。
+
+---
+
+## CLI 翻译工具
+
+开发期间，可使用多个 CLI 脚本同步、验证和检查翻译目录。
+
+### 同步目录
+将所有目标语言区域的目录（`messages/pl/*.json`、`messages/de/*.json` 等）与英语源目录结构进行同步，添加缺失的键并移除已弃用的键：
+```bash
+npm run i18n:sync
+```
+
+### 检查目录
+验证所有目录 JSON 文件是否格式正确且语法有效：
+```bash
+npm run i18n:check
+```
+
+### 验证布局占位符
+验证 ICU 格式变量（例如 `{username}`）在英语源文件与所有翻译文件之间是否完全匹配：
+```bash
+npm run i18n:layout
+```
+
+### 评估覆盖率
+计算所有已配置语言区域的翻译百分比覆盖率指标：
+```bash
+npm run i18n:coverage
+```
+
+### 验证套件
+运行全面的验证检查（包括检查、严格覆盖率、布局检查以及 `src/i18n/__tests__/` 下的单元测试），以防止通过翻译注入安全漏洞和跨站脚本 (XSS) 攻击。该套件在 CI 流程中于合并任何拉取请求前自动运行：
+```bash
+npm run i18n:verify
+```

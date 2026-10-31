@@ -1,0 +1,70 @@
+---
+title: 解散 VTC
+description: 永久解散您的虚拟运输公司，并了解成员和数据将如何处理。
+version: 1.2.0
+lastUpdated: 2026-10-30
+---
+解散操作将从 TrucklineMP 中永久移除您的 VTC。只有 **VTC 所有者** 可以执行此操作。该操作不可撤销。
+
+## 解散前须知
+
+请考虑以下替代方案：
+
+- 将所有权转移给可信赖的成员（[成员管理](/zh-cn/web-docs/vtc/member-management/)）
+- 将可见性设置为 **私密** 并停止招募（[可见性](/zh-cn/web-docs/vtc/visibility/)）
+- 暂停运营，但保留 VTC 以便未来回归
+
+当公司确定永久关闭时，才应执行解散操作。
+
+---
+
+## 如何解散
+
+1. 打开您的 VTC **管理** 面板
+2. 前往 **常规设置**（`/vtc/@handle/manage/settings`）
+3. 滚动到底部的危险操作区域
+4. 选择 **删除 VTC**
+5. 在提示时进行确认（您需要输入 VTC 名称）
+
+只有所有者才能看到此选项。
+
+---
+
+## 解散后的影响
+
+当 VTC 被解散后：
+
+- VTC 简介和管理面板将被移除
+- 所有成员都将失去该 VTC 的 membership
+- 与该 VTC 相关的新闻、活动和招募数据将根据平台政策被移除或归档
+- 该 VTC 的 Discord 服务器验证资格将被撤销
+- 有效的邀请链接将停止工作
+- 在冷却期过后，该名称可能会被重新使用（不保证）
+
+成员 **不会** 从 TrucklineMP 中被删除，他们只是不再属于已解散的 VTC。
+
+---
+
+## Discord 和公告
+
+如果您关联了 Discord 服务器：
+
+- `/vtc` 和 `/verify-server` 命令将显示该服务器已解除关联
+- 针对此 VTC 的公告 webhook 将停止发送消息
+- 如需彻底断开关联，请在解散前手动在 Discord 中解除关联
+
+请参阅 [Discord 验证](/zh-cn/web-docs/vtc/discord-verification/)。
+
+---
+
+## 工作人员解散 VTC
+
+平台工作人员可以解散违反规则的 VTC。工作人员的操作会单独记录。如果您的 VTC 被工作人员移除，请通过 [支持](/zh-cn/web-docs/account/support-tickets/) 联系我们咨询。
+
+---
+
+## 相关指南
+
+- [成员管理](/zh-cn/web-docs/vtc/member-management/) - 可考虑转移所有权作为替代方案
+- [VTC 公告](/zh-cn/web-docs/vtc/announcements/) - 解散操作可能触发 webhook 事件
+- [创建 VTC](/zh-cn/web-docs/vtc/creating/) - 解散后可重新开始创建新 VTC

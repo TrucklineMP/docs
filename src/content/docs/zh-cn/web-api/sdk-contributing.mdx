@@ -1,0 +1,188 @@
+---
+title: 为 TypeScript SDK 做出贡献
+description: 如何为 @trucklinemp/sdk 做出贡献 - 本地设置、包结构、添加端点、PR 标准和发布。
+version: 1.1.0
+lastUpdated: 2026-10-30
+---
+感谢您帮助改进 `@trucklinemp/sdk`，这是用于 TrucklineMP [公共 API](/zh-cn/web-api/public-api/)、OAuth 和 Webhook 的官方 TypeScript 和 JavaScript 工具包。
+
+本指南面向希望修改 **SDK 包本身**（添加新方法、修复错误、更新类型、修改仓库中的文档）的开发者。如果您仅需在应用中使用 SDK，请参阅 [TypeScript SDK](/zh-cn/web-api/sdk/) 指南。
+
+| | |
+|---|---|
+| 包 | `@trucklinemp/sdk` |
+| 源码 | [github.com/trucklinemp/sdk](https://github.com/trucklinemp/sdk) |
+| npm | [npmjs.com/package/@trucklinemp/sdk](https://www.npmjs.com/package/@trucklinemp/sdk) |
+| 许可证 | MIT |
+
+## 开始之前
+
+1. 对于较大的改动，请先提交 [issue](https://github.com/trucklinemp/sdk/issues)，以便维护者就设计方案达成一致。
+2. 查阅 [OpenAPI 规范](https://trucklinemp.com/api/v1/openapi.json) 和 [公共 API 指南](/zh-cn/web-api/public-api/)，了解真实的 HTTP 接口规范。SDK 是一个轻量级客户端，应严格映射公共路由，而非自行创建私有路由。
+3. 优先提交小型、专注的 pull request，而非大规模重写。
+
+## 环境要求
+
+- **Node.js 18+**（客户端依赖全局 `fetch`）
+- npm（随 Node 一同安装）
+- GitHub 账户以及 [trucklinemp/sdk](https://github.com/trucklinemp/sdk) 的 fork 版本
+
+手动集成测试可选：
+
+- TrucklineMP [开发者控制台](https://trucklinemp.com/developer) API 密钥
+
+## 克隆与安装
+
+```bash
+git clone https://github.com/YOUR_USER/sdk.git
+cd sdk
+npm install
+```
+
+如果您基于 Truckline 多仓库结构工作，该包位于 `sdk/` 目录下，脚本相同。
+
+## 脚本
+
+| 命令 | 用途 |
+|---------|---------|
+| `npm run build` | 使用 tsup 打包 → `dist/`（包含 main、`oauth` 和 `webhooks` 入口） |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm test` | Vitest 单元测试 |
+| `npm run prepublishOnly` | typecheck + test + build（维护者专用） |
+
+提交 PR 前请务必运行以下命令：
+
+```bash
+npm run typecheck
+npm test
+npm run build
+```
+
+## 包结构
+
+```
+sdk/
+├── src/
+│   ├── index.ts           # 主导出文件
+│   ├── oauth-entry.ts     # @trucklinemp/sdk/oauth
+│   ├── webhooks-entry.ts  # @trucklinemp/sdk/webhooks
+│   ├── client.ts          # Truckline 类
+│   ├── http.ts            # fetch、重试、钩子
+│   ├── resources.ts       # vtcs、用户、事件等
+│   ├── models.ts          # 公共响应类型
+│   ├── oauth.ts           # TrucklineOAuth + PKCE
+│   ├── webhooks.ts        # HMAC + 处理程序（Node crypto）
+│   ├── pagination.ts
+│   ├── batch.ts
+│   ├── errors.ts
+│   ├── types.ts
+│   └── version.ts
+├── tests/
+├── examples/
+├── dist/
+├── package.json
+└── …
+```
+
+### 设计原则
+
+- 对 HTTP 路径进行**轻量级封装**。优先使用 `this.http.get("/users/…")`，而非复杂的映射逻辑。
+- 使用 `encodeURIComponent` **编码路径段**。
+- 通过 `withOpts` 传递查询对象，使 `RequestOptions` 保持一致性。
+- 类型定义统一放在 `models.ts`，并确保与公共 API / OpenAPI 规范同步。
+- Webhook 加密逻辑保留在 `webhooks.ts`（仅限 Node 环境）。服务器端处理程序建议使用 `@trucklinemp/sdk/webhooks`。
+- OAuth 相关代码位于 `oauth.ts` 及 `/oauth` 子路径导出中。
+- 方法名或选项的破坏性变更需遵循语义化版本控制；可选响应字段可新增而不需升级主版本。
+
+## 添加公共 API 方法
+
+示例：API 新增 `GET /users/steam/{steamId}`。
+
+1. 在 OpenAPI 或网页公共路由中确认路径和参数。
+2. 在 `src/resources.ts` 的对应资源类中添加方法：
+
+```ts
+// UsersResource
+getBySteam(steamId: string, options?: RequestOptions) {
+  return this.http.get(
+    `/users/steam/${encodeURIComponent(steamId)}`,
+    options,
+  );
+}
+```
+
+3. 若引入**新的资源类**，需在 `src/client.ts` 的 `Truckline` 类中构建，且仅在调用方需要时从 `src/index.ts` 导出新类型。
+4. 若变更影响用户，需同步更新使用方文档页面（[TypeScript SDK](/zh-cn/web-api/sdk/)）。
+5. 运行 `npm run build && npm run typecheck`。
+
+### 兜底方案
+
+对于低频或仍在调整的路由，调用方可直接使用：
+
+```ts
+await tl.get("/path");
+await tl.request("GET", "/path", { query: { … } });
+```
+
+待路由稳定且常用后，建议改用命名方法。
+
+## 本地 API 快速测试
+
+```ts
+import { Truckline } from "trucklinemp-sdk"; // 或从本地 checkout 的 src/index.ts 导入
+
+const tl = new Truckline({
+  apiKey: process.env.TRUCKLINE_API_KEY,
+});
+
+console.log(await tl.meta.version());
+```
+
+**切勿提交 API 密钥**，仅使用环境变量。
+
+## Pull Request
+
+1. 从 `main` / `master`（与仓库默认分支一致）分叉并创建新分支。
+2. 确保改动范围聚焦于单一主题。
+3. 说明**修改了什么**、**为何修改**，并关联相关 API 或文档 issue。
+4. 确认 `npm run build` 和 `npm run typecheck` 通过。
+5. 若改动影响用户行为，需同步更新 README 或文档。
+
+### 提交信息风格（建议）
+
+```
+feat(sdk): 添加 users.getBySteam
+fix(sdk): 修复 news.get 的路径 ID 编码问题
+docs(sdk): 补充 webhook 原始体要求说明
+chore(sdk): 将版本升至 0.1.2
+```
+
+## 发布（维护者操作）
+
+发布流程详见仓库中的 `PUBLISH.md`。简要步骤如下：
+
+1. 在 `package.json` 中更新 `version`（使用 `npm version patch|minor|major`）。
+2. 推送到默认分支（或触发发布工作流）。
+3. CI 流程将执行构建、类型检查，并在版本更新后发布至 **公共** npm 注册表。
+
+贡献者无需 npm 发布权限。维护者将在审核通过后执行发布。
+
+## 我们不接受的内容
+
+- 针对**私有、管理员专属或需 Cookie 验证**的网页端点的封装
+- 增加包体积且无直接关联的工具库
+- 每次发布都为 OpenAPI 所有字段生成紧耦合类型（可选工具需提前讨论）
+- 提交密钥、凭证或个人令牌至仓库
+
+## 相关链接
+
+| 资源 | 链接 |
+|----------|------|
+| SDK 使用指南 | [TypeScript SDK](/zh-cn/web-api/sdk/) |
+| 公共 API | [公共 API](/zh-cn/web-api/public-api/) |
+| Webhook | [Webhook](/zh-cn/web-api/webhooks/) |
+| 开发者控制台 | [trucklinemp.com/developer](https://trucklinemp.com/developer) |
+| OpenAPI | [openapi.json](https://trucklinemp.com/api/v1/openapi.json) |
+| 文档翻译 | [贡献翻译指南](/zh-cn/web-docs/contribute/contributing/) |
+
+关于平台 API（不限于 SDK 包本身）的问题，可通过支持渠道或 trucklinemp.com 列出的开发者频道联系我们。

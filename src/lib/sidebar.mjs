@@ -16,6 +16,7 @@ export const sidebarTopics = [
       "pt-BR": "Documentação Web",
       ru: "Веб-документация",
       fr: "Documentation Web",
+      "zh-CN": "Web 文档",
     },
     link: "web-docs/vtc/creating",
     icon: "open-book",
@@ -28,6 +29,7 @@ export const sidebarTopics = [
           ru: "Программы VTC",
           de: "VTC Programme",
           fr: "Programmes VTC",
+          "zh-CN": "VTC 计划",
         },
         collapsed: false,
         items: [
@@ -41,6 +43,7 @@ export const sidebarTopics = [
               ru: "Программа верификации VTC",
               de: "Verifizierungsprogramm für VTCs",
               fr: "Programme des VTC Vérifiées",
+              "zh-CN": "认证 VTC 计划",
             },
           },
           {
@@ -53,6 +56,7 @@ export const sidebarTopics = [
               ru: "Роль Discord верифицированного VTC",
               de: "Verifizierte VTC-Discord-Rolle",
               fr: "Rôle Discord VTC Vérifiée",
+              "zh-CN": "认证 VTC Discord 身份组",
             },
           },
           {
@@ -65,6 +69,7 @@ export const sidebarTopics = [
               ru: "Партнёрская программа VTC",
               de: "Partner-VTC-Programm",
               fr: "Programme des VTC Partenaires",
+              "zh-CN": "合作伙伴 VTC 计划",
             },
           },
           {
@@ -77,6 +82,7 @@ export const sidebarTopics = [
               ru: "Правила оформления окрасок VTC",
               de: "VTC-Lackierungsrichtlinien",
               fr: "Directives de livrée VTC",
+              "zh-CN": "VTC 涂装指南",
             },
           },
         ],
@@ -88,6 +94,7 @@ export const sidebarTopics = [
           "pt-BR": "Guias de VTC",
           ru: "Руководства по VTC",
           fr: "Guides VTC",
+          "zh-CN": "VTC 指南",
         },
         collapsed: false,
         items: [
@@ -99,6 +106,7 @@ export const sidebarTopics = [
               "pt-BR": "Criar uma VTC",
               ru: "Создание VTC",
               fr: "Créer une VTC",
+              "zh-CN": "创建 VTC",
             },
           },
           {
@@ -109,6 +117,7 @@ export const sidebarTopics = [
               "pt-BR": "Diretório de VTCs",
               ru: "Каталог VTC",
               fr: "Annuaire VTC",
+              "zh-CN": "VTC 目录",
             },
           },
           {
@@ -121,6 +130,7 @@ export const sidebarTopics = [
               ru: "Общие настройки",
               de: "Allgemeine VTC-Einstellungen",
               fr: "Paramètres généraux",
+              "zh-CN": "常规设置",
             },
           },
           {
@@ -131,6 +141,7 @@ export const sidebarTopics = [
               "pt-BR": "Aparência",
               ru: "Оформление",
               fr: "Apparence",
+              "zh-CN": "外观",
             },
           },
           {
@@ -141,6 +152,7 @@ export const sidebarTopics = [
               "pt-BR": "Atividade dos Membros",
               ru: "Активность участников",
               fr: "Activité des membres",
+              "zh-CN": "成员活动",
             },
           },
           {
@@ -152,6 +164,7 @@ export const sidebarTopics = [
               pl: "Role i Uprawnienia",
               ru: "Роли и права доступа",
               fr: "Rôles et permissions",
+              "zh-CN": "角色与权限",
             },
           },
           {
@@ -163,6 +176,7 @@ export const sidebarTopics = [
               pl: "Zarządzanie Członkami",
               ru: "Управление участниками",
               fr: "Gestion des membres",
+              "zh-CN": "成员管理",
             },
           },
           {
@@ -174,6 +188,7 @@ export const sidebarTopics = [
               pl: "Rekrutacja",
               ru: "Набор участников",
               fr: "Recrutement",
+              "zh-CN": "招募",
             },
           },
           {
@@ -184,6 +199,7 @@ export const sidebarTopics = [
               "pt-BR": "Eventos",
               ru: "Мероприятия",
               fr: "Événements",
+              "zh-CN": "活动",
             },
           },
           {
@@ -194,6 +210,7 @@ export const sidebarTopics = [
               "pt-BR": "Integrações",
               ru: "Интеграции",
               fr: "Intégrations",
+              "zh-CN": "集成",
             },
           },
           {
@@ -204,6 +221,7 @@ export const sidebarTopics = [
               "pt-BR": "Notícias",
               ru: "Новости",
               fr: "Actualités",
+              "zh-CN": "新闻",
             },
           },
           {
@@ -214,6 +232,7 @@ export const sidebarTopics = [
               "pt-BR": "Galeria",
               ru: "Галерея",
               fr: "Galerie",
+              "zh-CN": "图库",
             },
           },
           {
@@ -225,6 +244,7 @@ export const sidebarTopics = [
               pl: "Ogłoszenia",
               ru: "Уведомления",
               fr: "Annonces",
+              "zh-CN": "公告",
             },
           },
           {
@@ -237,6 +257,7 @@ export const sidebarTopics = [
               ru: "Верификация Discord",
               de: "VTC-Discord-Server-Verifizierung",
               fr: "Vérification Discord",
+              "zh-CN": "Discord 验证",
             },
           },
           {
@@ -248,6 +269,7 @@ export const sidebarTopics = [
               pl: "Widoczność",
               ru: "Видимость",
               fr: "Visibilité",
+              "zh-CN": "可见性",
             },
           },
           {
@@ -258,6 +280,7 @@ export const sidebarTopics = [
               "pt-BR": "Empresas Irmãs",
               ru: "Родственные компании",
               fr: "Entreprises sœurs",
+              "zh-CN": "姊妹公司",
             },
           },
           {
@@ -268,6 +291,7 @@ export const sidebarTopics = [
               "pt-BR": "Parcerias",
               ru: "Партнёрства",
               fr: "Partenariats",
+              "zh-CN": "合作伙伴关系",
             },
           },
           {
@@ -278,6 +302,7 @@ export const sidebarTopics = [
               "pt-BR": "Registro de Atividade",
               ru: "Журнал активности",
               fr: "Journal d'activité",
+              "zh-CN": "活动日志",
             },
           },
           {
@@ -288,6 +313,7 @@ export const sidebarTopics = [
               "pt-BR": "Análises",
               ru: "Аналитика",
               fr: "Statistiques",
+              "zh-CN": "数据分析",
             },
           },
           {
@@ -298,6 +324,7 @@ export const sidebarTopics = [
               "pt-BR": "Tickets de Suporte",
               ru: "Тикеты поддержки",
               fr: "Tickets de support",
+              "zh-CN": "支持工单",
             },
           },
           {
@@ -308,6 +335,7 @@ export const sidebarTopics = [
               "pt-BR": "Dissolver uma VTC",
               ru: "Расформирование VTC",
               fr: "Dissoudre une VTC",
+              "zh-CN": "解散 VTC",
             },
           },
         ],
@@ -320,6 +348,7 @@ export const sidebarTopics = [
           pl: "Bot Discord",
           ru: "Бот Discord",
           fr: "Bot Discord",
+          "zh-CN": "Discord 机器人",
         },
         collapsed: false,
         items: [
@@ -331,6 +360,7 @@ export const sidebarTopics = [
               "pt-BR": "Fluxos de Conexão",
               ru: "Варианты подключения Discord",
               fr: "Flux de connexion",
+              "zh-CN": "连接流程",
             },
           },
           {
@@ -342,6 +372,7 @@ export const sidebarTopics = [
               pl: "Połączone Role",
               ru: "Привязанные Роли",
               fr: "Rôles liés",
+              "zh-CN": "关联身份组",
             },
           },
           {
@@ -352,6 +383,7 @@ export const sidebarTopics = [
               "pt-BR": "Notificações do Discord",
               ru: "Уведомления Discord",
               fr: "Notifications Discord",
+              "zh-CN": "Discord 通知",
             },
           },
           {
@@ -362,6 +394,7 @@ export const sidebarTopics = [
               "pt-BR": "Servidor Oficial do Discord",
               ru: "Официальный сервер Discord",
               fr: "Serveur Discord officiel",
+              "zh-CN": "官方 Discord 服务器",
             },
           },
         ],
@@ -373,6 +406,7 @@ export const sidebarTopics = [
           "pt-BR": "Guias de Conta",
           ru: "Руководства по учетным записям",
           fr: "Guides de compte",
+          "zh-CN": "账户指南",
         },
         collapsed: false,
         items: [
@@ -386,6 +420,7 @@ export const sidebarTopics = [
               ru: "Настройки профиля",
               de: "Profileinstellungen",
               fr: "Paramètres du profil",
+              "zh-CN": "个人资料设置",
             },
           },
           {
@@ -396,6 +431,7 @@ export const sidebarTopics = [
               "pt-BR": "Perfil Público",
               ru: "Публичный профиль",
               fr: "Profil public",
+              "zh-CN": "公开个人资料",
             },
           },
           {
@@ -406,6 +442,7 @@ export const sidebarTopics = [
               "pt-BR": "Diretório de Usuários",
               ru: "Каталог пользователей",
               fr: "Annuaire des utilisateurs",
+              "zh-CN": "用户目录",
             },
           },
           {
@@ -418,6 +455,7 @@ export const sidebarTopics = [
               ru: "Безопасность аккаунта",
               de: "Kontosicherheit",
               fr: "Sécurité du compte",
+              "zh-CN": "账户安全",
             },
           },
           {
@@ -429,6 +467,7 @@ export const sidebarTopics = [
               pl: "Połączenia",
               ru: "Подключённые аккаунты",
               fr: "Connexions",
+              "zh-CN": "关联账号",
             },
           },
           {
@@ -439,6 +478,7 @@ export const sidebarTopics = [
               "pt-BR": "Região e Fuso Horário",
               ru: "Регион и часовой пояс",
               fr: "Région et fuseau horaire",
+              "zh-CN": "地区与时区",
             },
           },
           {
@@ -449,6 +489,7 @@ export const sidebarTopics = [
               "pt-BR": "Notificações",
               ru: "Уведомления",
               fr: "Notifications",
+              "zh-CN": "通知",
             },
           },
           {
@@ -460,6 +501,7 @@ export const sidebarTopics = [
               pl: "Wygląd i Preferencje",
               ru: "Внешний вид и предпочтения",
               fr: "Apparence et préférences",
+              "zh-CN": "外观与偏好",
             },
           },
           {
@@ -470,6 +512,7 @@ export const sidebarTopics = [
               "pt-BR": "Tour de Boas-vindas",
               ru: "Ознакомительный тур",
               fr: "Visite guidée",
+              "zh-CN": "新手引导",
             },
           },
           {
@@ -480,6 +523,7 @@ export const sidebarTopics = [
               "pt-BR": "Supporter e Premium",
               ru: "Спонсор и Премиум",
               fr: "Supporter et Premium",
+              "zh-CN": "Supporter 与 Premium",
             },
           },
           {
@@ -490,6 +534,7 @@ export const sidebarTopics = [
               "pt-BR": "Fórum",
               ru: "Форум",
               fr: "Forum",
+              "zh-CN": "论坛",
             },
           },
           {
@@ -500,6 +545,7 @@ export const sidebarTopics = [
               "pt-BR": "Tickets de Suporte",
               ru: "Тикеты поддержки",
               fr: "Tickets de support",
+              "zh-CN": "支持工单",
             },
           },
           {
@@ -510,6 +556,7 @@ export const sidebarTopics = [
               "pt-BR": "Banimentos e Recursos",
               ru: "Баны и апелляции",
               fr: "Bans et appels",
+              "zh-CN": "封禁与申诉",
             },
           },
           {
@@ -520,6 +567,7 @@ export const sidebarTopics = [
               "pt-BR": "Status e Carteira de Motorista",
               ru: "Репутация и водительские права",
               fr: "Réputation et permis de conduite",
+              "zh-CN": "信誉与驾驶执照",
             },
           },
           {
@@ -531,6 +579,7 @@ export const sidebarTopics = [
               pl: "Usunięcie Konta",
               ru: "Удаление аккаунта",
               fr: "Suppression du compte",
+              "zh-CN": "注销账户",
             },
           },
         ],
@@ -542,6 +591,7 @@ export const sidebarTopics = [
           "pt-BR": "Guias da Plataforma",
           ru: "Руководства по платформе",
           fr: "Guides de la plateforme",
+          "zh-CN": "平台指南",
         },
         collapsed: false,
         items: [
@@ -553,6 +603,7 @@ export const sidebarTopics = [
               "pt-BR": "Notícias da Plataforma",
               ru: "Новости платформы",
               fr: "Actualités de la plateforme",
+              "zh-CN": "平台新闻",
             },
           },
           {
@@ -563,6 +614,7 @@ export const sidebarTopics = [
               "pt-BR": "Enquetes da Comunidade",
               ru: "Опросы сообщества",
               fr: "Sondages communautaires",
+              "zh-CN": "社区投票",
             },
           },
           {
@@ -573,6 +625,7 @@ export const sidebarTopics = [
               "pt-BR": "Programas e Reconhecimento",
               ru: "Программы и признание",
               fr: "Programmes et reconnaissance",
+              "zh-CN": "计划与表彰",
             },
           },
           {
@@ -583,6 +636,7 @@ export const sidebarTopics = [
               "pt-BR": "Status e Changelog",
               ru: "Статус и список изменений",
               fr: "Statut et journal des modifications",
+              "zh-CN": "服务状态与更新日志",
             },
           },
         ],
@@ -594,6 +648,7 @@ export const sidebarTopics = [
           "pt-BR": "Contribuir",
           ru: "Внесите вклад",
           fr: "Contribuer",
+          "zh-CN": "参与贡献",
         },
         collapsed: false,
         items: [
@@ -606,6 +661,7 @@ export const sidebarTopics = [
               pl: "Współtwórcy",
               ru: "Участники",
               fr: "Contributeurs",
+              "zh-CN": "贡献者",
             },
           },
           {
@@ -617,6 +673,7 @@ export const sidebarTopics = [
               pl: "Tłumacz Dokumentację",
               ru: "Перевод документации",
               fr: "Traduire la documentation",
+              "zh-CN": "翻译文档",
             },
           },
           {
@@ -627,6 +684,7 @@ export const sidebarTopics = [
               "pt-BR": "Status das Traduções",
               ru: "Статус перевода",
               fr: "Statut des traductions",
+              "zh-CN": "翻译状态",
             },
           },
         ],
@@ -640,6 +698,7 @@ export const sidebarTopics = [
       "pt-BR": "API Web",
       ru: "Веб API",
       fr: "API Web",
+      "zh-CN": "Web API",
     },
     link: "web-api/overview",
     icon: "setting",
@@ -651,6 +710,7 @@ export const sidebarTopics = [
           "pt-BR": "Primeiros Passos",
           ru: "Начало работы",
           fr: "Démarrage",
+          "zh-CN": "快速入门",
         },
         collapsed: false,
         items: [
@@ -662,6 +722,7 @@ export const sidebarTopics = [
               "pt-BR": "Visão Geral da Plataforma",
               ru: "Обзор платформы",
               fr: "Vue d'ensemble de la plateforme",
+              "zh-CN": "平台概览",
             },
           },
           {
@@ -672,6 +733,7 @@ export const sidebarTopics = [
               "pt-BR": "Console do Desenvolvedor",
               ru: "Консоль разработчика",
               fr: "Console développeur",
+              "zh-CN": "开发者控制台",
             },
           },
         ],
@@ -683,6 +745,7 @@ export const sidebarTopics = [
           "pt-BR": "API Pública",
           ru: "Публичный API",
           fr: "API publique",
+          "zh-CN": "公共 API",
         },
         collapsed: false,
         items: [
@@ -694,6 +757,7 @@ export const sidebarTopics = [
               "pt-BR": "API Pública",
               ru: "Публичный API",
               fr: "API publique",
+              "zh-CN": "公共 API",
             },
           },
           {
@@ -704,6 +768,7 @@ export const sidebarTopics = [
               "pt-BR": "Referência",
               ru: "Справочник",
               fr: "Référence",
+              "zh-CN": "API 文档",
             },
           },
           {
@@ -714,6 +779,7 @@ export const sidebarTopics = [
               "pt-BR": "Chaves de API e Segredos Expostos",
               ru: "Утечка API-ключей и секретов",
               fr: "Clés API et secrets exposés",
+              "zh-CN": "API 密钥与机密泄露",
             },
           },
         ],
@@ -725,6 +791,7 @@ export const sidebarTopics = [
           "pt-BR": "SDK TypeScript",
           ru: "TypeScript SDK",
           fr: "SDK TypeScript",
+          "zh-CN": "TypeScript SDK",
         },
         collapsed: false,
         items: [
@@ -736,6 +803,7 @@ export const sidebarTopics = [
               "pt-BR": "SDK TypeScript",
               ru: "TypeScript SDK",
               fr: "SDK TypeScript",
+              "zh-CN": "TypeScript SDK",
             },
           },
           {
@@ -746,6 +814,7 @@ export const sidebarTopics = [
               "pt-BR": "Contribuir para o SDK",
               ru: "Вклад в SDK",
               fr: "Contribuer au SDK",
+              "zh-CN": "参与 SDK 开发",
             },
           },
           {
@@ -756,6 +825,7 @@ export const sidebarTopics = [
               "pt-BR": "i18n e Traduções",
               ru: "Локализация и переводы",
               fr: "i18n et traductions",
+              "zh-CN": "国际化与翻译",
             },
           },
         ],
@@ -767,6 +837,7 @@ export const sidebarTopics = [
           "pt-BR": "Integrações",
           ru: "Интеграции",
           fr: "Intégrations",
+          "zh-CN": "集成",
         },
         collapsed: false,
         items: [
@@ -778,6 +849,7 @@ export const sidebarTopics = [
               "pt-BR": "Aplicativos OAuth",
               ru: "Приложения OAuth",
               fr: "Applications OAuth",
+              "zh-CN": "OAuth 应用",
             },
           },
           {
@@ -788,6 +860,7 @@ export const sidebarTopics = [
               "pt-BR": "Webhooks",
               ru: "Вебхуки",
               fr: "Webhooks",
+              "zh-CN": "Webhooks",
             },
           },
         ],
@@ -800,6 +873,7 @@ export const sidebarTopics = [
       fr: "Documentation du jeu",
       "pt-PT": "Documentação do Jogo",
       "pt-BR": "Documentação do Jogo",
+      "zh-CN": "游戏文档",
     },
     link: "game-docs",
     icon: "seti:asm",
@@ -810,6 +884,7 @@ export const sidebarTopics = [
           fr: "Documentation du jeu",
           "pt-PT": "Documentação do Jogo",
           "pt-BR": "Documentação do Jogo",
+          "zh-CN": "游戏文档",
         },
         collapsed: false,
         items: [
@@ -820,6 +895,7 @@ export const sidebarTopics = [
               fr: "Vue d'ensemble",
               "pt-PT": "Visão Geral",
               "pt-BR": "Visão Geral",
+              "zh-CN": "概览",
             },
           },
         ],
@@ -832,6 +908,7 @@ export const sidebarTopics = [
       fr: "SDK du jeu",
       "pt-PT": "SDK do Jogo",
       "pt-BR": "SDK do Jogo",
+      "zh-CN": "游戏 SDK",
     },
     link: "game-sdk",
     icon: "puzzle",
@@ -842,6 +919,7 @@ export const sidebarTopics = [
           fr: "SDK du jeu",
           "pt-PT": "SDK do Jogo",
           "pt-BR": "SDK do Jogo",
+          "zh-CN": "游戏 SDK",
         },
         collapsed: false,
         items: [
@@ -852,6 +930,7 @@ export const sidebarTopics = [
               fr: "Vue d'ensemble",
               "pt-PT": "Visão Geral",
               "pt-BR": "Visão Geral",
+              "zh-CN": "概览",
             },
           },
         ],
