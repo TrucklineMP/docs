@@ -1,0 +1,390 @@
+---
+title: 贡献翻译
+description: 为 TrucklineMP 文档贡献翻译的完整指南——文件结构、质量标准及提交流程。
+version: 1.4.0
+lastUpdated: 2026-10-31
+---
+
+感谢您对翻译 TrucklineMP 文档感兴趣！本指南将说明如何贡献翻译、我们期望达到哪些标准，以及如何提交您的工作。
+
+## 为什么要翻译？
+
+TrucklineMP 是一个全球性的社区。翻译我们的文档可以帮助世界各地的玩家和 VTC 经理用他们的母语了解平台的使用方法。高质量的翻译能让平台更易于使用、更亲切友好。
+
+## 加入贡献者社区
+
+想要贡献翻译或对翻译有疑问？欢迎加入我们的贡献者专属 Discord 服务器：
+
+[https://discord.gg/jsuGrx4Rbv](https://discord.gg/jsuGrx4Rbv)
+
+在这里，您可以与其他翻译者交流、提问并协调文档的翻译工作。
+
+## 文档版本控制
+
+每个文档页面都包含两个 frontmatter 字段：
+
+```yaml
+---
+title: 示例页面
+description: ...
+version: 1.2.0
+lastUpdated: 2026-07-09
+---
+```
+
+- **`version`** 用于标识页面的内容版本。当英文页面的内容发生重大变化时，其版本会随之更新。
+- **`lastUpdated`** 是文件上次编辑的日期。
+
+当您翻译或更新翻译时，**请从当前英文页面复制 `version` 字段**，并将 `lastUpdated` 设置为今天日期。如果翻译的 `version` 与英文页面一致，则会在 [翻译状态](/zh-cn/web-docs/contribute/translation-status/) 页面上显示为“当前”；如果版本不一致，则显示为“过时”，并在翻译页面上展示通知横幅。这两个字段都是必需的——如果缺少它们，CI 检查将导致拉取请求失败。
+
+## 当前支持的语言
+
+| 区域设置 | 语言 | 状态 |
+|--------|----------|--------|
+| `en` | 英语 | 源语言，始终完整 |
+| `ru` | 俄语 | 接受社区翻译，基本完成 |
+| `de` | 德语 | 接受社区翻译 |
+| `ta` | 泰米尔语 | 接受社区翻译 |
+| `tr` | 土耳其语 | 接受社区翻译 |
+| `pl` | 波兰语 | 接受社区翻译 |
+| `fr` | 法语 | 接受社区翻译 |
+
+请查看 [翻译状态](/zh-cn/web-docs/contribute/translation-status/) 页面，了解每个区域设置的当前状态。您不限于上述语言——您可以将文档翻译成任何您精通的语言。如果您的语言未在列表中，请按照下方的“添加新语言”部分操作，并联系团队以便我们添加该区域设置。
+
+---
+
+## 翻译工作原理
+
+TrucklineMP 文档使用 [Astro Starlight](https://starlight.astro.build/) 构建，该平台内置了国际化 (i18n) 支持。
+
+### 文件结构
+
+翻译文件存放在 `src/content/docs/` 下的区域设置专用文件夹中。内容按模块（`web-docs/`、`web-api/`、`game-docs/`、`game-sdk/`）组织，每个模块的翻译方式相同：
+
+```
+src/content/docs/
+├── index.mdx                     # 英文主页
+├── web-docs/
+│   ├── vtc-programs/
+│   │   ├── verified.mdx          # 英文指南
+│   │   └── ...
+│   └── ...
+└── pl/                           # 波兰语区域设置文件夹
+    ├── index.mdx                 # 波兰语主页
+    └── web-docs/
+        ├── vtc-programs/
+        │   ├── verified.mdx      # 波兰语翻译
+        │   └── ...
+        └── ...
+```
+
+### URL 结构
+
+- 英文：`https://docs.trucklinemp.com/web-docs/vtc-programs/verified/`
+- 俄语：`https://docs.trucklinemp.com/ru/web-docs/vtc-programs/verified/`
+- 德语：`https://docs.trucklinemp.com/de/web-docs/vtc-programs/verified/`
+- 泰米尔语：`https://docs.trucklinemp.com/ta/web-docs/vtc-programs/verified/`
+- 土耳其语：`https://docs.trucklinemp.com/tr/web-docs/vtc-programs/verified/`
+- 波兰语：`https://docs.trucklinemp.com/pl/web-docs/vtc-programs/verified/`
+- 法语：`https://docs.trucklinemp.com/fr/web-docs/vtc-programs/verified/`
+
+右上角的语言选择器可让用户切换可用语言。
+
+---
+
+## 可以翻译哪些内容？
+
+### 1. 指南内容
+
+`src/content/docs/web-docs/`、`web-api/`、`game-docs/` 和 `game-sdk/` 下的所有 `.mdx` 文件都可以翻译。每份英文指南都应在目标区域设置文件夹中有一个对应的文件。
+
+### 2. 主页
+
+`index.mdx` 引导页也应被翻译，以便用用户的语言向他们问好。
+
+### 3. 侧边栏标签
+
+侧边栏标签在 `src/lib/sidebar.mjs` 中按模块配置，并支持翻译：
+
+```js
+export const sidebarTopics = [
+  {
+    label: {
+      en: 'Web Docs',
+      pl: 'Dokumentacja Web',
+    },
+    link: 'web-docs/vtc/creating',
+    items: [
+      {
+        label: 'VTC Programs',
+        items: [
+          {
+            slug: 'web-docs/vtc-programs/verified',
+            label: 'Verified VTC Program',
+            translations: {
+              pl: 'Zweryfikowany Program VTC',
+            },
+          },
+        ],
+      },
+    ],
+  },
+  // ... Web API、Game Docs、Game SDK
+]
+```
+
+翻译时，请为每个分组和页面在 `translations` 对象中添加您语言的标签。顶级主题（Web Docs、Web API、Game Docs、Game SDK）是例外：它们的 `label` 本身就是一个包含每种语言条目的对象，因此不能在其上使用 `translations`。CI 会拒绝包含未知语言代码或在主题上使用 `translations` 的提交。
+
+### 4. UI 标签
+
+部分 Starlight UI 标签（如“本页内容”、“编辑页面”、“搜索”）由 Starlight 的内置翻译系统处理。如果某种语言未被 Starlight 完全支持，我们可以在配置中添加自定义的 UI 翻译。
+
+---
+
+## 开始前的准备
+
+### 要求
+- GitHub 账户
+- 基本的 Markdown 和 MDX 知识
+- 精通英语和目标语言
+- 熟悉 TrucklineMP 术语（如 VTC、车队等）
+
+### 推荐工具
+- 好用的文本编辑器（VS Code、Cursor 等）
+- Markdown 预览扩展
+- 本地安装的 Git（或使用 GitHub 网页界面）
+
+---
+
+## 翻译流程
+
+### 第 1 步：分叉仓库
+
+1. 前往 [GitHub 上的文档仓库](https://github.com/TrucklineMP/docs)
+2. 点击右上角的 **Fork**
+3. 将您的分叉仓库克隆到本地，或在 GitHub 网页界面中操作
+
+### 第 2 步：设置项目（可选）
+
+要预览您的翻译，可以打开一个拉取请求，并使用为您的分支自动生成的预览部署。构建完成后，拉取请求中将出现预览链接。
+
+### 第 3 步：选择要翻译的指南
+
+查看当前的翻译状态，选择一份尚未翻译或需要更新的指南。优先翻译的指南包括：
+
+1. 认证 VTC 计划
+2. 合作 VTC 计划
+3. VTC 通用设置
+4. 个人资料设置
+5. 账户安全
+
+### 第 4 步：创建翻译文件
+
+1. 找到英文源文件（例如 `src/content/docs/web-docs/vtc-programs/verified.mdx`）
+2. 在目标区域设置文件夹中创建对应的文件（例如 `src/content/docs/pl/web-docs/vtc-programs/verified.mdx`）
+3. 复制 frontmatter 并翻译内容
+
+### 第 5 步：保留 frontmatter 结构
+
+frontmatter 必须保持相同的结构，只需翻译其值：
+
+```mdx
+---
+title: 认证 VTC 计划规则
+description: Truckline 认证 VTC 计划的完整指南——如何申请、要求以及维持认证状态的规定。
+---
+```
+
+波兰语示例：
+
+```mdx
+---
+title: Zasady Programu Zweryfikowanych VTC
+description: Pełny przewodnik po Programie Zweryfikowanych VTC Truckline - jak aplikować, wymagania i zasady utrzymania statusu zweryfikowanego.
+---
+```
+
+### 第 6 步：翻译侧边栏标签
+
+打开 `src/lib/sidebar.mjs`，为您已翻译的指南添加翻译：
+
+```js
+{
+  slug: 'web-docs/vtc-programs/verified',
+  label: 'Verified VTC Program',
+  translations: {
+    pl: 'Zweryfikowany Program VTC',
+  },
+},
+```
+
+### 第 7 步：预览您的工作
+
+打开拉取请求中的预览部署链接，然后导航到翻译后的页面，例如 `/pl/web-docs/vtc-programs/verified/`。
+
+检查以下内容：
+- 所有内容均已翻译
+- 链接正常工作
+- 格式与源文件一致
+- 图片正常显示
+- 侧边栏标签已翻译
+
+### 第 8 步：提交拉取请求
+
+1. 提交更改时，使用清晰的提交信息：
+   ```
+   docs(pl): translate verified VTC program guide
+   ```
+2. 推送到您的分叉仓库
+3. 向原始仓库的 `main` 分支提交拉取请求
+4. 说明您翻译了哪些内容，并为审阅者添加任何备注
+
+---
+
+## 翻译标准
+
+### 准确性
+- 翻译含义，而非逐字翻译
+- 保持技术准确性
+- 格式、链接和结构与源文件完全一致
+
+### 语气
+- 与原文语气一致（专业但易于亲近）
+- 使用包容性语言
+- 除非源文件使用，否则避免过于随意的表达
+
+### 术语
+
+对 TrucklineMP 的关键术语使用一致的翻译。如有疑问，首次使用时请在括号中保留英文术语：
+
+| 英文 | 波兰语建议 |
+|---------|-------------------|
+| Virtual Trucking Company (VTC) | Wirtualna Firma Transportowa (VTC) |
+| Verified | Zweryfikowany |
+| Partnered | Partnerski |
+| Member | Członek |
+| Role | Rola |
+| Recruitment | Rekrutacja |
+| Profile | Profil |
+| Two-Factor Authentication | Uwierzytelnianie Dwuskładnikowe |
+
+### 代码和 URL
+
+**不要**翻译以下内容：
+- URL
+- 文件路径
+- 代码片段
+- 电子邮件地址
+- Discord 邀请链接
+- 技术参数名称
+
+### 链接
+- 内部链接应指向可用的翻译版本
+- 示例：`/web-docs/vtc-programs/verified/` → `/pl/web-docs/vtc-programs/verified/`
+- 外部链接应保持原样
+
+### 图片
+- 不要翻译图片文件名
+- 替代文本应被翻译
+- 如果截图中包含文本，请考虑提供本地化版本
+
+---
+
+## 质量检查清单
+
+提交翻译前，请确认：
+
+- [ ] frontmatter 已保留并被翻译
+- [ ] 所有标题均已翻译
+- [ ] 所有正文内容均已翻译
+- [ ] 链接指向正确的区域设置
+- [ ] 代码块和 URL 未作修改
+- [ ] `src/lib/sidebar.mjs` 中的侧边栏标签已更新
+- [ ] 指向标题的链接使用了翻译后标题的锚点（例如 `#перед-тем-как-начать`，而非 `#before-you-start`）
+- [ ] 页面在拉取请求的预览中能正确渲染
+- [ ] 没有格式错误或 Markdown 错误
+- [ ] 术语全文一致
+
+---
+
+## 更新翻译
+
+当英文源文件更新时，翻译可能会变得过时。请通过以下方式帮助保持翻译的时效性：
+
+1. 检查英文源文件是否有更改
+2. 将相同的更改应用到翻译文件
+3. 必要时更新 frontmatter
+4. 提交拉取请求并附上清晰的说明
+
+---
+
+## 添加新语言
+
+您可以将文档翻译成任何语言。如果您的语言目前尚不支持，可以自行添加。
+
+### 步骤
+
+1. 在 Discord 上**联系团队**，告知我们正在开发新语言的翻译
+2. 我们会将您的区域设置添加到 `src/lib/locales.mjs`
+3. 在 `src/content/docs/` 下创建区域设置文件夹（例如德语为 `de/`）
+4. 翻译核心指南
+5. 提交拉取请求
+
+虽然添加新语言没有必须翻译多少指南的硬性要求，但我们建议至少从以下指南开始：
+
+- 主页 (`index.mdx`)
+- 认证 VTC 计划
+- 合作 VTC 计划
+- VTC 通用设置
+- 个人资料设置
+
+### 区域设置配置
+
+新的区域设置在 `src/lib/locales.mjs` 中添加。以下条目会将该语言注册到 Starlight、文档验证、过时翻译横幅以及翻译状态页面：
+
+```js
+export const translationLocales = {
+  ru: { label: 'Русский', lang: 'ru', englishName: 'Russian' },
+  pl: { label: 'Polski', lang: 'pl', englishName: 'Polish' },
+  // ...
+  pt: { label: 'Português', lang: 'pt', englishName: 'Portuguese' },
+};
+```
+
+请确保为您的区域设置使用正确的 [BCP 47 语言标签](https://en.wikipedia.org/wiki/IETF_language_tag)。
+
+---
+
+## 常见错误
+
+### 错误翻译 URL
+错误：`/pl/przewodniki/zweryfikowany-program-vtc/`  
+正确：`/pl/web-docs/vtc-programs/verified/`
+
+### 遗漏 frontmatter
+错误：缺少 `title` 或 `description`  
+正确：为目标语言提供完整的 frontmatter
+
+### 术语不一致
+错误：一处使用 "weryfikacja"，另一处使用 "zweryfikowanie"  
+正确：全文使用一致的术语
+
+### 破坏 Markdown 格式
+错误：删除标题中的 `#` 或破坏表格  
+正确：保留所有 Markdown 格式
+
+---
+
+## 获取帮助
+
+如果您对翻译有任何疑问：
+
+- **Discord:** [https://discord.gg/trucklinemp](https://discord.gg/trucklinemp)
+- **GitHub Issues:** 在文档仓库中提交 issue
+- **拉取请求讨论:** 在现有的 PR 中评论以获取反馈
+
+---
+
+## 致谢
+
+翻译者和贡献者将在 [贡献者](/zh-cn/web-docs/contribute/contributors/) 页面上获得署名。感谢您帮助 TrucklineMP 让所有人都能轻松使用！

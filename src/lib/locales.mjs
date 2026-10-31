@@ -12,6 +12,7 @@ export const translationLocales = {
 	pl: { label: 'Polski', lang: 'pl', englishName: 'Polish' },
 	de: { label: 'Deutsch', lang: 'de', englishName: 'German' },
 	fr: { label: 'Français', lang: 'fr', englishName: 'French' },
+	'zh-cn': { label: '简体中文', lang: 'zh-CN', englishName: 'Chinese (Simplified)' },
 	ta: { label: 'தமிழ்', lang: 'ta', englishName: 'Tamil' },
 	tr: { label: 'Türkçe', lang: 'tr', englishName: 'Turkish' },
 	pt: { label: 'Português (Portugal)', lang: 'pt-PT', englishName: 'Portuguese (Portugal)' },

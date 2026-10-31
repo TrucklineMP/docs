@@ -1,0 +1,156 @@
+---
+title: Webhooks
+description: 订阅 TrucklineMP 平台事件，验证 HMAC 签名并处理自动重试。
+version: 1.2.0
+lastUpdated: 2026-10-30
+---
+当 TrucklineMP 上发生任何变化时，Webhooks 会将事件通知推送到您的 HTTP 端点。您可以在 [开发者控制台](https://trucklinemp.com/developer/webhooks) 中配置 Webhooks。
+
+Webhooks 是对公共 API 的补充。您可以使用 API 按需轮询或获取数据，而当您的服务需要即时响应平台变化时，则应使用 Webhooks。
+
+## 创建 Webhook
+
+1. 在开发者控制台中打开 **Webhooks**。
+2. 点击 **创建 Webhook**。
+3. 输入名称、HTTPS 端点 URL，并选择您想要订阅的事件。
+4. 在显示 **签名密钥** 时将其复制保存。您需要它来验证事件推送。
+
+每个 Webhook 都归属于您的开发者账户。您可以为不同环境（如预发布环境、生产环境）创建多个端点。
+
+## 推送格式
+
+TrucklineMP 会发送一个包含 JSON 有效负载的 HTTP `POST` 请求：
+
+```json
+{
+  "event": "vtc.member_joined",
+  "event_id": "550e8400-e29b-41d4-a716-446655440000",
+  "timestamp": "2026-06-30T12:00:00.000Z",
+  "data": {
+    "vtcId": 42,
+    "userId": "user_abc",
+    "role": "Driver"
+  }
+}
+```
+
+### 请求标头
+
+| 标头 | 说明 |
+|------|------|
+| `Content-Type` | `application/json` |
+| `X-TrucklineMP-Signature` | HMAC-SHA256 签名（格式为 `sha256=<hex>`） |
+| `X-TrucklineMP-Event` | 事件类型（例如 `vtc.member_joined`） |
+| `X-TrucklineMP-Delivery` | 唯一推送 ID（与 `event_id` 一致） |
+
+您还可以在 Webhook 设置中附加自定义标头。敏感标头名称（如 `Authorization`、`Cookie` 及类似名称）会从推送日志中移除。
+
+## 验证签名
+
+使用您的 Webhook 密钥对 **原始请求有效负载** 计算预期签名：
+
+```
+expected = "sha256=" + HMAC_SHA256(secret, raw_body)
+```
+
+使用恒定时间比较函数将 `expected` 与 `X-TrucklineMP-Signature` 标头进行比较。在解析有效负载前，拒绝签名无效的请求。
+
+示例（Node.js）：
+
+```javascript
+import { createHmac, timingSafeEqual } from "crypto";
+
+function verifySignature(rawBody, signatureHeader, secret) {
+  const expected = "sha256=" + createHmac("sha256", secret).update(rawBody).digest("hex");
+  if (!signatureHeader || signatureHeader.length !== expected.length) return false;
+  return timingSafeEqual(Buffer.from(signatureHeader), Buffer.from(expected));
+}
+```
+
+## 重试
+
+失败的推送会自动重试。默认重试延迟如下：
+
+| 尝试次数 | 失败后延迟时间 |
+|----------|----------------|
+| 1 | 30 秒 |
+| 2 | 2 分钟 |
+| 3 | 10 分钟 |
+
+当您的端点返回 HTTP `2xx` 状态码时，推送即视为成功。重定向（`3xx`）会被视为失败。每次尝试的默认超时时间为 30 秒。
+
+您可以在控制台中查看推送历史记录和状态。使用 **发送测试** 可向您的端点触发一个 `webhook.test` 事件。
+
+## 事件目录
+
+请仅订阅您的集成所需的事件。
+
+### 用户
+
+| 事件 | 说明 |
+|------|------|
+| `user.updated` | 用户资料已更新 |
+| `user.banned` | 用户已被封禁 |
+| `user.unbanned` | 用户的封禁已被解除 |
+
+### VTC
+
+| 事件 | 说明 |
+|------|------|
+| `vtc.created` | 已创建新的 VTC |
+| `vtc.member_joined` | 用户已加入 VTC |
+| `vtc.member_left` | 用户已离开 VTC |
+| `vtc.updated` | VTC 详细信息已更新 |
+
+### 活动
+
+| 事件 | 说明 |
+|------|------|
+| `event.created` | 已发布新活动 |
+| `event.updated` | 活动已更新 |
+| `event.cancelled` | 活动已取消 |
+| `event.rsvp` | 用户已对活动作出回应 |
+
+### 审核管理
+
+| 事件 | 说明 |
+|------|------|
+| `ban.issued` | 已执行封禁 |
+| `ban.appealed` | 已提交封禁申诉 |
+| `ban.appeal_resolved` | 封禁申诉已处理完毕 |
+
+### API（账户级别）
+
+| 事件 | 说明 |
+|------|------|
+| `api.rate_limit_hit` | 您的某个 API 令牌已达到速率限制 |
+| `api.token_revoked` | API 令牌已被吊销 |
+
+### 测试
+
+| 事件 | 说明 |
+|------|------|
+| `webhook.test` | 通过控制台手动发送的测试推送 |
+
+不同事件的有效负载字段可能有所不同。请将 `data` 视为事件特定的对象，并忽略未知字段以确保向前兼容。
+
+## 端点要求
+
+- 生产环境必须使用 **HTTPS**。
+- 应快速返回 `2xx` 状态码。繁重任务应移至后台队列处理。
+- 只有在确认已接收有效负载后才能返回 `2xx`。TrucklineMP 不会对已成功推送的事件进行重试。
+- 接收端不应执行重定向。重定向响应将导致推送失败。
+
+平台会阻止私有网络 URL 和不安全的目的地。
+
+## VTC 公告 Webhooks（独立功能）
+
+VTC 所有者可以通过其 VTC 管理面板配置 **Discord 公告 Webhooks**。当 VTC 发生事件（如成员加入、申请等）时，这些 Webhooks 会将格式化的嵌入消息发布到 Discord。
+
+开发者控制台中的 Webhooks 与此不同，它们是供您的集成代码使用的账户级别 HTTP 端点。有关 Discord 相关功能的详细信息，请参阅 [VTC 公告](/zh-cn/web-docs/vtc/announcements/)。
+
+## 相关指南
+
+- [开发者平台概览](/zh-cn/web-api/overview/)
+- [公共 API](/zh-cn/web-api/public-api/)
+- [OAuth 应用](/zh-cn/web-api/oauth-apps/)

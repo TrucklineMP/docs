@@ -1,0 +1,104 @@
+---
+title: 公开个人资料
+description: 了解您的 TrucklineMP 公开个人资料选项卡、徽章、动态以及他人可见的内容。
+version: 1.2.0
+lastUpdated: 2026-10-30
+---
+您的公开个人资料是其他驾驶员在 TrucklineMP 上看到您的方式。它整合了您的身份、VTC 会员资格、社区动态以及信誉信息。
+
+## 打开个人资料
+
+- 您的个人资料：点击您的头像，或访问 `trucklinemp.com/user/me`（该链接会重定向至您的用户名或 WebID 网址）
+- 其他用户的个人资料：`trucklinemp.com/@handle` 或 `/user/{webId}`
+- 通过 [用户目录](/zh-cn/web-docs/account/user-directory/)
+
+---
+
+## 个人资料页眉
+
+页眉显示以下内容：
+
+- 头像和显示名称
+- 用户名 (`@username`)
+- WebID
+- 员工或项目徽章
+- 生效中的封禁或停封横幅（如适用）
+- 已连接且可见时的 **Twitch** 或 **YouTube** 实时状态
+- 快捷操作（举报用户，适用于已登录的查看者）
+
+---
+
+## 个人资料选项卡
+
+不同账户的选项卡可能有所不同。常见版块如下：
+
+### 概览
+
+统计摘要、角色、徽章和亮点。
+
+### VTC
+
+当前的 VTC 会员资格、角色以及指向公司个人资料的链接。未加入任何 VTC 的用户将显示为空状态。
+
+### 动态
+
+近期的平台动态信息流（包括帖子、参与记录及其他类似活动，如有提供）。
+
+### 论坛
+
+论坛参与情况的摘要，并附有指向 [forum.trucklinemp.com](https://forum.trucklinemp.com) 内容的链接（前提是已启用论坛模块）。
+
+### 配置
+
+您选择分享的外部卡车配置（如果您在设置中启用了**隐藏外部配置**，则这些配置将不可见）。
+
+### 记录
+
+在信誉规则下可见的封禁和处罚历史。您在自己个人资料中可能看到的内容会比陌生人更多。请参阅 [封禁与申诉](/zh-cn/web-docs/account/bans-appeals/)。
+
+---
+
+## 您可控制的内容
+
+在 [个人资料设置](/zh-cn/web-docs/account/profile-settings/) 中可编辑：
+
+- 显示名称和用户名
+- 头像（上传或提供网址）
+- 社交媒体链接（TikTok、X 等）
+- YouTube 和 Twitch 可见性开关
+
+在 [关联账户](/zh-cn/web-docs/account/connections/) 中可编辑：
+
+- 已关联的 OAuth 提供商（Steam、Discord、Google 等）
+
+---
+
+## 徽章与项目
+
+认可徽章（例如贡献者徽章或项目奖励）会在员工或自动化项目授予时显示。您无法自行添加官方徽章。
+
+---
+
+## 举报
+
+已登录用户可以举报某个个人资料以供审核。举报将生成一张 [支持工单](/zh-cn/web-docs/account/support-tickets/)。请提供事实性详细信息。
+
+---
+
+## API
+
+公开个人资料数据可供集成服务使用：
+
+```
+GET https://api.trucklinemp.com/users/{handleOrId}
+```
+
+OAuth 的 `profile` 作用域会为授权应用返回部分数据。请参阅 [OAuth 应用](/zh-cn/web-api/oauth-apps/)。
+
+---
+
+## 相关指南
+
+- [个人资料设置](/zh-cn/web-docs/account/profile-settings/)
+- [用户目录](/zh-cn/web-docs/account/user-directory/)
+- [论坛](/zh-cn/web-docs/account/forum/)

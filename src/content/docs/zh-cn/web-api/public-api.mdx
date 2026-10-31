@@ -1,0 +1,140 @@
+---
+title: 公共 API
+description: TrucklineMP 公共 REST API 的认证、基础 URL、速率限制和端点概览。
+version: 1.3.0
+lastUpdated: 2026-10-30
+---
+TrucklineMP 公共 API 是一个供第三方集成的只读 REST 接口。它提供了 VTC 目录数据、活动、新闻、用户搜索、审核记录和平台元数据。
+
+所有端点均可无需认证访问。提供开发者控制台的 API 密钥可提高您的速率限制，并将请求与您的项目关联。
+
+## 认证
+
+将您的 API 密钥通过 `Authorization` 标头发送：
+
+```
+Authorization: Bearer tlmp_api_YOUR_API_KEY
+```
+
+API 密钥：
+
+- 使用 `tlmp_api_` 前缀（例如 `tlmp_api_a1b2c3...`）。先前通过旧版 `tl_` 前缀签发的密钥仍可使用。
+- 在 [开发者控制台](https://trucklinemp.com/developer) 中按项目创建。
+- 创建时仅显示**一次**。请安全存储。
+- 仅提供对公共数据的**只读**访问权限。它们不会解锁私有账户操作或写入操作。
+- 可随时从控制台吊销。
+
+无效或已吊销的密钥将被忽略。请求将被视为匿名请求，并适用匿名速率限制。
+
+如果您的 API 密钥被公开（例如提交到代码库），请立即轮换密钥——请参阅 [泄露的 API 密钥与凭据](/zh-cn/web-api/leaked-secrets/)。
+
+### 会话 Cookie
+
+当您登录 trucklinemp.com 并随请求发送会话 Cookie 时，某些端点会返回额外字段（例如仅限成员的 VTC 字段）。此功能为可选，专用于第一方使用。第三方集成应依赖 API 密钥和 OAuth（如适用）。
+
+## 基础 URL
+
+| 环境 | 基础 URL | 说明 |
+|-------------|----------|-------|
+| 生产环境 | `https://api.trucklinemp.com` | 公共 API 主机名 |
+| 同源环境 | `https://trucklinemp.com/api/v1` | 用于浏览器内沙箱环境 |
+
+### 重要提示：请勿重复添加 `/v1`
+
+生产环境主机名 `api.trucklinemp.com` 会通过 nginx 路由。对以下地址的请求：
+
+```
+https://api.trucklinemp.com/vtcs
+```
+
+会被代理到 `/api/v1/vtcs`。**请勿**在主机名 URL 后追加 `/v1`。
+
+同源请求直接使用 `/api/v1`：
+
+```
+https://trucklinemp.com/api/v1/vtcs
+```
+
+### 示例请求
+
+```bash
+curl "https://api.trucklinemp.com/version"
+
+curl -H "Authorization: Bearer tlmp_api_YOUR_API_KEY" \
+  "https://api.trucklinemp.com/vtcs?limit=10"
+```
+
+## 速率限制
+
+速率限制对匿名流量按客户端 IP 应用，对使用有效密钥的请求则按 API 密钥（和 IP）应用。限制在 **1 分钟** 和 **5 分钟** 的时间窗口内执行。超出限制将返回 HTTP `429` 和 `RATE_LIMITED` 错误。
+
+### 匿名（无 API 密钥）
+
+| 时间窗口 | 限制 |
+|--------|-------|
+| 1 分钟 | 100 次请求 |
+| 5 分钟 | 400 次请求 |
+
+### API 密钥等级
+
+| 等级 | 1 分钟 | 5 分钟 |
+|------|----------|-----------|
+| **免费**（默认） | 1,000 | 5,000 |
+| **基础** | 2,500 | 12,000 |
+| **高级** | 5,000 | 25,000 |
+| **无限制** | 20,000 | 80,000 |
+
+等级由 TrucklineMP 工作人员管理。如果您的集成需要更高等级，请联系支持团队。
+
+### 最佳实践
+
+- 尽可能缓存响应。许多列表端点支持分页。
+- 收到 `429` 响应后请退避。在重试前降低并发数。
+- 生产环境中务必发送有效的 API 密钥。匿名限制仅用于轻量级测试。
+
+## 端点概览
+
+[trucklinemp.com/api/v1/openapi.json](https://trucklinemp.com/api/v1/openapi.json) 处的 OpenAPI 规范是权威来源。主要资源组如下：
+
+| 组别 | 示例 |
+|-------|----------|
+| **平台** | `GET /version`, `GET /status`, `GET /rules`, `GET /partners`, `GET /stats` |
+| **VTC** | `GET /vtcs`, `GET /vtcs/{idOrHandle}`, `GET /vtcs/{id}/members`, `GET /vtcs/{id}/news`, `GET /vtcs/{id}/events`, `GET /vtcs/{id}/roles` |
+| **活动** | `GET /events`, `GET /events/{eventId}`, `GET /events/{eventId}/attendees`, `GET /events/{eventId}/slots` |
+| **新闻** | `GET /news`, `GET /news/{newsId}` |
+| **用户** | `GET /users/search`, `GET /users/{handleOrId}`, `GET /users/steam/{steamId}`, `GET /users/batch`, `GET /users/{id}/bans`, `GET /users/{id}/events` |
+
+公共用户对象包含一个 `steamId` 字段（SteamID64 字符串，若未关联则为 `null`）。您也可以通过 `GET /users/{steamId}` 或专用的 `GET /users/steam/{steamId}` 路由解析个人资料。
+| **封禁** | `GET /bans`, `GET /bans/{id}` |
+| **项目** | `GET /programs/badges/{slug}`, `GET /programs/recognition` |
+| **会话** | `GET /session`（基于 Cookie 的会话检查） |
+
+路径参数（如 `{idOrHandle}`）在规范中注明时可接受数值 ID 或公开句柄。
+
+## TypeScript SDK
+
+对于 Node.js 集成，您可以使用官方客户端，而非手动编写 `fetch` 调用。请参阅 [TypeScript SDK](/zh-cn/web-api/sdk/)。
+
+## 错误响应
+
+常见错误代码：
+
+| 代码 | HTTP | 含义 |
+|------|------|---------|
+| `UNAUTHORIZED` | 401 | 受保护路由缺少或凭据无效 |
+| `FORBIDDEN` | 403 | 认证有效但权限不足 |
+| `NOT_FOUND` | 404 | 资源不存在 |
+| `RATE_LIMITED` | 429 | 超出速率限制 |
+| `VALIDATION_ERROR` | 400 | 查询或路径参数无效 |
+
+## 交互式工具
+
+- [API 沙箱](https://trucklinemp.com/developer/playground)：在浏览器中发送请求（使用同源的 `/api/v1`）。
+- [Swagger UI](/zh-cn/web-api/public-api/doc)：在此文档中交互式地浏览完整模式。
+
+## 相关指南
+
+- [开发者平台概览](/zh-cn/web-api/overview/)
+- [OAuth 应用](/zh-cn/web-api/oauth-apps/)（用户登录，公共读端点无需使用）
+- [Webhook](/zh-cn/web-api/webhooks/)（事件推送通知）
+- [泄露的 API 密钥与凭据](/zh-cn/web-api/leaked-secrets/)（密钥泄露后的补救措施）

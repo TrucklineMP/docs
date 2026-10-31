@@ -1,0 +1,133 @@
+---
+title: Discord 连接流程
+description: "了解 TrucklineMP 如何与 Discord 连接：账户关联、已关联角色、VTC 服务器验证以及主服务器的已验证 VTC 角色。"
+version: 1.2.0
+lastUpdated: 2026-10-30
+---
+TrucklineMP 以多种方式使用 Discord。这些方式解决的是不同的问题，**彼此之间不能相互替代**。
+
+| 流程 | 位置 | 用途 |
+|------|-------|---------|
+| **账户连接** | 网站设置 | 身份识别、账户恢复、通知私信 |
+| **已关联角色** | Discord 服务器 | 根据 TrucklineMP 规则授予的可选角色 |
+| **VTC 服务器验证** | Discord 的 `/verify-server` 命令 | 证明某服务器属于您在网站上的 VTC |
+| **已验证 VTC 角色** | TrucklineMP 主 Discord 服务器 | 已验证 VTC 所有者的领导角色 |
+
+---
+
+## 1. 账户连接（设置）
+
+**路径：** trucklinemp.com → 设置 → **连接** → 连接 Discord
+
+**用途：**
+
+- 将 Discord 与您的 TrucklineMP 身份关联
+- 账户恢复选项
+- [Discord 通知私信](/zh-cn/web-docs/discord-bot/notifications/)
+
+**不涉及：**
+
+- 在 Discord 服务器中授予已关联角色
+- 在您的个人资料中验证 VTC 服务器
+- 在任何地方自动添加角色
+
+除非受到工作人员限制，否则您可以随时在“连接”页面断开和重新连接。
+
+---
+
+## 2. 已关联角色（Discord 服务器）
+
+**路径：** Discord → 服务器菜单 → **已关联角色** → 连接 TrucklineMP
+
+**用途：**
+
+- 服务器管理员要求成员证明其拥有 TrucklineMP 账户
+- 可选的 **TrucklineMP 工作人员** 验证功能，用于仅限工作人员的频道
+- 通过已验证的角色限制频道的访问权限
+
+**不涉及：**
+
+- 替代网站“连接”功能以接收私信（但应使用相同的 Discord 账户）
+- 在 trucklinemp.com 上显示 VTC 徽章
+- 运行 `/verify-server` 命令以验证 VTC 所有权
+
+成员必须**在每个服务器中单独选择加入**。角色不会自动分配。
+
+完整设置指南：[已关联角色](/zh-cn/web-docs/discord-bot/linked-roles/)
+
+---
+
+## 3. VTC 服务器验证
+
+**路径：** VTC 管理 → 常规设置 → 生成令牌 → Discord 中的 `/verify-server` 命令
+
+**用途：**
+
+- 在您的 TrucklineMP 个人资料中显示 VTC 的官方 Discord
+- 在该服务器中运行 `/vtc` 命令以显示公司信息
+- 向网站访客证明服务器的所有权
+
+**要求：**
+
+- VTC 所有者或拥有 Discord 设置权限的工作人员
+- 服务器中已安装 TrucklineMP 机器人
+- 在 Discord 中拥有运行 `/verify-server` 命令的管理员权限
+
+**不涉及：**
+
+- 配置已关联角色（请在 Discord 的角色设置中单独完成）
+- 除非成员也使用“已关联角色”或“账户连接”功能，否则不会关联其个人账户
+
+完整设置指南：[VTC Discord 验证](/zh-cn/web-docs/vtc/discord-verification/)
+
+---
+
+## 4. 已验证 VTC 角色（主服务器）
+
+**路径：** TrucklineMP 主 Discord 服务器 → 已验证 VTC 角色频道 → **申请角色**
+
+**用途：**
+
+- 已验证 VTC 所有者（以及一名可选的管理人员）可在 TrucklineMP **官方** Discord 服务器中获得领导角色
+- 获得独立于您所属 VTC 的 Discord 服务器的身份认可
+
+**要求：**
+
+- 拥有 [已验证 VTC 计划](/zh-cn/web-docs/vtc-programs/verified/) 状态
+- 在主服务器中拥有 **已验证** 的[已关联角色](/zh-cn/web-docs/discord-bot/linked-roles/)
+- 由 VTC 所有者通过 Modbot 提交申请（可选管理人员的 Discord 用户 ID）
+
+**不涉及：**
+
+- 在您的个人资料中验证 VTC 的 Discord 服务器（请使用流程 3）
+- 替代社区服务器中的已关联角色
+
+完整设置指南：[已验证 VTC Discord 角色](/zh-cn/web-docs/vtc-programs/discord-role/)
+
+---
+
+## 快速决策指南
+
+| 我的需求 | 使用方案 |
+|--------------|-----|
+| 在 Discord 私信中获得网站提醒 | [账户连接](/zh-cn/web-docs/account/connections/) |
+| 要求成员在加入 #members 聊天前进行验证 | [已关联角色](/zh-cn/web-docs/discord-bot/linked-roles/) |
+| 在个人资料中显示我们的 VTC Discord | [VTC Discord 验证](/zh-cn/web-docs/vtc/discord-verification/) |
+| 在 TrucklineMP 主 Discord 中获得领导角色 | [已验证 VTC Discord 角色](/zh-cn/web-docs/vtc-programs/discord-role/) |
+| 向某个频道发布招募提醒 | [VTC 公告](/zh-cn/web-docs/vtc/announcements/) Webhook |
+
+---
+
+## 所有流程均使用同一 Discord 账户
+
+请为“账户连接”、“已关联角色”和验证流程使用同一个 Discord 账户。账户不一致会导致 `/profile` 页面出现“未关联”错误，并造成角色验证失败。
+
+---
+
+## 相关指南
+
+- [已关联角色](/zh-cn/web-docs/discord-bot/linked-roles/)
+- [VTC Discord 验证](/zh-cn/web-docs/vtc/discord-verification/)
+- [Discord 通知](/zh-cn/web-docs/discord-bot/notifications/)
+- [已验证 VTC Discord 角色](/zh-cn/web-docs/vtc-programs/discord-role/)
+- [官方 Discord 服务器](/zh-cn/web-docs/discord-bot/official-server/)

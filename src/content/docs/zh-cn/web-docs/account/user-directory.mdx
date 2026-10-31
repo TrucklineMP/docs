@@ -1,0 +1,71 @@
+---
+title: 用户目录
+description: 在公开目录中搜索和浏览 TrucklineMP 用户资料。
+version: 1.2.0
+lastUpdated: 2026-10-30
+---
+用户目录可帮助您通过姓名、用户名或 VTC 归属来查找司机。
+
+## 访问目录
+
+打开 [trucklinemp.com/users](https://trucklinemp.com/users)。
+
+您无需登录即可浏览。部分资料详情需要身份验证或好友关系。
+
+---
+
+## 搜索与筛选
+
+使用搜索栏缩小结果范围：
+
+- **姓名或用户名**部分匹配
+- 每个结果会显示用户当前的 VTC（如有）
+- 结果集较大时支持分页
+
+目前没有其他独立的筛选控件（例如按 VTC 筛选），仅可通过姓名或用户名进行搜索。
+
+点击用户即可打开其[公开资料](/zh-cn/web-docs/account/public-profile/)。
+
+---
+
+## 资料页面 URL
+
+可通过以下地址访问用户资料：
+
+- `trucklinemp.com/@handle`（如果用户设置了用户名，则优先使用此地址）
+- `trucklinemp.com/user/{webId}`（作为备用，使用数字 WebID）
+
+用户名是唯一的，可在[资料设置](/zh-cn/web-docs/account/profile-settings/)中设置。
+
+---
+
+## 隐私
+
+用户可自行控制其资料中显示的内容（头像、社交链接、已关联的流媒体账户）。被封禁的用户可能会显示状态横幅。仅限工作人员查看的备注绝不会公开。
+
+---
+
+## 举报用户
+
+如果您发现用户违反政策，请打开其资料页面，然后点击**举报用户**以提交[支持工单](/zh-cn/web-docs/account/support-tickets/)。请勿通过私信或 Discord 骚扰用户。
+
+---
+
+## API 访问
+
+集成开发者可通过公开 API 搜索用户：
+
+```
+GET https://api.trucklinemp.com/users/search
+GET https://api.trucklinemp.com/users/{handleOrId}
+```
+
+请参阅[公开 API](/zh-cn/web-api/public-api/)。
+
+---
+
+## 相关指南
+
+- [公开资料](/zh-cn/web-docs/account/public-profile/)
+- [资料设置](/zh-cn/web-docs/account/profile-settings/)
+- [封禁与申诉](/zh-cn/web-docs/account/bans-appeals/)

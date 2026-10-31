@@ -1,0 +1,230 @@
+---
+title: OAuth 应用
+description: 在 TrucklineMP 上创建 OAuth 应用、授权用户、配置 PKCE、管理测试用户并发布应用。
+version: 1.2.0
+lastUpdated: 2026-10-30
+---
+OAuth 应用允许用户使用其 TrucklineMP 帐户登录您的应用。授权后，您的应用将获得根据所请求权限范围生成的访问令牌。
+
+OAuth 与公共 API 密钥是相互独立的。当您需要代表已登录用户执行操作时，请使用 OAuth。对于服务器端读取平台公开数据的需求，请使用 API 密钥。
+
+## 创建应用
+
+1. 启用[开发者模式](/zh-cn/web-api/overview/#开始前的准备)，然后打开[开发者控制台](https://trucklinemp.com/developer)。
+2. 前往 **OAuth 应用** 页面，点击 **创建应用**。
+3. 填写应用名称、描述、图标、网站以及法律声明相关网址。
+4. 在 **OAuth** 页面，设置 **重定向 URI**（每行一个）并选择 **权限范围**。
+5. 保存更改。在 **客户端密钥** 显示时立即复制，该密钥之后无法再次获取。
+
+### 重定向 URI 规则
+
+- 在授权和令牌请求阶段，必须**完全匹配**（包括路径、端口和结尾的斜杠）。
+- 允许使用 **https://** 开头的公共主机。
+- **http://** 仅可用于本地开发主机：`localhost`、`*.localhost`、`127.x.x.x`、私有局域网地址段（`10/8`、`172.16/12`、`192.168/16`）以及 `host.docker.internal`。
+- 原生应用可使用**自定义应用方案**（例如 `myapp://callback`）。
+- 包含片段（`#...`）或嵌入凭据（`user:pass@`）的 URI 将被拒绝。
+
+### 应用类型
+
+| 类型 | 客户端密钥 | 典型用途 |
+|------|---------------|-------------|
+| **保密型**（默认） | 在令牌端点处必须提供 | 服务器端 Web 应用和后端服务 |
+| **公开型** | 不使用 | 使用 PKCE 的移动应用和单页应用 (SPA) |
+
+公开客户端在令牌端点认证时，需省略 `client_secret_post`。保密客户端则必须提交 `client_secret`。
+
+## OAuth 端点
+
+发现文档（OAuth 2.0 授权服务器元数据）：
+
+```
+GET https://trucklinemp.com/.well-known/oauth-authorization-server
+```
+
+| 端点 | URL |
+|----------|-----|
+| 授权 | `https://trucklinemp.com/oauth/authorize` |
+| 令牌 | `https://trucklinemp.com/api/oauth/token` |
+| 吊销 | `https://trucklinemp.com/api/oauth/revoke` |
+| 用户信息 | `https://trucklinemp.com/api/oauth/userinfo` |
+
+支持的响应类型：`code`（授权码流程）。
+
+支持的授权类型：`authorization_code`、`refresh_token`。
+
+支持的 PKCE 方法：`S256`。
+
+## 权限范围
+
+| 权限范围 | 访问权限 |
+|-------|--------|
+| `profile` | 用户名、头像和公开个人资料（必需） |
+| `vtc:read` | VTC 成员资格、角色和 VTC 详细信息 |
+| `events:read` | 保留用于未来的用户信息字段（目前尚未返回） |
+| `bans:read` | 保留用于未来的用户信息字段（目前尚未返回） |
+
+请仅请求应用所需的权限范围。用户将在同意屏幕上看到完整的权限范围列表。
+
+`events:read` 和 `bans:read` 目前可以请求，但尚未为用户信息添加相应字段。如需获取公开的封禁数据，请使用公共 API 的封禁端点。
+
+## 授权流程
+
+### 1. 重定向用户进行授权
+
+构建一个 URL（或使用应用概览页面上的**安装链接**）：
+
+```
+https://trucklinemp.com/oauth/authorize
+  ?client_id=tlmp_client_...
+  &response_type=code
+  &redirect_uri=https://your-app.com/callback
+  &scope=profile vtc:read
+  &state=RANDOM_CSRF_TOKEN
+```
+
+如果您的应用需要 PKCE，还需包含：
+
+```
+&code_challenge=CHALLENGE
+&code_challenge_method=S256
+```
+
+通过 SHA-256 和 base64url 编码从 `code_verifier` 生成挑战值。
+
+### 2. 用户同意
+
+用户登录（如需要）并批准所请求的权限范围。TrucklineMP 会将用户重定向回您的 `redirect_uri`，并附上 `code` 和 `state`。
+
+验证 `state` 是否与之前发送的值一致，以防止 CSRF 攻击。
+
+### 3. 将授权码兑换为令牌
+
+```bash
+curl -X POST "https://trucklinemp.com/api/oauth/token" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=authorization_code" \
+  -d "client_id=tlmp_client_..." \
+  -d "client_secret=tlmp_secret_..." \
+  -d "code=AUTHORIZATION_CODE" \
+  -d "redirect_uri=https://your-app.com/callback" \
+  -d "code_verifier=VERIFIER_IF_PKCE"
+```
+
+响应将包含 `access_token`（`tlmp_...`）和可选的 `refresh_token`（`tlmpr_...`）。
+
+### 4. 调用用户信息接口
+
+```bash
+curl -H "Authorization: Bearer tlmp_ACCESS_TOKEN" \
+  "https://trucklinemp.com/api/oauth/userinfo"
+```
+
+## 用户信息响应
+
+返回的字段取决于访问令牌被授予的权限范围。`sub` 字段始终包含在内。
+
+### 始终返回的字段
+
+| 字段 | 类型 | 描述 |
+|-------|------|-------------|
+| `sub` | string | TrucklineMP 用户 ID |
+| `web_id` | string | 公开 WebID |
+
+### 拥有 `profile` 权限范围时
+
+| 字段 | 类型 | 描述 |
+|-------|------|-------------|
+| `name` | string | 显示名称 |
+| `picture` | string | 头像 URL |
+| `handle` | string | 公开 `@handle`（可能为空） |
+| `steam_id` | string \| null | 已关联的 SteamID64 |
+
+### 拥有 `vtc:read` 权限范围时
+
+| 字段 | 类型 | 描述 |
+|-------|------|-------------|
+| `vtc_memberships` | array | 包含 `vtcId`、`vtcName`、`role`、`isOwner`、`joinedAt` 的对象数组 |
+
+### 示例
+
+```json
+{
+  "sub": "user_abc123",
+  "web_id": "10042",
+  "name": "Driver Name",
+  "picture": "https://cdn.example/avatar.webp",
+  "handle": "drivername",
+  "vtc_memberships": [
+    {
+      "vtcId": 7,
+      "vtcName": "Example Logistics",
+      "role": "Driver",
+      "isOwner": false,
+      "joinedAt": "2026-01-15T10:00:00.000Z"
+    }
+  ]
+}
+```
+
+无效或过期的令牌将返回 HTTP `401` 错误，并附带 `{ "error": "invalid_token" }`。
+
+## PKCE
+
+PKCE 用于保护无法存储客户端密钥的公开客户端。在应用的安全设置中启用 **要求 PKCE**，即可拒绝未提供有效挑战的授权请求。
+
+当 PKCE 为必需项时：
+
+1. 生成一个 `code_verifier`（随机的 base64url 字符串）。
+2. 计算 `code_challenge = BASE64URL(SHA256(code_verifier))`。
+3. 在授权请求中提交 `code_challenge` 和 `code_challenge_method=S256`。
+4. 在令牌请求中提交 `code_verifier`。
+
+## 测试模式与测试用户
+
+新的第三方应用初始状态为**未发布**。在未发布状态下：
+
+- 只有**应用所有者**和**测试用户**才能完成授权。
+- 其他所有用户都将看到该应用处于测试模式的消息。
+
+在应用设置的 **常规** 页面添加测试用户。可通过名称或句柄搜索 TrucklineMP 用户。测试用户列表也可以包含与授权帐户匹配的电子邮件地址。
+
+此功能可让您在不向所有 TrucklineMP 用户开放应用的情况下进行开发和测试。
+
+## 发布应用
+
+当应用准备面向公众时：
+
+1. 完成网站和重定向 URI 的**域名验证**（敏感配置所必需）。
+2. 打开应用设置中的 **发布** 页面。
+3. 点击 **验证/发布应用**，在需要时提交以供人工审核。
+4. 审核通过后，使用 **发布应用** 使应用对所有用户可见。
+
+已发布的应用可再次从同一页面**取消发布**。取消发布后，应用将恢复为测试模式的限制。
+
+如果应用未通过审核，工作人员会提供修改建议。请根据反馈进行修改后重新提交。
+
+## 令牌格式
+
+| 项目 | 前缀/格式 |
+|------|-----------------|
+| 客户端 ID | `tlmp_client_...` |
+| 客户端密钥 | `tlmp_secret_...` |
+| 访问令牌 | `tlmp_...` |
+| 刷新令牌 | `tlmpr_...` |
+
+如果客户端密钥泄露，请通过安全页面进行轮换。根据轮换设置，现有令牌可能会被作废。
+
+## 安全自查清单
+
+- 生产环境中的重定向 URI 必须使用 HTTPS。
+- 始终验证 `state` 参数。
+- 公开客户端和基于浏览器的应用必须使用 PKCE。
+- 客户端密钥和刷新令牌应仅存储在服务器端。
+- 仅请求应用所需的最低权限范围。
+
+## 相关指南
+
+- [开发者平台概览](/zh-cn/web-api/overview/)
+- [开发者控制台](/zh-cn/web-api/console/)
+- [公共 API](/zh-cn/web-api/public-api/)
+- [Webhooks](/zh-cn/web-api/webhooks/)

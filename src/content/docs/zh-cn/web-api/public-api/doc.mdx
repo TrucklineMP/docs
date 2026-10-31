@@ -1,0 +1,19 @@
+---
+title: 公共 API 参考
+description: TrucklineMP 公共 REST API 的交互式 Swagger UI 参考。
+version: 1.3.0
+lastUpdated: 2026-10-30
+---
+import SwaggerUI from '../../../../../components/SwaggerUI.astro';
+
+这是 TrucklineMP 公共 API 的完整规范，通过 Swagger UI 以交互式方式呈现。每个端点、参数和响应模式均根据 [trucklinemp.com/api/v1/openapi.json](https://trucklinemp.com/api/v1/openapi.json) 处的 OpenAPI 规范实时生成。
+
+您可以使用筛选器查找端点，展开某个部分查看参数和示例，然后点击 **Try it out** 发送真实请求。公共只读端点无需 API 密钥即可使用；如需提高速率限制，请从 [开发者控制台](https://trucklinemp.com/developer) 添加 `tlmp_api_...` 密钥。
+
+<SwaggerUI specUrl="https://trucklinemp.com/api/v1/openapi.json" />
+
+## 更多资源
+
+- [公共 API](/zh-cn/web-api/public-api/) - 身份验证、基础 URL、速率限制和端点概览。
+- [API 游乐场](https://trucklinemp.com/developer/playground) - 直接在浏览器中发送请求。
+- [TypeScript SDK](/zh-cn/web-api/sdk/) - 安装官方客户端。
